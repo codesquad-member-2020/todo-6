@@ -1,5 +1,14 @@
+CREATE DATABASE IF NOT EXISTS todo;
 
-CREATE TABLE IF NOT EXISTS column (
+SET character_set_client = utf8;
+SET character_set_results = utf8;
+SET character_set_connection = utf8;
+ALTER DATABASE todo DEFAULT CHARACTER SET utf8;
+commit;
+
+USE todo;
+
+CREATE TABLE IF NOT EXISTS section (
     id int primary key auto_increment,
     name varchar (255)
 );
@@ -9,7 +18,7 @@ CREATE TABLE IF NOT EXISTS card (
     content varchar (255),
     user varchar (64),
     deleted boolean default false,
-    column int references column(id),
+    section int references section(id),
     column_key int
 );
 
@@ -21,3 +30,9 @@ CREATE TABLE IF NOT EXISTS activity (
     card int references card(id),
     created_at timestamp
 );
+
+CREATE TABLE IF NOT EXISTS user (
+    id int primary key auto_increment,
+    user_id varchar (64),
+    name varchar(64)
+)
