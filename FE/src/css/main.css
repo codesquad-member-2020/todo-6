@@ -1,0 +1,33 @@
+@tailwind base;
+
+@tailwind components;
+
+.container {
+  @apply box-border mx-auto w-full px-4;
+}
+
+.header {
+  @apply fixed z-10 top-0 inset-x-0 flex items-center justify-between h-16 px-6 bg-gray-900;
+}
+
+.menu-btn {
+  @apply absolute right-0 mr-3 w-12 h-12 flex items-center justify-center;
+}
+
+.column-wrap {
+  @apply box-border flex flex-no-wrap flex-row justify-start w-full max-w-screen-xl min-h-screen pt-20 pb-4;
+}
+
+.column {
+  @apply w-full max-w-md bg-gray-200 box-border border border-gray-400 rounded;
+}
+
+.full-width {
+  max-width: 100%;
+}
+
+button:focus {
+  outline: 0;
+}
+
+@tailwind utilities;
