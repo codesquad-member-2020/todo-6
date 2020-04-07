@@ -1,33 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
 @tailwind base;
 
 @tailwind components;
 
-.container {
-  @apply box-border mx-auto w-full px-4;
+/* layout */
+* {
+  @apply text-gray-900;
 }
 
+.material-icons {
+  @apply text-gray-700;
+}
+
+.container {
+  @apply box-border mx-auto min-w-0;
+}
+
+/* header */
 .header {
   @apply fixed z-10 top-0 inset-x-0 flex items-center justify-between h-16 px-6 bg-gray-900;
 }
 
-.menu-btn {
-  @apply absolute right-0 mr-3 w-12 h-12 flex items-center justify-center;
+.header-title {
+  font-family: 'Poppins', sans-serif;
+  @apply font-bold text-2xl text-white;
 }
 
+/* menu button */
+.menu-btn,
+.edit-btn {
+  @apply absolute right-0;
+}
+
+.menu-btn {
+  @apply mr-3 w-12 h-12 flex items-center justify-center text-white;
+}
+
+/* column */
 .column-wrap {
-  @apply box-border flex flex-no-wrap flex-row justify-start w-full max-w-screen-xl min-h-screen pt-20 pb-4;
+  @apply overflow-x-auto flex box-border h-screen max-h-screen min-w-0 pt-20 pb-4;
 }
 
 .column {
-  @apply w-full max-w-md bg-gray-200 box-border border border-gray-400 rounded;
+  @apply flex-none flex flex-col relative max-w-md bg-gray-200 box-border border border-gray-400 rounded p-4 mr-4;
+}
+
+.column:first-child {
+  @apply ml-4;
+}
+
+.column:last-child::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: -1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.column-title-wrap {
+  @apply flex items-center mb-4;
+}
+
+.column-number {
+  @apply flex items-center justify-center rounded-full w-6 h-6 bg-gray-400 font-bold;
+}
+
+.column-title {
+  @apply ml-2 text-xl font-bold;
+}
+
+textarea,
+.edit-btn,
+.delete-btn,
+.add-btn {
+  @apply transition duration-200 ease-in-out;
+}
+
+.edit-btn {
+  @apply mr-4;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  @apply text-blue-500;
+}
+
+/* text-area */
+.todo-input-wrap {
+  @apply flex flex-col flex-wrap mb-4;
+}
+
+textarea {
+  @apply box-border w-full h-24 p-4 resize-y border border-gray-300 rounded;
+}
+
+.input-btn-wrap {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.input-btn-wrap button {
+  @apply h-10 rounded font-semibold mt-2;
+}
+
+.add-btn {
+  @apply border border-blue-600 bg-blue-500 text-white;
+}
+
+.add-btn.disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.cancel-btn {
+  @apply bg-gray-100 border border-gray-400;
 }
 
 .full-width {
   max-width: 100%;
 }
 
-button:focus {
+/* card */
+.card-wrap {
+  @apply overflow-y-scroll;
+}
+
+.card {
+  @apply relative box-border w-full p-2 pl-10 pr-10 mb-2 bg-white border border-gray-400 rounded;
+}
+
+.card-icon,
+.delete-btn {
+  @apply absolute top-0 mt-2;
+}
+
+.card-icon {
+  @apply left-0 ml-2 text-gray-600;
+}
+
+.delete-btn {
+  @apply right-0 mr-2;
+}
+
+.card-title {
+  @apply align-top mb-2;
+}
+
+.card-author {
+  @apply text-sm text-gray-500;
+}
+
+.card-author b {
+  @apply font-normal text-gray-600;
+}
+
+button:focus,
+textarea:focus {
   outline: 0;
+}
+
+textarea:focus {
+  @apply border border-blue-400;
 }
 
 @tailwind utilities;
