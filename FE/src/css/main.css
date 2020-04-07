@@ -165,10 +165,16 @@ textarea {
   @apply font-normal text-gray-600;
 }
 
+/*dimmed background*/
+.dimmed-layer {
+  @apply fixed top-0 left-0 w-full h-full z-10 opacity-50 bg-black;
+}
+
 /* sidemenu */
 .sidemenu {
   @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
-  /* right: -28rem; transition animation */
+  right: -28rem;
+  /* transition animation */
 }
 
 .sidemenu-header {
@@ -196,6 +202,9 @@ textarea {
   @apply text-blue-600;
 }
 
+/* modal */
+
+/* focus */
 button:focus,
 textarea:focus {
   @apply outline-none;

@@ -11,6 +11,7 @@
   </head>
   <body>
     <div class="container full-width">
+      <!-- header -->
       <header class="header">
         <h1 class="header-title">
           <a href="">Todo</a>
@@ -19,6 +20,9 @@
           menu
         </button>
       </header>
+      <!-- 메뉴용 딤드 레이어. 누르면 메뉴 꺼지게 -->
+      <div class="dimmed-layer menu hidden"></div>
+      <!-- sidemenu -->
       <div class="sidemenu">
         <div class="sidemenu-header">
           <button class="material-icons sidemenu-btn icon-btn">menu</button>
@@ -41,6 +45,7 @@
           </li>
         </ul>
       </div>
+      <!-- column -->
       <div class="column-wrap">
         <div class="column">
           <div class="column-title-wrap">
@@ -48,6 +53,7 @@
             <h2 class="column-title">해야할 일</h2>
             <button class="edit-btn material-icons">add</button>
           </div>
+          <!-- input wrap -->
           <div class="todo-input-wrap">
             <textarea
               name="todo"
@@ -60,6 +66,7 @@
               <button class="cancel-btn">취소</button>
             </div>
           </div>
+          <!-- card -->
           <div class="card-wrap">
             <article class="card">
               <i class="card-icon material-icons">bookmark_border</i>
