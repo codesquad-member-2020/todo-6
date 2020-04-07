@@ -10,7 +10,7 @@
 }
 
 .material-icons {
-  @apply text-gray-700;
+  @apply text-gray-800;
 }
 
 .container {
@@ -18,13 +18,22 @@
 }
 
 /* header */
+.header,
+.sidemenu-header {
+  @apply flex absolute top-0 inset-x-0 items-center justify-between h-16 px-6;
+}
+
 .header {
-  @apply fixed z-10 top-0 inset-x-0 flex items-center justify-between h-16 px-6 bg-gray-900;
+  @apply fixed z-10 bg-gray-900;
 }
 
 .header-title {
   font-family: 'Poppins', sans-serif;
   @apply font-bold text-2xl text-white;
+}
+
+.icon-btn {
+  @apply absolute right-0 mr-3 w-12 h-12 flex items-center justify-center;
 }
 
 /* menu button */
@@ -34,7 +43,7 @@
 }
 
 .menu-btn {
-  @apply mr-3 w-12 h-12 flex items-center justify-center text-white;
+  @apply text-white;
 }
 
 /* column */
@@ -43,7 +52,7 @@
 }
 
 .column {
-  @apply flex-none flex flex-col relative max-w-md bg-gray-200 box-border border border-gray-400 rounded p-4 mr-4;
+  @apply flex-none flex flex-col relative w-full max-w-md bg-gray-200 box-border border border-gray-400 rounded p-4 mr-4;
 }
 
 .column:first-child {
@@ -108,7 +117,7 @@ textarea {
   @apply border border-blue-600 bg-blue-500 text-white;
 }
 
-.add-btn.disabled {
+.disabled {
   @apply cursor-not-allowed opacity-50;
 }
 
@@ -143,24 +152,55 @@ textarea {
 }
 
 .card-title {
-  @apply align-top mb-2;
+  @apply font-semibold align-top mb-2;
 }
 
-.card-author {
+.small-text {
   @apply text-sm text-gray-500;
 }
 
-.card-author b {
+.small-text strong {
   @apply font-normal text-gray-600;
+}
+
+/* sidemenu */
+.sidemenu {
+  @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
+  /* right: -28rem; transition animation */
+}
+
+.sidemenu-header {
+  @apply bg-gray-200 border-b border-gray-300;
+}
+
+.sidemenu-title {
+  font-family: 'Poppins', sans-serif;
+  @apply font-bold text-2xl;
+}
+
+.activity-container {
+  @apply overflow-y-scroll pt-16;
+}
+
+.activity-text {
+  @apply block mb-1;
+}
+
+.activity-list {
+  @apply py-4 border-b border-gray-300;
+}
+
+.activity-todo {
+  @apply text-blue-600;
 }
 
 button:focus,
 textarea:focus {
-  outline: 0;
+  @apply outline-none;
 }
 
 textarea:focus {
-  @apply border border-blue-400;
+  @apply shadow-outline;
 }
 
 @tailwind utilities;
