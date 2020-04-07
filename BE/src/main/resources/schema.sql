@@ -8,18 +8,25 @@ commit;
 
 USE todo;
 
+CREATE TABLE IF NOT EXISTS user (
+    id int primary key auto_increment,
+    user_id varchar (64),
+    name varchar(64)
+);
+
 CREATE TABLE IF NOT EXISTS section (
     id int primary key auto_increment,
-    name varchar (255)
+    user int references user(id),
+    name varchar (255),
+    user_key int
 );
 
 CREATE TABLE IF NOT EXISTS card (
     id int primary key auto_increment,
-    content varchar (255),
-    user varchar (64),
+    content varchar (500),
     deleted boolean default false,
     section int references section(id),
-    column_key int
+    section_key int
 );
 
 CREATE TABLE IF NOT EXISTS activity (
@@ -28,11 +35,8 @@ CREATE TABLE IF NOT EXISTS activity (
     source varchar (255),
     destination varchar (255),
     card int references card(id),
+    user int references user(id),
     created_at timestamp
 );
 
-CREATE TABLE IF NOT EXISTS user (
-    id int primary key auto_increment,
-    user_id varchar (64),
-    name varchar(64)
-)
+
