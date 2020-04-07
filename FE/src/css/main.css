@@ -103,6 +103,8 @@ textarea,
 
 textarea {
   @apply box-border w-full h-24 p-4 resize-y border border-gray-300 rounded;
+  min-height: 4rem;
+  max-height: 32rem;
 }
 
 .input-btn-wrap {
@@ -140,11 +142,11 @@ textarea {
 
 .card-icon,
 .delete-btn {
-  @apply absolute top-0 mt-2;
+  @apply absolute top-0 mt-2 text-gray-600;
 }
 
 .card-icon {
-  @apply left-0 ml-2 text-gray-600;
+  @apply left-0 ml-2;
 }
 
 .delete-btn {
