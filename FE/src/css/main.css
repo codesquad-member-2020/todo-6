@@ -17,13 +17,16 @@
   @apply box-border mx-auto min-w-0;
 }
 
+h2 {
+  @apply text-xl font-bold;
+}
+
 /* header */
-.header,
-.sidemenu-header {
+.header {
   @apply flex absolute top-0 inset-x-0 items-center justify-between h-16 px-6;
 }
 
-.header {
+.main-header {
   @apply fixed z-10 bg-gray-900;
 }
 
@@ -37,13 +40,8 @@
 }
 
 /* menu button */
-.menu-btn,
-.edit-btn {
-  @apply absolute right-0;
-}
-
 .menu-btn {
-  @apply text-white;
+  @apply absolute right-0 text-white;
 }
 
 /* column */
@@ -69,30 +67,29 @@
 }
 
 .column-title-wrap {
-  @apply flex items-center mb-4;
+  @apply flex items-center justify-between mb-4;
+}
+
+.column-button-wrap {
+  @apply flex items-center;
 }
 
 .column-number {
-  @apply flex items-center justify-center rounded-full w-6 h-6 bg-gray-400 font-bold;
+  @apply flex items-center justify-center rounded-full w-6 h-6 mr-2 bg-gray-400 font-bold;
 }
 
 .column-title {
-  @apply ml-2 text-xl font-bold;
+  @apply block box-border w-4/5 pr-4;
 }
 
 textarea,
-.edit-btn,
-.delete-btn,
-.add-btn {
+button {
   @apply transition duration-200 ease-in-out;
 }
 
-.edit-btn {
-  @apply mr-4;
-}
-
 .edit-btn:hover,
-.delete-btn:hover {
+.delete-btn:hover,
+.modal .delete-btn:hover {
   @apply text-blue-500;
 }
 
@@ -102,9 +99,9 @@ textarea,
 }
 
 textarea {
-  @apply box-border w-full h-24 p-4 resize-y border border-gray-300 rounded;
+  @apply box-border block w-full h-24 p-4 resize-y border border-gray-300 rounded;
   min-height: 4rem;
-  max-height: 32rem;
+  max-height: 20rem;
 }
 
 .input-btn-wrap {
@@ -112,10 +109,18 @@ textarea {
 }
 
 .input-btn-wrap button {
-  @apply h-10 rounded font-semibold mt-2;
+  @apply rounded font-semibold mt-2 py-2;
 }
 
-.add-btn {
+.primary-btn {
+  @apply border border-blue-600 bg-blue-500 text-white;
+}
+
+.primary-btn:hover {
+  @apply border-blue-700 bg-blue-700;
+}
+
+.primary-btn.disabled:hover {
   @apply border border-blue-600 bg-blue-500 text-white;
 }
 
@@ -125,6 +130,10 @@ textarea {
 
 .cancel-btn {
   @apply bg-gray-100 border border-gray-400;
+}
+
+.cancel-btn:hover {
+  @apply bg-gray-400;
 }
 
 .full-width {
@@ -140,8 +149,7 @@ textarea {
   @apply relative box-border w-full p-2 pl-10 pr-10 mb-2 bg-white border border-gray-400 rounded;
 }
 
-.card-icon,
-.delete-btn {
+.secondary-icon {
   @apply absolute top-0 mt-2 text-gray-600;
 }
 
@@ -149,7 +157,7 @@ textarea {
   @apply left-0 ml-2;
 }
 
-.delete-btn {
+.card .delete-btn {
   @apply right-0 mr-2;
 }
 
@@ -165,14 +173,20 @@ textarea {
   @apply font-normal text-gray-600;
 }
 
+/*dimmed background*/
+.dimmed-layer {
+  @apply fixed top-0 left-0 w-full h-full z-10 opacity-50 bg-black;
+}
+
 /* sidemenu */
 .sidemenu {
   @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
-  /* right: -28rem; transition animation */
+  right: -28rem;
+  /* transition animation */
 }
 
 .sidemenu-header {
-  @apply bg-gray-200 border-b border-gray-300;
+  @apply bg-gray-200 border-b border-gray-200;
 }
 
 .sidemenu-title {
@@ -196,6 +210,45 @@ textarea {
   @apply text-blue-600;
 }
 
+/* modal */
+.modal {
+  @apply box-border z-30 fixed w-full max-w-lg bg-white border rounded;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-header {
+  @apply relative px-6 mb-6 bg-gray-200 border-b border-gray-300;
+}
+
+.modal-content {
+  @apply clear-both px-6 pb-6;
+}
+
+.modal-content::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.modal-text {
+  @apply block w-full mb-6 text-lg;
+}
+
+.modal-label {
+  @apply block font-semibold mb-2;
+}
+
+.modal-btn {
+  @apply float-left font-semibold rounded mt-4 w-24 py-2;
+}
+
+.modal-btn.cancel-btn {
+  @apply ml-2;
+}
+
+/* focus */
 button:focus,
 textarea:focus {
   @apply outline-none;
