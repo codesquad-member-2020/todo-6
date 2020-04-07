@@ -3,7 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <title>TODO</title>
   </head>
-  <body></body>
+  <body>
+    <div class="container full-width">
+      <header class="header">
+        <h1 class="font-bold text-2xl text-white">
+          <a href="">TODO</a>
+        </h1>
+        <button class="menu-btn">
+          <span class="material-icons text-white">
+            menu
+          </span>
+        </button>
+      </header>
+      <div class="column-wrap">
+        <div class="column">
+          <div>
+            <div class="number">5</div>
+            <h2>해야할 일</h2>
+            <button class="add-btn"></button>
+            <button class="delete-btn hidden"></button>
+          </div>
+          <div class="todo-input-wrap">
+            <textarea name="todo" id="todo" maxlength="500"></textarea>
+            <button class="input-add-btn"></button>
+            <button class="input-cancel-btn"></button>
+          </div>
+          <article class="card">
+            <i></i>
+            <button class="delete-btn"></button>
+            <h3>투두 리스트</h3>
+            <span>Added by <b>ed</b></span>
+          </article>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

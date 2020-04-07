@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: ['@babel/polyfill', './src/ts/main.ts', './src/scss/main.scss'],
+  entry: ['@babel/polyfill', './src/ts/main.ts', './src/css/main.css'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -18,14 +18,26 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-        exclude: /node_modules/,
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          { loader: 'css-loader' },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [require('tailwindcss'), require('autoprefixer')],
+            },
+          },
+        ],
       },
     ],
   },
   resolve: { extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'] },
-  plugins: [new MiniCssExtractPlugin({ filename: 'css/style.css' }), new HtmlWebpackPlugin({ template: './src/index.html' })],
+  plugins: [
+    new MiniCssExtractPlugin({ filename: 'css/style.css' }),
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
+  ],
   devServer: {
     host: '127.0.0.1',
     contentBase: path.join(__dirname, 'dist'),
