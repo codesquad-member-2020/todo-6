@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS user (
     id int primary key auto_increment,
     user_id varchar (64),
     name varchar(64),
-    project int references project(id),
+    project int references project(id)
 );
 
 CREATE TABLE IF NOT EXISTS section (

@@ -3,8 +3,8 @@ INTO project (id, title)
 VALUES (1, 'todo');
 
 INSERT
-INTO user (id, user_id, name, project, project_key)
-VALUES (1, 'john01', 'John Smith', 1, 0);
+INTO user (id, user_id, name, project)
+VALUES (1, 'john01', 'John Smith', 1);
 
 INSERT
 INTO section (id, name, project, project_key)
