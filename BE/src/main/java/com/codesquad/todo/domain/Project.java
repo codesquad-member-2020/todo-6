@@ -3,14 +3,16 @@ package com.codesquad.todo.domain;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.data.annotation.Id;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Project {
   @Id
   private int id;
   private String title;
-  private List<User> users;
+  private Set<User> users = new HashSet<>();
   private List<Section> sections;
   private List<Activity> activities;
 
@@ -30,11 +32,11 @@ public class Project {
     this.title = title;
   }
 
-  public List<User> getUsers() {
+  public Set<User> getUsers() {
     return users;
   }
 
-  public void setUsers(List<User> users) {
+  public void setUsers(Set<User> users) {
     this.users = users;
   }
 

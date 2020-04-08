@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS user (
     user_id varchar (64),
     name varchar(64),
     project int references project(id),
-    project_key int
 );
 
 CREATE TABLE IF NOT EXISTS section (
