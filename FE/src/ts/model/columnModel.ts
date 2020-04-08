@@ -6,10 +6,7 @@ interface IColumn {
 }
 
 export class Column implements IColumn {
-  cards: Array<Card>;
-  constructor(public title: string) {
-    this.cards = [];
-  }
+  constructor(public title: string, public cards: Array<Card> = []) {}
 
   getCard(index: number): Card {
     return this.cards[index];
@@ -30,7 +27,8 @@ export class Column implements IColumn {
   }
 
   insertCard(index: number, card: Card): void {
-    this.cards.splice(index, 0, card);
+    const { content, author } = card;
+    this.cards.splice(index, 0, new Card(content, author));
   }
 
   removeCard(index: number): void {
