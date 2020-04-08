@@ -1,8 +1,8 @@
-interface ICard {
+interface ICardModel {
   content: string;
   author: string;
 }
 
-export class Card implements ICard {
+export class CardModel implements ICardModel {
   constructor(public content: string, public author: string) {}
 }

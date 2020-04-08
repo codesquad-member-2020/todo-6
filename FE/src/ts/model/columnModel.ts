@@ -1,41 +1,41 @@
-import { Card } from './cardModel';
+import { CardModel } from './cardModel';
 
-interface IColumn {
-  cards: Array<Card>;
+interface IColumnModel {
+  cards: Array<CardModel>;
   title: string;
 }
 
-export class Column implements IColumn {
-  constructor(public title: string, public cards: Array<Card> = []) {}
+export class ColumnModel implements IColumnModel {
+  constructor(public title: string, public cards: Array<CardModel> = []) {}
 
-  getCard(index: number): Card {
+  getCardModel(index: number): CardModel {
     return this.cards[index];
   }
 
-  getCardIndex(targetCard: Card): number {
+  getCardModelIndex(targetCard: CardModel): number {
     return this.cards
       .map(card => JSON.stringify(card))
       .indexOf(JSON.stringify(targetCard));
   }
 
-  getCardsSize(): number {
+  getCardModelsSize(): number {
     return this.cards.length;
   }
 
-  addCard(content: string, author: string): void {
-    this.cards.push(new Card(content, author));
+  addCardModel(content: string, author: string): void {
+    this.cards.push(new CardModel(content, author));
   }
 
-  insertCard(index: number, card: Card): void {
+  insertCardModel(index: number, card: CardModel): void {
     const { content, author } = card;
-    this.cards.splice(index, 0, new Card(content, author));
+    this.cards.splice(index, 0, new CardModel(content, author));
   }
 
-  removeCard(index: number): void {
+  removeCardModel(index: number): void {
     this.cards.splice(index, 1);
   }
 
-  updateCard(index: number, newContent: string): void {
+  updateCardModel(index: number, newContent: string): void {
     this.cards[index].content = newContent;
   }
 }
