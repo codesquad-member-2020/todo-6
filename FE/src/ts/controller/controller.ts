@@ -1,22 +1,15 @@
 import { ColumnSetModel } from '../model/columnSetModel';
-import { ColumnView } from '../view/columnView';
+import { ColumnSetView } from '../view/columnSetView';
 
 const c = new ColumnSetModel();
+const v = new ColumnSetView();
 
-c.addColumn('해야할 일');
-c.addColumn('하는 중');
-console.log(c);
-
-c.columns[0].addCardModel('낚시', '성익');
-c.columns[1].addCardModel('쇼핑', '희수');
-console.log(c.columns);
-
-const be = {
-  beforeColumnIndex: 0,
-  targetCard: { content: '낚시', author: '성익' },
+const addColumn = (str: string) => {
+  c.addColumn(str);
+  v.addColumn(str);
+  v.render();
 };
-const af = { afterColumnIndex: 1, targetIndex: 2 };
 
-c.moveCardModel(be, af);
-console.log(c.columns[0].cards);
-console.log(c.columns[1].cards);
+addColumn('해야 할 일');
+addColumn('하는 중');
+addColumn('다 한 일');

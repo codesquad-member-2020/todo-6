@@ -29,11 +29,12 @@ const PRIMARY_BUTTON_TEXT: string = '할 일 추가';
 const CANCEL_BUTTON_TEXT: string = '취소';
 
 export class ColumnView implements IColumnView {
-  constructor(
-    public cards: Array<CardView>,
-    public title: string,
-    public cardSize: number,
-  ) {}
+  cards: Array<CardView>;
+  cardSize: number;
+  constructor(public title: string) {
+    this.cards = [];
+    this.cardSize = this.cards.length;
+  }
 
   generateCardsComponent(): string {
     return this.cards.reduce((cardsComponent, card) => {
