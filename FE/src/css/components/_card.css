@@ -1,0 +1,23 @@
+.card-wrap {
+  @apply overflow-y-scroll;
+}
+
+.card {
+  @apply relative box-border w-full p-2 pl-10 pr-10 mb-2 bg-white border border-gray-400 rounded;
+}
+
+.card-title {
+  @apply align-top mb-2;
+}
+
+.secondary-icon {
+  @apply absolute top-0 mt-2 text-gray-600;
+}
+
+.card-icon {
+  @apply left-0 ml-2;
+}
+
+.card .delete-btn {
+  @apply right-0 mr-2;
+}

@@ -9,14 +9,15 @@
     />
     <title>Todo</title>
   </head>
+
   <body>
     <div class="container full-width">
       <!-- header -->
-      <header class="header main-header">
+      <header class="header-wrap main-header">
         <h1 class="header-title">
           <a href="">Todo</a>
         </h1>
-        <button class="material-icons menu-btn icon-btn">
+        <button class="material-icons menu-btn icon-primary-btn">
           menu
         </button>
       </header>
@@ -25,8 +26,8 @@
       <!-- <div class="dimmed-layer"></div> -->
       <!--
       <div class="modal edit">
-        <div class="header modal-header">
-          <button class="delete-btn material-icons icon-btn">
+        <div class="header-wrap modal-header">
+          <button class="delete-btn icon-secondary-btn material-icons icon-primary-btn">
             close
           </button>
           <h2 class="modal-title">할 일 수정</h2>
@@ -43,8 +44,8 @@
       </div> -->
       <!-- delete modal -->
       <!-- <div class="modal delete">
-        <div class="header modal-header">
-          <button class="delete-btn material-icons icon-btn">
+        <div class="header-wrap modal-header">
+          <button class="delete-btn icon-secondary-btn material-icons icon-primary-btn">
             close
           </button>
           <h2 class="modal-title">할 일 삭제</h2>
@@ -58,9 +59,11 @@
       <!-- 메뉴용 딤드 레이어. 누르면 메뉴 꺼지게 -->
       <div id="sidemenu-dl" class="dimmed-layer hidden"></div>
       <!-- sidemenu -->
-      <div class="sidemenu sidemenu-header">
-        <div class="header">
-          <button class="material-icons sidemenu-btn icon-btn">menu</button>
+      <div class="sidemenu">
+        <div class="header-wrap sidemenu-header">
+          <button class="material-icons sidemenu-btn icon-primary-btn">
+            menu
+          </button>
           <h2 class="sidemenu-title">Activity</h2>
         </div>
         <ul class="activity-container">
@@ -89,8 +92,12 @@
               해야할 일
             </h2>
             <div class="column-button-wrap">
-              <button class="edit-btn material-icons">add</button>
-              <button class="delete-btn material-icons">close</button>
+              <button class="edit-btn icon-secondary-btn material-icons">
+                add
+              </button>
+              <button class="delete-btn icon-secondary-btn material-icons">
+                close
+              </button>
             </div>
           </div>
           <!-- input wrap -->
@@ -112,7 +119,9 @@
               <i class="card-icon material-icons secondary-icon"
                 >bookmark_border</i
               >
-              <button class="delete-btn material-icons secondary-icon">
+              <button
+                class="delete-btn icon-secondary-btn material-icons secondary-icon"
+              >
                 close
               </button>
               <h3 class="card-title">장보기</h3>

@@ -1,0 +1,36 @@
+.column-wrap {
+  @apply overflow-x-auto flex box-border h-screen max-h-screen min-w-0 pt-20 pb-4;
+}
+
+.column {
+  @apply flex-none flex flex-col relative w-full max-w-md bg-gray-200 box-border border border-gray-400 rounded p-4 mr-4;
+}
+
+.column:first-child {
+  @apply ml-4;
+}
+
+.column:last-child::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: -1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.column-title-wrap {
+  @apply flex items-center justify-between mb-4;
+}
+
+.column-button-wrap {
+  @apply flex items-center;
+}
+
+.column-number {
+  @apply flex items-center justify-center rounded-full w-6 h-6 mr-2 bg-gray-400 font-bold;
+}
+
+.column-title {
+  @apply block box-border w-4/5 pr-4;
+}
