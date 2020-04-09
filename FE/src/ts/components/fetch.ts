@@ -1,5 +1,5 @@
 import { Card } from './card';
-import { initialRender } from './eventManager';
+import { initialRender } from './renderManager';
 
 const BASE_URL = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
 
