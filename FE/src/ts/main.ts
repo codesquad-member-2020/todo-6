@@ -1,1 +1,3 @@
-import './components/fetch';
+import { fetchTodoList } from './components/fetch';
+
+fetchTodoList();

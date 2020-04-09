@@ -1,7 +1,8 @@
 import { ICON_TYPE } from '../utils/constants';
 import { _q } from '../utils/utils';
+import { columnWrapElement } from './eventManager';
 import { createTextareaElement } from './inputForm';
-import { createCardElement } from './card';
+import { createAllCardElement } from './card';
 import { Sections } from './fetch';
 
 export const COLUMN_CLASS = {
@@ -24,7 +25,7 @@ const COLUMN_ATOM = {
   title: (name: string): string => `<h2 class="${COLUMN_CLASS.title}">${name}</h2>`,
   buttons: `<div class="${COLUMN_CLASS.buttonWrap}"><button class="${COLUMN_CLASS.addButton}">${ICON_TYPE.add}</button><button class="${COLUMN_CLASS.deleteButton}">${ICON_TYPE.delete}</button></div>`,
   textarea: createTextareaElement(),
-  cards: (id: number, userName: string, cards: Array<any>): string => `<div class="${COLUMN_CLASS.cardWrap}">${createCardElement(COLUMN_CLASS.id(id), cards, userName)}</div>`,
+  cards: (id: number, userName: string, cards: Array<any>): string => `<div class="${COLUMN_CLASS.cardWrap}">${createAllCardElement(COLUMN_CLASS.id(id), cards, userName)}</div>`,
 };
 
 export const createColumnElement = ({ id, name, cards }: Sections, userName: string): string => {
@@ -33,4 +34,12 @@ export const createColumnElement = ({ id, name, cards }: Sections, userName: str
   ${COLUMN_ATOM.titleAtoms(`${COLUMN_ATOM.cardCount(cardSize)}${COLUMN_ATOM.title(name)}${COLUMN_ATOM.buttons}`)}
   ${COLUMN_ATOM.textarea}
   ${COLUMN_ATOM.cards(id, userName, cards)}</div>`;
+};
+
+export const initialRender = (sections: Array<Sections>, userName: string): void => {
+  const elementStr = sections.reduce((allElements: string, eachSection: Sections) => {
+    allElements += createColumnElement(eachSection, userName);
+    return allElements;
+  }, '');
+  columnWrapElement.innerHTML = elementStr;
 };

@@ -1,11 +1,15 @@
 import { Card } from './card';
-import { initialRender } from './renderManager';
+import { createCardElement } from './card';
+import { initialRender } from './column';
 
 const BASE_URL = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
 
 const API_URL = {
   todoList: (): string => `${BASE_URL}/api/todo`,
+  addedCard: (columnId: number): string => `${BASE_URL}/api/column/${columnId}/card`,
 };
+
+let author = '';
 
 export interface Sections {
   id: number;
@@ -14,12 +18,19 @@ export interface Sections {
 }
 
 export const fetchTodoList = async (): Promise<void> => {
-  const response = await fetch(API_URL.todoList());
+  const response = await fetch(API_URL.todoList(), { method: 'GET' });
   const todoList = await response.json();
   const { users, sections } = todoList.data;
   const userName: string = users[0].name;
-
-  initialRender(sections, userName);
+  author = userName;
+  initialRender(sections, author);
 };
 
-fetchTodoList();
+export const fetchAddedCard = async (columnId: string, contents: string): Promise<string> => {
+  const extractIdRegex: RegExp = /^[0-9]+/;
+  const filteredColumnId: number = parseInt(extractIdRegex.exec(columnId), 10);
+  const response = await fetch(API_URL.addedCard(filteredColumnId), { method: 'POST', body: JSON.stringify({ contents: contents }), redirect: 'follow' });
+  const addedCard = await response.json();
+  const { data } = addedCard;
+  return createCardElement(columnId, data, author);
+};
