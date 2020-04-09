@@ -1,6 +1,6 @@
 import { Card } from './card';
 import { createColumnElement } from './column';
-import render from './eventManager';
+import { initialRender } from './eventManager';
 
 const BASE_URL = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
 
@@ -26,7 +26,7 @@ export const fetchTodoList = async (): Promise<void> => {
     return allElements;
   }, '');
 
-  render(initColumnElement);
+  initialRender(initColumnElement);
 };
 
 fetchTodoList();

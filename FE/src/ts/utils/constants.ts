@@ -6,4 +6,5 @@ export const ICON_TYPE = {
 
 export const UTIL_CLASS = {
   hidden: 'hidden',
+  disabled: 'disabled',
 };

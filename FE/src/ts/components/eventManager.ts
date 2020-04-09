@@ -1,4 +1,4 @@
-import { _q, toggleClass } from '../utils/utils';
+import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
 import { COLUMN_CLASS } from './column';
 import { INPUT_FORM_CLASS } from './inputForm';
@@ -6,15 +6,11 @@ import { INPUT_FORM_CLASS } from './inputForm';
 const WRAPPER_CLASS: string = 'column-wrap';
 const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
 
-const render = (elementStr: string): void => {
+export const initialRender = (elementStr: string): void => {
   columnWrapElement.innerHTML = elementStr;
 };
 
-const clickHandler = (event: any) => {
-  clickColumnAddButton(event);
-};
-
-const clickColumnAddButton = (event: any) => {
+const clickColumnAddButton = (event: any): void => {
   if (event.target.className !== COLUMN_CLASS.addButton) return;
   const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
@@ -23,6 +19,20 @@ const clickColumnAddButton = (event: any) => {
   textarea.focus();
 };
 
-columnWrapElement.addEventListener('click', clickHandler);
+const toogleActivateAddButton = (event: any): void => {
+  if (event.target.id !== INPUT_FORM_CLASS.textarea) return;
+  const targetInputForm = event.target.closest(`.${INPUT_FORM_CLASS.inputWrap}`);
+  const addButton = targetInputForm.querySelector(`.${INPUT_FORM_CLASS.addButton}`);
+  event.target.value ? removeClass(UTIL_CLASS.disabled, addButton) : addClass(UTIL_CLASS.disabled, addButton);
+};
 
-export default render;
+const clickHandler = (event: any): void => {
+  clickColumnAddButton(event);
+};
+
+const inputHandler = (event: any): void => {
+  toogleActivateAddButton(event);
+};
+
+columnWrapElement.addEventListener('click', clickHandler);
+columnWrapElement.addEventListener('input', inputHandler);
