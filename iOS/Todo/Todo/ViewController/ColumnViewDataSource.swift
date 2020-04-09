@@ -11,7 +11,7 @@ class ColumnViewDataSource: NSObject, UITableViewDataSource {
     // MARK: TableView DataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.column.count
+        return self.column.cardsCount
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

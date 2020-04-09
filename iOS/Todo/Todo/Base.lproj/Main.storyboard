@@ -237,9 +237,14 @@
                             <constraint firstItem="V0t-s3-m1W" firstAttribute="top" secondItem="5pq-if-uhy" secondAttribute="bottom" id="tP8-yj-n7A"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="to1-Vs-ZeE"/>
+                        <connections>
+                            <outlet property="badgeLabel" destination="EK6-b5-v9C" id="iUg-og-lfT"/>
+                            <outlet property="titleLabel" destination="3fh-sW-EfW" id="ovB-RB-3cy"/>
+                        </connections>
                     </view>
                     <size key="freeformSize" width="400" height="834"/>
                     <connections>
+                        <outlet property="columnView" destination="b1H-K1-x9S" id="Ue8-mn-MPQ"/>
                         <outlet property="tableView" destination="V0t-s3-m1W" id="Z2t-hj-Qaf"/>
                     </connections>
                 </viewController>
