@@ -2,14 +2,14 @@ import { Card } from './card';
 import { createCardElement } from './card';
 import { initialRender } from './column';
 
-const BASE_URL = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
+const BASE_URL: string = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
 
 const API_URL = {
   todoList: (): string => `${BASE_URL}/api/todo`,
   addedCard: (columnId: number): string => `${BASE_URL}/api/column/${columnId}/card`,
 };
 
-let author = '';
+let author: string = '';
 
 export interface Sections {
   id: number;

@@ -7,8 +7,10 @@ import { fetchAddedCard } from './fetch';
 export const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
 
 const addNewCard = async (targetColumn: HTMLDivElement, cardWrap: HTMLDivElement, textarea: HTMLTextAreaElement): void => {
-  cardWrap.insertAdjacentHTML('beforeend', await fetchAddedCard(targetColumn.id, textarea.value));
+  textarea.setAttribute('disabled', true);
+  cardWrap.insertAdjacentHTML('afterbegin', await fetchAddedCard(targetColumn.id, textarea.value));
   textarea.value = '';
+  textarea.removeAttribute('disabled');
   changeCardCount(targetColumn);
 };
 
