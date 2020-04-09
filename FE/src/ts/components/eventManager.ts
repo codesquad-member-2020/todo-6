@@ -1,14 +1,15 @@
 import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS, WRAPPER_CLASS } from '../utils/constants';
-import { COLUMN_CLASS } from './column';
+import { COLUMN_CLASS, changeCardCount } from './column';
 import { INPUT_FORM_CLASS } from './inputForm';
 import { fetchAddedCard } from './fetch';
 
 export const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
 
-const clearTextarea = (textarea: HTMLTextAreaElement, button: HTMLButtonElement): void => {
+const addNewCard = async (targetColumn: HTMLDivElement, cardWrap: HTMLDivElement, textarea: HTMLTextAreaElement): void => {
+  cardWrap.insertAdjacentHTML('beforeend', await fetchAddedCard(targetColumn.id, textarea.value));
   textarea.value = '';
-  addClass(UTIL_CLASS.disabled, button);
+  changeCardCount(targetColumn);
 };
 
 const hiddenInputForm = (targetColumn: HTMLDivElement): void => {
@@ -31,13 +32,13 @@ const clickInputFormCancelButton = (event: any): void => {
   hiddenInputForm(targetColumn);
 };
 
-const clickInputFormAddButton = async (event: any): Promise => {
+const clickInputFormAddButton = async (event: any): void => {
   if (event.target.className !== INPUT_FORM_CLASS.addButton) return;
   const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   const cardWrap = targetColumn.querySelector(`.${COLUMN_CLASS.cardWrap}`);
   const textarea: HTMLTextAreaElement = targetColumn.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
-  cardWrap.insertAdjacentHTML('beforeend', await fetchAddedCard(targetColumn.id, textarea.value));
-  clearTextarea(textarea, event.target);
+  addClass(UTIL_CLASS.disabled, event.target);
+  addNewCard(targetColumn, cardWrap, textarea);
 };
 
 const toogleActivateAddButton = (event: any): void => {
