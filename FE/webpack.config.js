@@ -1,6 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const purgecss = require('@fullhuman/postcss-purgecss')({
+  content: ['./src/**/*.html'],
+  defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+});
 
 module.exports = {
   mode: 'development',
@@ -26,7 +30,12 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
-              plugins: [require('tailwindcss'), require('autoprefixer')],
+              plugins: [
+                require('postcss-import'),
+                require('tailwindcss'),
+                require('autoprefixer'),
+                // purgecss,
+              ],
             },
           },
         ],

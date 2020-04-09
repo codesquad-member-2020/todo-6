@@ -1,1 +1,1 @@
-
+import './components/fetch';

@@ -1,0 +1,29 @@
+.sidemenu {
+  @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
+  /* right: -28rem; */
+  /* transition animation */
+}
+
+.sidemenu-header {
+  @apply bg-gray-200 border-b border-gray-200;
+}
+
+.sidemenu-title {
+  @apply text-2xl;
+}
+
+.activity-container {
+  @apply overflow-y-scroll pt-16;
+}
+
+.activity-text {
+  @apply block mb-1;
+}
+
+.activity-list {
+  @apply py-4 border-b border-gray-300;
+}
+
+.activity-todo {
+  @apply text-blue-600;
+}
