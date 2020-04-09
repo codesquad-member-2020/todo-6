@@ -1,6 +1,7 @@
-import { _q, removeClass } from '../utils/utils';
+import { _q, toggleClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
 import { COLUMN_CLASS } from './column';
+import { INPUT_FORM_CLASS } from './inputForm';
 
 const WRAPPER_CLASS: string = 'column-wrap';
 const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
@@ -10,13 +11,17 @@ const render = (elementStr: string): void => {
 };
 
 const clickHandler = (event: any) => {
-  console.log(event.target.closest('.column'));
-  removeClass(UTIL_CLASS.hidden, event.target.closest('.column').children[1]);
+  clickColumnAddButton(event);
 };
 
-// const clickColumnAddButton = (event: any) => {
-//   if(event.target === )
-// }
+const clickColumnAddButton = (event: any) => {
+  if (event.target.className !== COLUMN_CLASS.addButton) return;
+  const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
+  const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
+  const textarea = inputForm.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
+  toggleClass(UTIL_CLASS.hidden, inputForm);
+  textarea.focus();
+};
 
 columnWrapElement.addEventListener('click', clickHandler);
 

@@ -1,6 +1,6 @@
 import { ICON_TYPE } from '../utils/constants';
 import { _q } from '../utils/utils';
-import createTextareaElement from './textarea';
+import { createTextareaElement } from './inputForm';
 import { createCardElement } from './card';
 import { Sections } from './fetch';
 
