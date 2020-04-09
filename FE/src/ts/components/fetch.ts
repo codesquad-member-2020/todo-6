@@ -1,5 +1,4 @@
 import { Card } from './card';
-import { createColumnElement } from './column';
 import { initialRender } from './eventManager';
 
 const BASE_URL = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
@@ -19,14 +18,8 @@ export const fetchTodoList = async (): Promise<void> => {
   const todoList = await response.json();
   const { users, sections } = todoList.data;
   const userName: string = users[0].name;
-  let initColumnElement: string = '';
 
-  initColumnElement = sections.reduce((allElements: string, eachSection: Sections) => {
-    allElements += createColumnElement(eachSection, userName);
-    return allElements;
-  }, '');
-
-  initialRender(initColumnElement);
+  initialRender(sections, userName);
 };
 
 fetchTodoList();

@@ -1,12 +1,17 @@
 import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
-import { COLUMN_CLASS } from './column';
+import { COLUMN_CLASS, createColumnElement } from './column';
 import { INPUT_FORM_CLASS } from './inputForm';
+import { Sections } from './fetch';
 
 const WRAPPER_CLASS: string = 'column-wrap';
 const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
 
-export const initialRender = (elementStr: string): void => {
+export const initialRender = (sections: Array<Sections>, userName: string): void => {
+  const elementStr = sections.reduce((allElements: string, eachSection: Sections) => {
+    allElements += createColumnElement(eachSection, userName);
+    return allElements;
+  }, '');
   columnWrapElement.innerHTML = elementStr;
 };
 
