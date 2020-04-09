@@ -12,7 +12,7 @@ struct ColumnViewModel {
     }
 }
 
-extension ColumnViewModel {
+extension ColumnViewModel: ViewModel {
     func configure(_ view: UIView) {
         guard let view = view as? ColumnView else {
             debugPrint("\(ColumnView.self)로 형변환 실패", #function)

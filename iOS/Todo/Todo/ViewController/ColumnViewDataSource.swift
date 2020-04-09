@@ -18,7 +18,7 @@ class ColumnViewDataSource: NSObject, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell", for: indexPath)
 
         let card = column.cards[indexPath.row]
-        let viewModel = CardViewModel(card: card)
+        let viewModel: ViewModel = CardViewModel(card: card)
         viewModel.configure(cell)
 
         return cell

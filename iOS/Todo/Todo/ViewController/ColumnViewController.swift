@@ -6,6 +6,7 @@ class ColumnViewController: UIViewController {
 
     @IBOutlet var columnView: ColumnView!
     var column: Column?
+    var columnViewModel: ViewModel?
 
     @IBOutlet weak var tableView: UITableView!
     var tableViewDataSource: UITableViewDataSource?
@@ -19,8 +20,8 @@ class ColumnViewController: UIViewController {
             self.tableViewDataSource = ColumnViewDataSource(column: column)
             self.tableView.dataSource = tableViewDataSource
 
-            let columnViewModel = ColumnViewModel(column: column)
-            columnViewModel.configure(columnView)
+            self.columnViewModel = ColumnViewModel(column: column)
+            columnViewModel?.configure(columnView)
         }
     }
 
