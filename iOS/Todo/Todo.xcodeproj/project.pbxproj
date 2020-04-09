@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D61C57A243F559500DE63E4 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C579243F559500DE63E4 /* CardViewModel.swift */; };
-		8D61C57C243F58CE00DE63E4 /* ColumnViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C57B243F58CE00DE63E4 /* ColumnViewDataSource.swift */; };
+		8D61C57C243F58CE00DE63E4 /* ColumnTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C57B243F58CE00DE63E4 /* ColumnTableViewDataSource.swift */; };
 		8D61C57F243F6AE200DE63E4 /* ColumnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C57E243F6AE200DE63E4 /* ColumnViewModel.swift */; };
 		8D61C581243F77FC00DE63E4 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C580243F77FC00DE63E4 /* ViewModel.swift */; };
 		8D63935F243C94C000164C3B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D63935E243C94BF00164C3B /* README.md */; };
@@ -37,7 +37,7 @@
 
 /* Begin PBXFileReference section */
 		8D61C579243F559500DE63E4 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
-		8D61C57B243F58CE00DE63E4 /* ColumnViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnViewDataSource.swift; sourceTree = "<group>"; };
+		8D61C57B243F58CE00DE63E4 /* ColumnTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnTableViewDataSource.swift; sourceTree = "<group>"; };
 		8D61C57E243F6AE200DE63E4 /* ColumnViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnViewModel.swift; sourceTree = "<group>"; };
 		8D61C580243F77FC00DE63E4 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		8D63935E243C94BF00164C3B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 			children = (
 				8D6A922B243AEDD300076665 /* MainViewController.swift */,
 				8D639360243CC54B00164C3B /* ColumnViewController.swift */,
-				8D61C57B243F58CE00DE63E4 /* ColumnViewDataSource.swift */,
+				8D61C57B243F58CE00DE63E4 /* ColumnTableViewDataSource.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -261,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D61C57F243F6AE200DE63E4 /* ColumnViewModel.swift in Sources */,
-				8D61C57C243F58CE00DE63E4 /* ColumnViewDataSource.swift in Sources */,
+				8D61C57C243F58CE00DE63E4 /* ColumnTableViewDataSource.swift in Sources */,
 				8D639367243DB8F600164C3B /* Model.swift in Sources */,
 				8D61C581243F77FC00DE63E4 /* ViewModel.swift in Sources */,
 				8D6A922C243AEDD300076665 /* MainViewController.swift in Sources */,

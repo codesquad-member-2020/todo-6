@@ -17,7 +17,7 @@ class ColumnViewController: UIViewController {
         super.viewDidLoad()
 
         if let column = column {
-            self.tableViewDataSource = ColumnViewDataSource(column: column)
+            self.tableViewDataSource = ColumnTableViewDataSource(column: column)
             self.tableView.dataSource = tableViewDataSource
 
             self.columnViewModel = ColumnViewModel(column: column)

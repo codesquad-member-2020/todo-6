@@ -1,6 +1,6 @@
 import UIKit
 
-class ColumnViewDataSource: NSObject, UITableViewDataSource {
+class ColumnTableViewDataSource: NSObject, UITableViewDataSource {
     private var column: Column
 
     init(column: Column) {
