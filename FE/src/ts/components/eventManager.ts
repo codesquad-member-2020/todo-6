@@ -1,41 +1,58 @@
 import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
-import { UTIL_CLASS } from '../utils/constants';
-import { COLUMN_CLASS, createColumnElement } from './column';
+import { UTIL_CLASS, WRAPPER_CLASS } from '../utils/constants';
+import { COLUMN_CLASS } from './column';
 import { INPUT_FORM_CLASS } from './inputForm';
-import { Sections } from './fetch';
 
-const WRAPPER_CLASS: string = 'column-wrap';
-const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
-
-export const initialRender = (sections: Array<Sections>, userName: string): void => {
-  const elementStr = sections.reduce((allElements: string, eachSection: Sections) => {
-    allElements += createColumnElement(eachSection, userName);
-    return allElements;
-  }, '');
-  columnWrapElement.innerHTML = elementStr;
-};
+export const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
 
 const clickColumnAddButton = (event: any): void => {
   if (event.target.className !== COLUMN_CLASS.addButton) return;
   const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
-  const textarea = inputForm.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
+  const textarea: HTMLTextAreaElement = inputForm.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
   toggleClass(UTIL_CLASS.hidden, inputForm);
   textarea.focus();
+};
+
+const clearTextarea = (textarea: HTMLTextAreaElement, button: HTMLButtonElement): void => {
+  textarea.value = '';
+  addClass(UTIL_CLASS.disabled, button);
+};
+
+const hiddenInputForm = (targetColumn: HTMLDivElement): void => {
+  const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
+  addClass(UTIL_CLASS.hidden, inputForm);
+};
+
+const clickInputFormCancelButton = (event: any): void => {
+  if (event.target.className !== INPUT_FORM_CLASS.cancelButton) return;
+  const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
+  hiddenInputForm(targetColumn);
+};
+
+const clickInputFormAddButton = (event: any): void => {
+  if (event.target.className !== INPUT_FORM_CLASS.addButton) return;
+  const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
+  const cardWrap = targetColumn.querySelector(`.${COLUMN_CLASS.cardWrap}`);
+  const textarea: HTMLTextAreaElement = targetColumn.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
+  clearTextarea(textarea, event.target);
+  // addNewCard(textarea.value);
 };
 
 const toogleActivateAddButton = (event: any): void => {
   if (event.target.id !== INPUT_FORM_CLASS.textarea) return;
   const targetInputForm = event.target.closest(`.${INPUT_FORM_CLASS.inputWrap}`);
-  const addButton = targetInputForm.querySelector(`.${INPUT_FORM_CLASS.addButton}`);
+  const addButton: HTMLButtonElement = targetInputForm.querySelector(`.${INPUT_FORM_CLASS.addButton}`);
   event.target.value ? removeClass(UTIL_CLASS.disabled, addButton) : addClass(UTIL_CLASS.disabled, addButton);
 };
 
-const clickHandler = (event: any): void => {
+const clickHandler = (event: Event): void => {
   clickColumnAddButton(event);
+  clickInputFormAddButton(event);
+  clickInputFormCancelButton(event);
 };
 
-const inputHandler = (event: any): void => {
+const inputHandler = (event: Event): void => {
   toogleActivateAddButton(event);
 };
 

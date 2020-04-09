@@ -1,5 +1,3 @@
-// <!--메뉴용 딤드 레이어.누르면 메뉴 꺼지게-- >
-//   <div id="sidemenu-dl" class="dimmed-layer hidden" > </div>
 //   <div class="sidemenu" >
 //     <div class="header-wrap sidemenu-header" >
 //       <button class="material-icons sidemenu-btn icon-primary-btn" >
