@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 struct CardViewModel {
     private let card: Card
@@ -13,9 +13,14 @@ struct CardViewModel {
 }
 
 extension CardViewModel {
-    func configure(_ view: CardCell) {
-        view.titleLabel.text = card.title
-        view.bodyLabel.text = card.body
-        view.authorLabel.text = authorName
+    func configure(_ view: UIView) {
+        guard let cell = view as? CardCell else {
+            debugPrint("\(CardCell.self)로 형변환 실패: \(view)", #function)
+            return
+        }
+
+        cell.titleLabel.text = card.title
+        cell.bodyLabel.text = card.body
+        cell.authorLabel.text = authorName
     }
 }

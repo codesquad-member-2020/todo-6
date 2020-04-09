@@ -12,6 +12,10 @@ struct User {
 }
 
 struct Column {
-    var items: [Card] = .init()
+    var cards: [Card] = .init()
     var title: String
+
+    var count: Int {
+        cards.count
+    }
 }
