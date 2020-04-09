@@ -2,6 +2,7 @@ package com.codesquad.todo.domain;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Embedded;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class User {
   private int id;
   private String userId;
   private String name;
-  private List<Card> cards;
+  private List<Project> project;
 
   public int getId() {
     return id;
@@ -37,11 +38,11 @@ public class User {
     this.name = name;
   }
 
-  public List<Card> getCards() {
-    return cards;
+  public List<Project> getProject() {
+    return project;
   }
 
-  public void setCards(List<Card> cards) {
-    this.cards = cards;
+  public void setProject(List<Project> project) {
+    this.project = project;
   }
 }
