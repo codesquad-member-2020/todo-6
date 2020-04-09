@@ -1,8 +1,12 @@
-import { _q } from '../utils/utils';
 import { Card } from './card';
-import createColumnElement from './column';
+import { createColumnElement } from './column';
+import render from './eventManager';
 
 const BASE_URL = 'https://576272fa-2ef9-48d0-a2c7-8ff6e25f9352.mock.pstmn.io';
+
+const API_URL = {
+  todoList: (): string => `${BASE_URL}/api/todo`,
+};
 
 export interface Sections {
   id: number;
@@ -10,16 +14,12 @@ export interface Sections {
   cards: Array<Card>;
 }
 
-const render = (columnElements: string): void => {
-  _q('.column-wrap').innerHTML = columnElements;
-};
-
-const fetchTodoList = async (): Promise<void> => {
-  const response = await fetch(`${BASE_URL}/api/todo`);
+export const fetchTodoList = async (): Promise<void> => {
+  const response = await fetch(API_URL.todoList());
   const todoList = await response.json();
-  const { id, title, users, sections } = todoList.data;
-  const userName = users[0].name;
-  let initColumnElement = '';
+  const { users, sections } = todoList.data;
+  const userName: string = users[0].name;
+  let initColumnElement: string = '';
 
   initColumnElement = sections.reduce((allElements: string, eachSection: Sections) => {
     allElements += createColumnElement(eachSection, userName);
@@ -27,7 +27,6 @@ const fetchTodoList = async (): Promise<void> => {
   }, '');
 
   render(initColumnElement);
-  console.log(id, title, name, sections);
 };
 
 fetchTodoList();

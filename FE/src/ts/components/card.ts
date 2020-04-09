@@ -6,7 +6,7 @@ export interface Card {
   deleted: boolean;
 }
 
-const CLASS_NAME = {
+export const CARD_CLASS = {
   id: (columnId: string, idNum: number): string => {
     return `${columnId}${idNum}`;
   },
@@ -19,13 +19,21 @@ const CLASS_NAME = {
 
 const AUTHOR_STRING: string = '가 추가함';
 
-export const createCardElement = (columnId: string, cardsData: Card, author: string): string => {
-  return cardsData.reduce((allCardElement: string, cardData: Card): string => {
-    const { id, contents, _ignore } = cardData;
-    allCardElement += `<article id="${CLASS_NAME.id(columnId, id)}" class="${CLASS_NAME.card}"><i class="${CLASS_NAME.icon}">${ICON_TYPE.bookmark}</i>
-    <button class="${CLASS_NAME.deleteBtn}">${ICON_TYPE.delete}</button>
-    <h3 class="${CLASS_NAME.content}">${contents}</h3>
-    <span class="${CLASS_NAME.author}"><strong>${author}</strong>${AUTHOR_STRING}</span></article>`;
+const CARD_ATOM = {
+  icon: `<i class="${CARD_CLASS.icon}">${ICON_TYPE.bookmark}</i>`,
+  deleteBtn: `<button class="${CARD_CLASS.deleteBtn}">${ICON_TYPE.delete}</button>`,
+  content: (text: string): string => `<h3 class="${CARD_CLASS.content}">${text}</h3>`,
+  author: (author: string): string => `<span class="${CARD_CLASS.author}"><strong>${author}</strong>${AUTHOR_STRING}</span></article>`,
+};
+
+export const createCardElement = (columnId: string, cardsData: Array<Card>, author: string): string => {
+  return cardsData.reduce((allCardElement: string, eachCardData: Card): string => {
+    const { id, contents } = eachCardData;
+    allCardElement += `<article id="${CARD_CLASS.id(columnId, id)}" class="${CARD_CLASS.card}">
+    ${CARD_ATOM.icon}
+    ${CARD_ATOM.deleteBtn}
+    ${CARD_ATOM.content(contents)}
+    ${CARD_ATOM.author(author)}</article>`;
     return allCardElement;
   }, '');
 };

@@ -4,7 +4,7 @@ import createTextareaElement from './textarea';
 import { createCardElement } from './card';
 import { Sections } from './fetch';
 
-const CLASS_NAME = {
+export const COLUMN_CLASS = {
   id: (idNum: number): string => {
     return `${idNum}c`;
   },
@@ -18,13 +18,19 @@ const CLASS_NAME = {
   cardWrap: 'card-wrap',
 };
 
-const createColumnElement = ({ id, name, cards }: Sections, userName: string): string => {
-  const cardSize = Object.keys(cards).length;
-  return `<div id="${CLASS_NAME.id(id)}" class="${CLASS_NAME.column}"><div class="${CLASS_NAME.titleWrap}"><div class="${CLASS_NAME.cardSize}">${cardSize}</div>
-    <h2 class="${CLASS_NAME.title}">${name}</h2><div class="${CLASS_NAME.buttonWrap}">
-    <button class="${CLASS_NAME.addButton}">${ICON_TYPE.add}</button>
-    <button class="${CLASS_NAME.deleteButton}">${ICON_TYPE.delete}</button>
-    </div></div>${createTextareaElement()}<div class="${CLASS_NAME.cardWrap}">${createCardElement(CLASS_NAME.id(id), cards, userName)}</div></div>`;
+const COLUMN_ATOM = {
+  titleAtoms: (atoms: string): string => `<div class="${COLUMN_CLASS.titleWrap}">${atoms}</div>`,
+  cardCount: (count: number): string => `<div class="${COLUMN_CLASS.cardSize}">${count}</div>`,
+  title: (name: string): string => `<h2 class="${COLUMN_CLASS.title}">${name}</h2>`,
+  buttons: `<div class="${COLUMN_CLASS.buttonWrap}"><button class="${COLUMN_CLASS.addButton}">${ICON_TYPE.add}</button><button class="${COLUMN_CLASS.deleteButton}">${ICON_TYPE.delete}</button></div>`,
+  textarea: createTextareaElement(),
+  cards: (id: number, userName: string, cards: Array<any>): string => `<div class="${COLUMN_CLASS.cardWrap}">${createCardElement(COLUMN_CLASS.id(id), cards, userName)}</div>`,
 };
 
-export default createColumnElement;
+export const createColumnElement = ({ id, name, cards }: Sections, userName: string): string => {
+  const cardSize = Object.keys(cards).length;
+  return `<div id="${COLUMN_CLASS.id(id)}" class="${COLUMN_CLASS.column}">
+  ${COLUMN_ATOM.titleAtoms(`${COLUMN_ATOM.cardCount(cardSize)}${COLUMN_ATOM.title(name)}${COLUMN_ATOM.buttons}`)}
+  ${COLUMN_ATOM.textarea}
+  ${COLUMN_ATOM.cards(id, userName, cards)}</div>`;
+};

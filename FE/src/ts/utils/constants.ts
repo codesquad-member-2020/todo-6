@@ -3,3 +3,7 @@ export const ICON_TYPE = {
   add: 'add',
   delete: 'close',
 };
+
+export const UTIL_CLASS = {
+  hidden: 'hidden',
+};
