@@ -17,7 +17,7 @@ export const CARD_CLASS = {
   author: 'card-author small-text',
 };
 
-const AUTHOR_STRING: string = '가 추가함';
+const AUTHOR_STRING: string = ' 가 추가함';
 
 const CARD_ATOM = {
   icon: `<i class="${CARD_CLASS.icon}">${ICON_TYPE.bookmark}</i>`,
