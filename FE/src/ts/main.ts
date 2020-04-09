@@ -1,1 +1,1 @@
-import './controller/controller';
+import './components/fetch';
