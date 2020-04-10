@@ -5,8 +5,8 @@ use todo;
 -- VALUES (1, 'john01', 'John Smith');
 --
 -- INSERT
--- INTO project (id, title)
--- VALUES (1, 'todo');
+-- INTO project (id, title, user, user_key)
+-- VALUES (1, 'todo', 1, 0);
 --
 -- INSERT
 -- INTO section (id, name, project, project_key)
