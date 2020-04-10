@@ -46,4 +46,11 @@ public class Project {
   public void setActivities(List<Activity> activities) {
     this.activities = activities;
   }
+
+  public Card createCardAtSection(int sectionPosition, Card card) {
+    final int createPosition = 0;
+    Section section = this.sections.get(sectionPosition);
+    section.getCards().add(createPosition, card);
+    return section.getCards().get(createPosition);
+  }
 }

@@ -45,4 +45,10 @@ public class User {
   public void setProject(List<Project> project) {
     this.project = project;
   }
+
+  public Card createCard(int sectionId, Card card) {
+    final int currentProject = 0;
+    final int sectionPosition = sectionId-1;
+    return this.project.get(currentProject).createCardAtSection(sectionPosition, card);
+  }
 }
