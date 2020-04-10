@@ -1,14 +1,14 @@
 import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
+import { fetchAddedCard, fetchdeletedCard } from './fetch';
 import { COLUMN_CLASS, changeCardCount } from './column';
 import { INPUT_FORM_CLASS, hiddenInputForm } from './inputForm';
-import { fetchAddedCard, fetchdeletedCard } from './fetch';
 import { CARD_CLASS, createCardElement } from './card';
 
 const addNewCard = async (targetColumn: HTMLDivElement, cardWrap: HTMLDivElement, textarea: HTMLTextAreaElement): void => {
   textarea.setAttribute('disabled', true);
-  // cardWrap.insertAdjacentHTML('afterbegin', await fetchAddedCard(targetColumn.id, textarea.value));
-  cardWrap.insertAdjacentHTML('afterbegin', createCardElement(targetColumn.id, { id: 999, contents: textarea.value }, '성익'));
+  cardWrap.insertAdjacentHTML('afterbegin', await fetchAddedCard(targetColumn.id, textarea.value));
+  // cardWrap.insertAdjacentHTML('afterbegin', createCardElement(targetColumn.id, { id: 999, contents: textarea.value }, '도널드 트럼프'));
   textarea.value = '';
   textarea.removeAttribute('disabled');
   changeCardCount(targetColumn);
@@ -42,8 +42,8 @@ const clickCardDeleteButton = async (event: any): void => {
   if (event.target.className !== CARD_CLASS.deleteBtn) return;
   const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   const targetCard = event.target.closest(`.${CARD_CLASS.card}`);
-  // const isDeleted = await fetchdeletedCard(targetCard.id);
-  const isDeleted = true;
+  const isDeleted = await fetchdeletedCard(targetCard.id);
+  // const isDeleted = true;
   isDeleted ? targetCard.remove() : console.error();
   changeCardCount(targetColumn);
 };

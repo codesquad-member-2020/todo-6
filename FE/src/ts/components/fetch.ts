@@ -21,9 +21,9 @@ export interface Sections {
 export const fetchTodoList = async (): Promise<void> => {
   const response = await fetch(API_URL.todoList(), { method: 'GET' });
   const todoList = await response.json();
-  const { name, project } = todoList.data;
+  const { userId, project } = todoList.data;
   const { sections } = project[0];
-  author = name;
+  author = userId;
   initialRender(sections, author);
 };
 
