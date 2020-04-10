@@ -13,7 +13,6 @@ public class Card {
   @NotEmpty
   @Length(max=500)
   private String contents;
-  private boolean deleted;
 
   public int getId() {
     return id;
@@ -29,13 +28,5 @@ public class Card {
 
   public void setContents(String contents) {
     this.contents = contents;
-  }
-
-  public boolean isDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(boolean deleted) {
-    this.deleted = deleted;
   }
 }

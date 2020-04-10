@@ -10,8 +10,8 @@ public class Activity {
   private String action;
   private String source;
   private String destination;
-  private Card card;
-  private User user;
+  private String card;
+  private String user;
 
   public int getId() {
     return id;
@@ -45,19 +45,19 @@ public class Activity {
     this.destination = destination;
   }
 
-  public Card getCard() {
+  public String getCard() {
     return card;
   }
 
-  public void setCard(Card card) {
+  public void setCard(String card) {
     this.card = card;
   }
 
-  public User getUser() {
+  public String getUser() {
     return user;
   }
 
-  public void setUser(User user) {
+  public void setUser(String user) {
     this.user = user;
   }
 }

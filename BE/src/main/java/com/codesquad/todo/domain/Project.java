@@ -12,7 +12,6 @@ public class Project {
   @Id
   private int id;
   private String title;
-  private Set<User> users = new HashSet<>();
   private List<Section> sections;
   private List<Activity> activities;
 
@@ -30,14 +29,6 @@ public class Project {
 
   public void setTitle(String title) {
     this.title = title;
-  }
-
-  public Set<User> getUsers() {
-    return users;
-  }
-
-  public void setUsers(Set<User> users) {
-    this.users = users;
   }
 
   public List<Section> getSections() {
