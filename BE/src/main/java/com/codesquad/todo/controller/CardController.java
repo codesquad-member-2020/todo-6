@@ -1,7 +1,7 @@
 package com.codesquad.todo.controller;
 
 import com.codesquad.todo.domain.*;
-import com.codesquad.todo.exeption.NotFoundException;
+import com.codesquad.todo.exeption.NotFoundDataException;
 import com.codesquad.todo.utill.ErrorMessages;
 import com.codesquad.todo.utill.VerifySection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class CardController {
   public ResponseEntity<ApiResponse> createCard(@PathVariable int columnId, @RequestBody @Valid Card card) {
     User user = userRepository.findById(1).get();
     if (!VerifySection.isValidSectionId(user, columnId)) {
-      throw new NotFoundException(ErrorMessages.NOTFOUND_COLUMN);
+      throw new NotFoundDataException(ErrorMessages.NOTFOUND_COLUMN);
     }
     Card createdCard =  user.createCard(columnId, card);
     user.recordActivity("add", createdCard, columnId);
