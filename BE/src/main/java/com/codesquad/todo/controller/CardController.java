@@ -1,6 +1,9 @@
 package com.codesquad.todo.controller;
 
 import com.codesquad.todo.domain.*;
+import com.codesquad.todo.exeption.NotFoundException;
+import com.codesquad.todo.utill.ErrorMessages;
+import com.codesquad.todo.utill.VerifySection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +21,12 @@ public class CardController {
   @PostMapping("/column/{columnId}/card")
   public ResponseEntity<ApiResponse> createCard(@PathVariable int columnId, @RequestBody @Valid Card card) {
     User user = userRepository.findById(1).get();
+    if (!VerifySection.isValidSectionId(user, columnId)) {
+      System.out.println("ddddd");
+      throw new NotFoundException(ErrorMessages.NOTFOUND_COLUMN);
+    }
     Card createdCard =  user.createCard(columnId, card);
-    user.recordActivity("add", card, columnId);
+    user.recordActivity("add", createdCard, columnId);
     userRepository.save(user);
     return new ResponseEntity<>(new ApiResponse("SUCCESS", createdCard), HttpStatus.OK);
   }

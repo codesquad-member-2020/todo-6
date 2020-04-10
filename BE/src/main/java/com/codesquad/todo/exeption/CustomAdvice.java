@@ -16,4 +16,11 @@ public class CustomAdvice {
   public ApiResponse handleError(UnauthorizedException unauthorized) {
     return unauthorized.returnErrorMessage();
   }
+
+  @ExceptionHandler(NotFoundException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ResponseBody
+  public ApiResponse handleError(NotFoundException notFound) {
+    return notFound.returnErrorMessage();
+  }
 }
