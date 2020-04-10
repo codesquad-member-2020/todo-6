@@ -17,7 +17,7 @@ export const CARD_CLASS = {
   author: 'card-author small-text',
 };
 
-const AUTHOR_STRING: string = '가 추가함';
+const AUTHOR_STRING: string = ' 가 추가함';
 
 const CARD_ATOM = {
   icon: `<i class="${CARD_CLASS.icon}">${ICON_TYPE.bookmark}</i>`,
@@ -26,14 +26,18 @@ const CARD_ATOM = {
   author: (author: string): string => `<span class="${CARD_CLASS.author}"><strong>${author}</strong>${AUTHOR_STRING}</span></article>`,
 };
 
-export const createCardElement = (columnId: string, cardsData: Array<Card>, author: string): string => {
-  return cardsData.reduce((allCardElement: string, eachCardData: Card): string => {
-    const { id, contents } = eachCardData;
-    allCardElement += `<article id="${CARD_CLASS.id(columnId, id)}" class="${CARD_CLASS.card}">
+export const createCardElement = (columnId: string, cardData: Card, author: string): string => {
+  const { id, contents } = cardData;
+  return `<article id="${CARD_CLASS.id(columnId, id)}" class="${CARD_CLASS.card}">
     ${CARD_ATOM.icon}
     ${CARD_ATOM.deleteBtn}
     ${CARD_ATOM.content(contents)}
     ${CARD_ATOM.author(author)}</article>`;
+};
+
+export const createAllCardElement = (columnId: string, cardsData: Array<Card>, author: string): string => {
+  return cardsData.reduce((allCardElement: string, eachCardData: Card): string => {
+    allCardElement += createCardElement(columnId, eachCardData, author);
     return allCardElement;
   }, '');
 };
