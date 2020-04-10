@@ -3,6 +3,8 @@ package com.codesquad.todo.domain;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
+
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Activity {
   @Id
@@ -12,6 +14,36 @@ public class Activity {
   private String destination;
   private String card;
   private String user;
+  private LocalDateTime createdAt = LocalDateTime.now();
+
+  public Activity(){}
+
+  public Activity(String action, String card, String user) {
+    this.action = action;
+    this.card = card;
+    this.source = "";
+    this.destination = "";
+    this.card = card;
+    this.user = user;
+  }
+
+  public Activity(String action,String card, String user, String source){
+    this.action = action;
+    this.card = card;
+    this.source = source;
+    this.destination = source;
+    this.card = card;
+    this.user = user;
+  }
+
+  public Activity(String action,String card, String user, String source, String destination){
+    this.action = action;
+    this.card = card;
+    this.source = source;
+    this.destination = destination;
+    this.card = card;
+    this.user = user;
+  }
 
   public int getId() {
     return id;
@@ -59,5 +91,13 @@ public class Activity {
 
   public void setUser(String user) {
     this.user = user;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 }

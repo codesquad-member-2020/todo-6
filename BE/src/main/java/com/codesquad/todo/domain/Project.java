@@ -53,4 +53,10 @@ public class Project {
     section.getCards().add(createPosition, card);
     return section.getCards().get(createPosition);
   }
+
+  public void addActivity(Card card, String user, int sectionPosition) {
+    String sectionName = this.sections.get(sectionPosition).getName();
+    Activity activity = new Activity("add", card.getContents(), user, sectionName);
+    this.activities.add(activity);
+  }
 }

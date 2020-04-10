@@ -51,4 +51,12 @@ public class User {
     final int sectionPosition = sectionId-1;
     return this.project.get(currentProject).createCardAtSection(sectionPosition, card);
   }
+
+  public void recordActivity(String action, Card card, int sectionId) {
+    final int currentProject = 0;
+    final int sectionPosition = sectionId-1;
+    if (action.equals("add")) {
+      this.project.get(currentProject).addActivity(card, this.userId, sectionPosition);
+    }
+  }
 }

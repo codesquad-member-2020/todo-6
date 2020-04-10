@@ -19,6 +19,7 @@ public class CardController {
   public ResponseEntity<ApiResponse> createCard(@PathVariable int columnId, @RequestBody @Valid Card card) {
     User user = userRepository.findById(1).get();
     Card createdCard =  user.createCard(columnId, card);
+    user.recordActivity("add", card, columnId);
     userRepository.save(user);
     return new ResponseEntity<>(new ApiResponse("SUCCESS", createdCard), HttpStatus.OK);
   }
