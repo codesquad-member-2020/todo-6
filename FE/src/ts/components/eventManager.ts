@@ -1,10 +1,8 @@
 import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
-import { UTIL_CLASS, WRAPPER_CLASS } from '../utils/constants';
+import { UTIL_CLASS } from '../utils/constants';
 import { COLUMN_CLASS, changeCardCount } from './column';
 import { INPUT_FORM_CLASS } from './inputForm';
 import { fetchAddedCard } from './fetch';
-
-export const columnWrapElement: HTMLElement = _q(`.${WRAPPER_CLASS}`);
 
 const addNewCard = async (targetColumn: HTMLDivElement, cardWrap: HTMLDivElement, textarea: HTMLTextAreaElement): void => {
   textarea.setAttribute('disabled', true);
@@ -50,15 +48,12 @@ const toogleActivateAddButton = (event: any): void => {
   event.target.value ? removeClass(UTIL_CLASS.disabled, addButton) : addClass(UTIL_CLASS.disabled, addButton);
 };
 
-const clickHandler = (event: Event): void => {
+export const clickHandler = (event: Event): void => {
   clickColumnAddButton(event);
   clickInputFormAddButton(event);
   clickInputFormCancelButton(event);
 };
 
-const inputHandler = (event: Event): void => {
+export const inputHandler = (event: Event): void => {
   toogleActivateAddButton(event);
 };
-
-columnWrapElement.addEventListener('click', clickHandler);
-columnWrapElement.addEventListener('input', inputHandler);

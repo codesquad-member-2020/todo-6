@@ -1,6 +1,5 @@
 import { ICON_TYPE } from '../utils/constants';
 import { _q } from '../utils/utils';
-import { columnWrapElement } from './eventManager';
 import { createTextareaElement } from './inputForm';
 import { createAllCardElement } from './card';
 import { Sections } from './fetch';
@@ -41,12 +40,4 @@ export const changeCardCount = (targetColumn: any): void => {
   const cardWrapElement = targetColumn.querySelector(`.${COLUMN_CLASS.cardWrap}`);
   const cardCount: number = cardWrapElement.childElementCount;
   countElement.innerHTML = cardCount;
-};
-
-export const initialRender = (sections: Array<Sections>, userName: string): void => {
-  const elementStr = sections.reduce((allElements: string, eachSection: Sections) => {
-    allElements += createColumnElement(eachSection, userName);
-    return allElements;
-  }, '');
-  columnWrapElement.innerHTML = elementStr;
 };
