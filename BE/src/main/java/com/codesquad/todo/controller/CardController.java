@@ -22,7 +22,6 @@ public class CardController {
   public ResponseEntity<ApiResponse> createCard(@PathVariable int columnId, @RequestBody @Valid Card card) {
     User user = userRepository.findById(1).get();
     if (!VerifySection.isValidSectionId(user, columnId)) {
-      System.out.println("ddddd");
       throw new NotFoundException(ErrorMessages.NOTFOUND_COLUMN);
     }
     Card createdCard =  user.createCard(columnId, card);
