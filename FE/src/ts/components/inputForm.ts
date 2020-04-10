@@ -1,4 +1,4 @@
-import { _q } from '../utils/utils';
+import { _q, addClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
 
 export const INPUT_FORM_CLASS = {
@@ -23,4 +23,9 @@ export const createTextareaElement = (): string => {
   return `<div class="${INPUT_FORM_CLASS.inputWrap} ${UTIL_CLASS.hidden}">
     ${INPUT_FORM_ATOM.textarea}
     ${INPUT_FORM_ATOM.buttons}</div>`;
+};
+
+export const hiddenInputForm = (targetColumn: HTMLDivElement): void => {
+  const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
+  addClass(UTIL_CLASS.hidden, inputForm);
 };

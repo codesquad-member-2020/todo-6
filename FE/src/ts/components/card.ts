@@ -3,7 +3,6 @@ import { ICON_TYPE } from '../utils/constants';
 export interface Card {
   id: number;
   contents: string;
-  deleted: boolean;
 }
 
 export const CARD_CLASS = {
@@ -17,7 +16,7 @@ export const CARD_CLASS = {
   author: 'card-author small-text',
 };
 
-const AUTHOR_STRING: string = ' 가 추가함';
+const AUTHOR_STRING: string = ' (이)가 추가함';
 
 const CARD_ATOM = {
   icon: `<i class="${CARD_CLASS.icon}">${ICON_TYPE.bookmark}</i>`,
