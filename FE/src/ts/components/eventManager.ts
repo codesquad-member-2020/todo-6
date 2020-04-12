@@ -45,25 +45,44 @@ let deleteTargetCard: any = null;
 let modalElement: any = null;
 let dimmedLayerElement: any = null;
 
+const setModalElementToVariable = (): void => {
+  dimmedLayerElement = _q(`.${MODAL_CLASS.dimmedLayer}`);
+  modalElement = _q(`.${MODAL_CLASS.modal}`);
+};
+
+const removeModalElement = (): void => {
+  modalElement.removeEventListener('click', modalClickHandler);
+  dimmedLayerElement.remove();
+  modalElement.remove();
+};
+
 const clickCardDeleteButton = (event: any): void => {
   if (event.target.className !== CARD_CLASS.deleteBtn) return;
   deleteTargetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   deleteTargetCard = event.target.closest(`.${CARD_CLASS.card}`);
   renderDeleteModal();
-  dimmedLayerElement = _q(`.${MODAL_CLASS.dimmedLayer}`);
-  modalElement = _q(`.${MODAL_CLASS.modal}`);
-  console.log(modalElement);
-  modalElement.addEventListener('click', clickModalCardDeleteButton);
+  setModalElementToVariable();
+  modalElement.addEventListener('click', modalClickHandler);
 };
 
 const clickModalCardDeleteButton = async (event: any): void => {
   if (event.target.className !== MODAL_CLASS.deleteBtn) return;
   const isDeleted = await fetchdeletedCard(deleteTargetCard.id);
-  // const isDeleted = true;
-  isDeleted ? deleteTargetCard.remove() : console.error();
-  changeCardCount(deleteTargetColumn);
-  dimmedLayerElement.remove();
-  modalElement.remove();
+  if (isDeleted) {
+    deleteTargetCard.remove();
+    changeCardCount(deleteTargetColumn);
+  } else console.error('Delete Error');
+  removeModalElement();
+};
+
+const clickModalCloseButton = (event: any): void => {
+  if (event.target.className !== MODAL_CLASS.closeBtn && event.target.className !== MODAL_CLASS.cancelBtn) return;
+  removeModalElement();
+};
+
+const modalClickHandler = (event: any): void => {
+  clickModalCardDeleteButton(event);
+  clickModalCloseButton(event);
 };
 
 const toogleActivateAddButton = (event: any): void => {
@@ -82,8 +101,4 @@ export const clickHandler = (event: Event): void => {
 
 export const inputHandler = (event: Event): void => {
   toogleActivateAddButton(event);
-};
-
-const modalClickHandler = (event: Event): void => {
-  clickModalCardDeleteButton(event);
 };
