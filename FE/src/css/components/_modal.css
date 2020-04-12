@@ -3,6 +3,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: 0.5s modal-fade-in;
 }
 
 .modal-header {
@@ -33,4 +34,14 @@
 
 .modal-btn.cancel-btn {
   @apply ml-2;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

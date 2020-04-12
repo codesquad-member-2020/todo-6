@@ -5,6 +5,7 @@ import { COLUMN_CLASS, changeCardCount } from './column';
 import { INPUT_FORM_CLASS, hideInputForm } from './inputForm';
 import { CARD_CLASS, createCardElement } from './card';
 import { renderDeleteModal } from './container';
+import { MODAL_CLASS } from './modal';
 
 const addNewCard = async (targetColumn: HTMLDivElement, cardWrap: HTMLDivElement, textarea: HTMLTextAreaElement): void => {
   textarea.setAttribute('disabled', true);
@@ -39,17 +40,30 @@ const clickInputFormAddButton = async (event: any): void => {
   addNewCard(targetColumn, cardWrap, textarea);
 };
 
-let deleteTargetCard = null;
+let deleteTargetColumn: any = null;
+let deleteTargetCard: any = null;
+let modalElement: any = null;
+let dimmedLayerElement: any = null;
 
-const clickCardDeleteButton = async (event: any): void => {
+const clickCardDeleteButton = (event: any): void => {
   if (event.target.className !== CARD_CLASS.deleteBtn) return;
-  const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
+  deleteTargetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   deleteTargetCard = event.target.closest(`.${CARD_CLASS.card}`);
+  renderDeleteModal();
+  dimmedLayerElement = _q(`.${MODAL_CLASS.dimmedLayer}`);
+  modalElement = _q(`.${MODAL_CLASS.modal}`);
+  console.log(modalElement);
+  modalElement.addEventListener('click', clickModalCardDeleteButton);
+};
+
+const clickModalCardDeleteButton = async (event: any): void => {
+  if (event.target.className !== MODAL_CLASS.deleteBtn) return;
   const isDeleted = await fetchdeletedCard(deleteTargetCard.id);
   // const isDeleted = true;
-  renderDeleteModal();
   isDeleted ? deleteTargetCard.remove() : console.error();
-  changeCardCount(targetColumn);
+  changeCardCount(deleteTargetColumn);
+  dimmedLayerElement.remove();
+  modalElement.remove();
 };
 
 const toogleActivateAddButton = (event: any): void => {
@@ -68,4 +82,8 @@ export const clickHandler = (event: Event): void => {
 
 export const inputHandler = (event: Event): void => {
   toogleActivateAddButton(event);
+};
+
+const modalClickHandler = (event: Event): void => {
+  clickModalCardDeleteButton(event);
 };

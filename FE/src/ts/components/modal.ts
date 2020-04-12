@@ -1,41 +1,9 @@
-//     <!-- < div class="dimmed-layer" > </div> -->
-//       < !--
-//       < div class="modal edit" >
-//   <div class="header-wrap modal-header" >
-//     <button class="delete-btn icon-secondary-btn material-icons icon-primary-btn" >
-//       close
-//       < /button>
-//       < h2 class="modal-title" > 할 일 수정 < /h2>
-//         < /div>
-//         < div class="modal-content" >
-//           <label class="modal-label" for= "edit-textarea" > 할 일 < /label>
-//             < textarea
-//             name = "edit-textarea"
-//             id = "edit-textarea"
-// maxlength = "500"
-//   > </textarea>
-//   < button class="modal-btn primary-btn" > 수정하기 < /button>
-//     < /div>
-//     < /div> -->
-//     < !-- delete modal-- >
-//       <!-- < div class="modal delete" >
-//         <div class="header-wrap modal-header" >
-//           <button class="delete-btn icon-secondary-btn material-icons icon-primary-btn" >
-//             close
-//             < /button>
-//             < h2 class="modal-title" > 할 일 삭제 < /h2>
-//               < /div>
-//               < div class="modal-content" >
-//                 <span class="modal-text" > 선택한 할 일 카드를 삭제하시겠어요 ? </span>
-//                   < button class="modal-btn primary-btn" > 삭제하기 < /button>
-//                     < button class="modal-btn cancel-btn" > 취소 < /button>
-//                       < /div>
-//                       < /div> -->
-
+import { _q } from '../utils/utils';
 import { ICON_TYPE } from '../utils/constants';
 
 export const MODAL_CLASS = {
   dimmedLayer: 'dimmed-layer',
+  modal: 'modal',
   edit: 'modal edit',
   delete: 'modal delete',
   header: 'header-wrap modal-header',
@@ -45,7 +13,8 @@ export const MODAL_CLASS = {
   label: 'modal-label',
   textarea: 'edit-textarea',
   text: 'modal-text',
-  primaryBtn: 'modal-btn primary-btn',
+  deleteBtn: 'modal-btn primary-btn delete-card',
+  editBtn: `modal-btn primary-btn edit-card`,
   cancelBtn: 'modal-btn cancel-btn',
 };
 
@@ -69,16 +38,21 @@ const MODAL_ATOM = {
   deleteTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.deleteTitle}</h2>`,
   deleteText: `<span class="${MODAL_CLASS.text}">${MODAL_STRING.deleteText}</span>`,
   editLabel: `<label class="${MODAL_CLASS.label}" for="${MODAL_CLASS.textarea}">${MODAL_STRING.editLabel}</label>`,
-  editTextarea: `<textarea name="${MODAL_CLASS.textarea}" id="${MODAL_CLASS.textarea}" maxlength="${TEXTAREA_MAX_LENGTH}"></textarea>`,
+  editTextarea: (value: string): string => `<textarea name="${MODAL_CLASS.textarea}" id="${MODAL_CLASS.textarea}" maxlength="${TEXTAREA_MAX_LENGTH}">${value}</textarea>`,
   closeBtn: `<button class="${MODAL_CLASS.closeBtn}">${ICON_TYPE.delete}</button>`,
-  deleteBtn: `<button class="${MODAL_CLASS.primaryBtn}">${MODAL_STRING.deleteBtn}</button>`,
-  editBtn: `<button class="${MODAL_CLASS.primaryBtn}">${MODAL_STRING.editBtn}</button>`,
+  deleteBtn: `<button class="${MODAL_CLASS.deleteBtn}">${MODAL_STRING.deleteBtn}</button>`,
+  editBtn: `<button class="${MODAL_CLASS.editBtn}">${MODAL_STRING.editBtn}</button>`,
   cancelBtn: `<button class="${MODAL_CLASS.cancelBtn}">${MODAL_STRING.cancelBtn}</button>`,
 };
 
-export const createEditModalComponent = () => {};
+export const createEditModalElement = (textAreaValue: string): string => {
+  return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.edit}">
+  ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.editTitle}`)}
+  ${MODAL_ATOM.content(`${MODAL_ATOM.editLabel}${MODAL_ATOM.editTextarea(textAreaValue)}${MODAL_ATOM.editBtn}`)}
+  </div>`;
+};
 
-export const createDeleteModalComponent = (): string => {
+export const createDeleteModalElement = (): string => {
   return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.delete}">
   ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.deleteTitle}`)}
   ${MODAL_ATOM.content(`${MODAL_ATOM.deleteText}${MODAL_ATOM.deleteBtn}${MODAL_ATOM.cancelBtn}`)}
