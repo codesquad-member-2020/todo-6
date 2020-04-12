@@ -25,7 +25,7 @@ export const createTextareaElement = (): string => {
     ${INPUT_FORM_ATOM.buttons}</div>`;
 };
 
-export const hiddenInputForm = (targetColumn: HTMLDivElement): void => {
+export const hideInputForm = (targetColumn: HTMLDivElement): void => {
   const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
   addClass(UTIL_CLASS.hidden, inputForm);
 };

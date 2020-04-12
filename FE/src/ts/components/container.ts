@@ -1,5 +1,6 @@
 import { _q } from '../utils/utils';
 import { createColumnElement } from './column';
+import { createDeleteModalComponent } from './modal';
 import { Sections } from './fetch';
 
 const WRAPPER_CLASS: string = 'column-wrap';
@@ -12,4 +13,8 @@ export const initialRender = (sections: Array<Sections>, userName: string): void
     return allElements;
   }, '');
   columnWrapElement.innerHTML = elementStr;
+};
+
+export const renderDeleteModal = (): void => {
+  columnWrapElement.insertAdjacentHTML('afterbegin', createDeleteModalComponent());
 };

@@ -2,8 +2,9 @@ import { _q, toggleClass, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
 import { fetchAddedCard, fetchdeletedCard } from './fetch';
 import { COLUMN_CLASS, changeCardCount } from './column';
-import { INPUT_FORM_CLASS, hiddenInputForm } from './inputForm';
+import { INPUT_FORM_CLASS, hideInputForm } from './inputForm';
 import { CARD_CLASS, createCardElement } from './card';
+import { renderDeleteModal } from './container';
 
 const addNewCard = async (targetColumn: HTMLDivElement, cardWrap: HTMLDivElement, textarea: HTMLTextAreaElement): void => {
   textarea.setAttribute('disabled', true);
@@ -26,7 +27,7 @@ const clickColumnAddButton = (event: any): void => {
 const clickInputFormCancelButton = (event: any): void => {
   if (event.target.className !== INPUT_FORM_CLASS.cancelButton) return;
   const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
-  hiddenInputForm(targetColumn);
+  hideInputForm(targetColumn);
 };
 
 const clickInputFormAddButton = async (event: any): void => {
@@ -38,13 +39,16 @@ const clickInputFormAddButton = async (event: any): void => {
   addNewCard(targetColumn, cardWrap, textarea);
 };
 
+let deleteTargetCard = null;
+
 const clickCardDeleteButton = async (event: any): void => {
   if (event.target.className !== CARD_CLASS.deleteBtn) return;
   const targetColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
-  const targetCard = event.target.closest(`.${CARD_CLASS.card}`);
-  const isDeleted = await fetchdeletedCard(targetCard.id);
+  deleteTargetCard = event.target.closest(`.${CARD_CLASS.card}`);
+  const isDeleted = await fetchdeletedCard(deleteTargetCard.id);
   // const isDeleted = true;
-  isDeleted ? targetCard.remove() : console.error();
+  renderDeleteModal();
+  isDeleted ? deleteTargetCard.remove() : console.error();
   changeCardCount(targetColumn);
 };
 

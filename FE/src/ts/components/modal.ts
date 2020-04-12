@@ -36,8 +36,8 @@ import { ICON_TYPE } from '../utils/constants';
 
 export const MODAL_CLASS = {
   dimmedLayer: 'dimmed-layer',
-  edit: 'modal-edit',
-  delete: 'modal-delete',
+  edit: 'modal edit',
+  delete: 'modal delete',
   header: 'header-wrap modal-header',
   closeBtn: 'delete-btn icon-secondary-btn material-icons icon-primary-btn',
   title: 'modal-title',
@@ -62,8 +62,9 @@ const MODAL_STRING = {
 const TEXTAREA_MAX_LENGTH: number = 500;
 
 const MODAL_ATOM = {
-  dimmedLayer: `<div class="${MODAL_CLASS.dimmedLayer}"> /div>`,
+  dimmedLayer: `<div class="${MODAL_CLASS.dimmedLayer}"></div>`,
   header: (atoms: string): string => `<div class="${MODAL_CLASS.header}">${atoms}</div>`,
+  content: (atoms: string): string => `<div class="${MODAL_CLASS.content}">${atoms}</div>`,
   editTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.editTitle}</h2>`,
   deleteTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.deleteTitle}</h2>`,
   deleteText: `<span class="${MODAL_CLASS.text}">${MODAL_STRING.deleteText}</span>`,
@@ -75,6 +76,11 @@ const MODAL_ATOM = {
   cancelBtn: `<button class="${MODAL_CLASS.cancelBtn}">${MODAL_STRING.cancelBtn}</button>`,
 };
 
-const createDeleteModalComponent = () => {};
+export const createEditModalComponent = () => {};
 
-const createEditModalComponent = () => {};
+export const createDeleteModalComponent = (): string => {
+  return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.delete}">
+  ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.deleteTitle}`)}
+  ${MODAL_ATOM.content(`${MODAL_ATOM.deleteText}${MODAL_ATOM.deleteBtn}${MODAL_ATOM.cancelBtn}`)}
+  </div>`;
+};
