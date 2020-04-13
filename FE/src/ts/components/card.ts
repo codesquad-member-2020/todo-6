@@ -1,5 +1,5 @@
-import { ICON_TYPE } from '../utils/constants';
-import { HTML_ELEMENT } from '../utils/htmlElement';
+import { ICON_TYPE, DATA_ATTRIBUTE } from '../utils/constants';
+import htmlElements from '../utils/htmlElement';
 import { renderDeleteModal } from './container';
 import { columnElement } from './column';
 import { modalElement, setModalElement } from './modal';
@@ -14,9 +14,6 @@ export interface Card {
 }
 
 export const CARD_CLASS = {
-  id: (columnId: string, idNum: number): string => {
-    return `${columnId}${idNum}`;
-  },
   card: 'card',
   icon: 'card-icon material-icons secondary-icon',
   deleteBtn: 'delete-btn icon-secondary-btn material-icons secondary-icon',
@@ -27,25 +24,26 @@ export const CARD_CLASS = {
 const AUTHOR_STRING: string = ' (이)가 추가함';
 
 const CARD_ATOM = {
-  icon: HTML_ELEMENT.icon(CARD_CLASS.icon, ICON_TYPE.bookmark),
-  deleteBtn: HTML_ELEMENT.button(CARD_CLASS.deleteBtn, ICON_TYPE.delete),
-  content: (text: string): string => HTML_ELEMENT.h3(CARD_CLASS.content, text),
-  author: (author: string): string => HTML_ELEMENT.span(CARD_CLASS.author, HTML_ELEMENT.strong(author), AUTHOR_STRING),
+  icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.bookmark),
+  deleteBtn: htmlElements.button(CARD_CLASS.deleteBtn, ICON_TYPE.delete),
+  content: (text: string): string => htmlElements.h3(CARD_CLASS.content, text),
+  author: (author: string): string => htmlElements.span(CARD_CLASS.author, htmlElements.strong(author), AUTHOR_STRING),
 };
+
+export const getCardId = (targetCard: any): any => targetCard.dataset.cardId;
 
 export const cardElement = (event: any): any => event.target.closest(`.${CARD_CLASS.card}`);
 
-export const templateCardElement = (columnId: string, cardData: Card, author: string): string => {
+export const templateCardElement = (columnId: number, cardData: Card, author: string): string => {
   const { id, contents } = cardData;
-  console.log(id, contents);
-  return `<article id="${CARD_CLASS.id(columnId, id)}" class="${CARD_CLASS.card}">
+  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", class="${CARD_CLASS.card}">
     ${CARD_ATOM.icon}
     ${CARD_ATOM.deleteBtn}
     ${CARD_ATOM.content(contents)}
     ${CARD_ATOM.author(author)}</article>`;
 };
 
-export const templateAllCardElement = (columnId: string, cardsData: Array<Card>, author: string): string => {
+export const templateAllCardElement = (columnId: number, cardsData: Array<Card>, author: string): string => {
   return cardsData.reduce((allCardElement: string, eachCardData: Card): string => {
     allCardElement += templateCardElement(columnId, eachCardData, author);
     return allCardElement;

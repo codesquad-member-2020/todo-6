@@ -1,7 +1,9 @@
 import { _q } from '../utils/utils';
 import { ICON_TYPE } from '../utils/constants';
+import htmlElements from '../utils/htmlElement';
 import { fetchDeletedCard } from './fetch';
 import { changeCardCount } from './column';
+import { getCardId } from './card';
 
 export const MODAL_CLASS = {
   dimmedLayer: 'dimmed-layer',
@@ -33,18 +35,24 @@ const MODAL_STRING = {
 const TEXTAREA_MAX_LENGTH: number = 500;
 
 const MODAL_ATOM = {
-  dimmedLayer: `<div class="${MODAL_CLASS.dimmedLayer}"></div>`,
-  header: (atoms: string): string => `<div class="${MODAL_CLASS.header}">${atoms}</div>`,
-  content: (atoms: string): string => `<div class="${MODAL_CLASS.content}">${atoms}</div>`,
-  editTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.editTitle}</h2>`,
-  deleteTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.deleteTitle}</h2>`,
-  deleteText: `<span class="${MODAL_CLASS.text}">${MODAL_STRING.deleteText}</span>`,
-  editLabel: `<label class="${MODAL_CLASS.label}" for="${MODAL_CLASS.textarea}">${MODAL_STRING.editLabel}</label>`,
-  editTextarea: (value: string): string => `<textarea name="${MODAL_CLASS.textarea}" id="${MODAL_CLASS.textarea}" maxlength="${TEXTAREA_MAX_LENGTH}">${value}</textarea>`,
-  closeBtn: `<button class="${MODAL_CLASS.closeBtn}">${ICON_TYPE.delete}</button>`,
-  deleteBtn: `<button class="${MODAL_CLASS.deleteBtn}">${MODAL_STRING.deleteBtn}</button>`,
-  editBtn: `<button class="${MODAL_CLASS.editBtn}">${MODAL_STRING.editBtn}</button>`,
-  cancelBtn: `<button class="${MODAL_CLASS.cancelBtn}">${MODAL_STRING.cancelBtn}</button>`,
+  dimmedLayer: htmlElements.div(MODAL_CLASS.dimmedLayer),
+  header: (atoms: string): string => htmlElements.div(MODAL_CLASS.header, atoms),
+  content: (atoms: string): string => htmlElements.div(MODAL_CLASS.content, atoms),
+  editTitle: htmlElements.h2(MODAL_CLASS.title, MODAL_STRING.editTitle),
+  deleteTitle: htmlElements.h2(MODAL_CLASS.title, MODAL_STRING.deleteTitle),
+  deleteText: htmlElements.span(MODAL_CLASS.text, MODAL_STRING.deleteText),
+  editLabel: htmlElements.label(MODAL_CLASS.label, MODAL_CLASS.textarea, MODAL_STRING.editLabel),
+  editTextarea: (value: string): string =>
+    htmlElements.textarea({
+      id: MODAL_CLASS.textarea,
+      maxLength: TEXTAREA_MAX_LENGTH,
+      placeholder: '',
+      value: value,
+    }),
+  closeBtn: htmlElements.button(MODAL_CLASS.closeBtn, ICON_TYPE.delete),
+  deleteBtn: htmlElements.button(MODAL_CLASS.deleteBtn, MODAL_STRING.deleteBtn),
+  editBtn: htmlElements.button(MODAL_CLASS.editBtn, MODAL_STRING.editBtn),
+  cancelBtn: htmlElements.button(MODAL_CLASS.cancelBtn, MODAL_STRING.cancelBtn),
 };
 
 export const modalElement: any = {
@@ -83,7 +91,7 @@ const removeModalElement = (): void => {
 
 const clickModalCardDeleteButton = async (event: any): void => {
   if (event.target.className !== MODAL_CLASS.deleteBtn) return;
-  const isDeleted = await fetchDeletedCard(modalElement.targetCard.id);
+  const isDeleted = await fetchDeletedCard(getCardId(modalElement.targetCard));
   if (isDeleted) {
     modalElement.targetCard.remove();
     changeCardCount(modalElement.targetColumn);

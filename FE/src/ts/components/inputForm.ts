@@ -1,5 +1,6 @@
 import { _q, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
+import htmlElements from '../utils/htmlElement';
 import { columnElement, cardWrapElement, addNewCard } from './column';
 
 export const INPUT_FORM_CLASS = {
@@ -16,8 +17,12 @@ const PRIMARY_BUTTON_TEXT: string = '할 일 추가';
 const CANCEL_BUTTON_TEXT: string = '취소';
 
 const INPUT_FORM_ATOM = {
-  textarea: `<textarea name="${INPUT_FORM_CLASS.textarea}" id="${INPUT_FORM_CLASS.textarea}" maxlength="${TEXTAREA_MAX_LENGTH}" placeholder="${TEXTAREA_PLACEHOLDER}"></textarea>`,
-  buttons: `<div class="${INPUT_FORM_CLASS.inputButtonWrap}"><button class="${INPUT_FORM_CLASS.addButton} ${UTIL_CLASS.disabled}">${PRIMARY_BUTTON_TEXT}</button><button class="${INPUT_FORM_CLASS.cancelButton}">${CANCEL_BUTTON_TEXT}</button></div>`,
+  textarea: htmlElements.textarea({ id: INPUT_FORM_CLASS.textarea, maxLength: TEXTAREA_MAX_LENGTH, placeholder: TEXTAREA_PLACEHOLDER, value: '' }),
+  buttons: htmlElements.div(
+    INPUT_FORM_CLASS.inputButtonWrap,
+    htmlElements.button(`${INPUT_FORM_CLASS.addButton} ${UTIL_CLASS.disabled}`, PRIMARY_BUTTON_TEXT),
+    htmlElements.button(INPUT_FORM_CLASS.cancelButton, CANCEL_BUTTON_TEXT),
+  ),
 };
 
 export const inputFormElement = (parentElement: any): any => parentElement.querySelector(`.${INPUT_FORM_CLASS.inputForm}`);
