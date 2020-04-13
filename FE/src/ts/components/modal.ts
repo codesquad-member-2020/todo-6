@@ -1,5 +1,7 @@
 import { _q } from '../utils/utils';
 import { ICON_TYPE } from '../utils/constants';
+import { fetchDeletedCard } from './fetch';
+import { changeCardCount } from './column';
 
 export const MODAL_CLASS = {
   dimmedLayer: 'dimmed-layer',
@@ -45,16 +47,56 @@ const MODAL_ATOM = {
   cancelBtn: `<button class="${MODAL_CLASS.cancelBtn}">${MODAL_STRING.cancelBtn}</button>`,
 };
 
-export const createEditModalElement = (textAreaValue: string): string => {
+export const modalElement: any = {
+  targetCard: null,
+  targetColumn: null,
+  modal: null,
+  dimmedLayer: null,
+  textarea: null,
+};
+
+export const templateEditModalElement = (textAreaValue: string): string => {
   return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.edit}">
   ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.editTitle}`)}
   ${MODAL_ATOM.content(`${MODAL_ATOM.editLabel}${MODAL_ATOM.editTextarea(textAreaValue)}${MODAL_ATOM.editBtn}`)}
   </div>`;
 };
 
-export const createDeleteModalElement = (): string => {
+export const templateDeleteModalElement = (): string => {
   return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.delete}">
   ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.deleteTitle}`)}
   ${MODAL_ATOM.content(`${MODAL_ATOM.deleteText}${MODAL_ATOM.deleteBtn}${MODAL_ATOM.cancelBtn}`)}
   </div>`;
+};
+
+export const setModalElement = (): void => {
+  modalElement.dimmedLayer = _q(`.${MODAL_CLASS.dimmedLayer}`);
+  modalElement.modal = _q(`.${MODAL_CLASS.modal}`);
+  modalElement.modal.addEventListener('click', modalClickHandler);
+};
+
+const removeModalElement = (): void => {
+  modalElement.modal.removeEventListener('click', modalClickHandler);
+  modalElement.dimmedLayer.remove();
+  modalElement.modal.remove();
+};
+
+const clickModalCardDeleteButton = async (event: any): void => {
+  if (event.target.className !== MODAL_CLASS.deleteBtn) return;
+  const isDeleted = await fetchDeletedCard(modalElement.targetCard.id);
+  if (isDeleted) {
+    modalElement.targetCard.remove();
+    changeCardCount(modalElement.targetColumn);
+  } else console.error('Delete Error');
+  removeModalElement();
+};
+
+const clickModalCloseButton = (event: any): void => {
+  if (event.target.className !== MODAL_CLASS.closeBtn && event.target.className !== MODAL_CLASS.cancelBtn) return;
+  removeModalElement();
+};
+
+const modalClickHandler = (event: any): void => {
+  clickModalCardDeleteButton(event);
+  clickModalCloseButton(event);
 };
