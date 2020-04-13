@@ -19,6 +19,6 @@ export const renderDeleteModal = (): void => {
   containerElement.insertAdjacentHTML('beforebegin', templateDeleteModalElement());
 };
 
-export const renderEditModal = (): void => {
-  // containerElement.insertAdjacentHTML('beforebegin', templateEditModalElement(value));
+export const renderEditModal = (value: string): void => {
+  containerElement.insertAdjacentHTML('beforebegin', templateEditModalElement(value));
 };

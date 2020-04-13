@@ -27,14 +27,14 @@ export const fetchTodoList = async (): Promise<void> => {
   initialRender(sections, author.userId);
 };
 
-export const createCard = async (columnId: string, contents: string): Promise<string> => {
+export const createCard = async (columnId: number, contents: string): Promise<string> => {
   const response = await fetch(API_URL.addedCard(columnId), { method: 'POST', body: JSON.stringify({ contents: contents }), redirect: 'follow' });
   const addedCard = await response.json();
   const { data } = addedCard;
   return templateCardElement(columnId, data, author.userId);
 };
 
-export const fetchDeletedCard = async (cardId: string): Promise<boolean> => {
+export const fetchDeletedCard = async (cardId: number): Promise<boolean> => {
   const response = await fetch(API_URL.deletedCard(cardId), { method: 'DELETE', redirect: 'follow' });
   return response.ok;
 };

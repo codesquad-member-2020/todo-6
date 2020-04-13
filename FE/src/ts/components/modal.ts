@@ -58,9 +58,9 @@ const MODAL_ATOM = {
 export const modalElement: any = {
   targetCard: null,
   targetColumn: null,
+  targetCardContent: null,
   modal: null,
   dimmedLayer: null,
-  textarea: null,
 };
 
 export const templateEditModalElement = (textAreaValue: string): string => {
