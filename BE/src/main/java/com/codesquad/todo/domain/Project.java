@@ -12,6 +12,7 @@ public class Project {
   private String name;
   private List<Section> sections;
   private List<Activity> activities;
+  private List<User> users;
 
   public void setId(Long id) {
     this.id = id;
