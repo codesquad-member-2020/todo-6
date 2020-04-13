@@ -1,8 +1,10 @@
-import { _q, addClass } from '../utils/utils';
+import { _q, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
+import htmlElements from '../utils/htmlElement';
+import { columnElement, cardWrapElement, addNewCard } from './column';
 
 export const INPUT_FORM_CLASS = {
-  inputWrap: 'todo-input-wrap',
+  inputForm: 'todo-input-wrap',
   textarea: 'todo-textarea',
   inputButtonWrap: 'input-btn-wrap',
   addButton: 'primary-btn',
@@ -15,17 +17,53 @@ const PRIMARY_BUTTON_TEXT: string = '할 일 추가';
 const CANCEL_BUTTON_TEXT: string = '취소';
 
 const INPUT_FORM_ATOM = {
-  textarea: `<textarea name="${INPUT_FORM_CLASS.textarea}" id="${INPUT_FORM_CLASS.textarea}" maxlength="${TEXTAREA_MAX_LENGTH}" placeholder="${TEXTAREA_PLACEHOLDER}"></textarea>`,
-  buttons: `<div class="${INPUT_FORM_CLASS.inputButtonWrap}"><button class="${INPUT_FORM_CLASS.addButton} ${UTIL_CLASS.disabled}">${PRIMARY_BUTTON_TEXT}</button><button class="${INPUT_FORM_CLASS.cancelButton}">${CANCEL_BUTTON_TEXT}</button></div>`,
+  textarea: htmlElements.textarea({ id: INPUT_FORM_CLASS.textarea, maxLength: TEXTAREA_MAX_LENGTH, placeholder: TEXTAREA_PLACEHOLDER, value: '' }),
+  buttons: htmlElements.div(
+    INPUT_FORM_CLASS.inputButtonWrap,
+    htmlElements.button(`${INPUT_FORM_CLASS.addButton} ${UTIL_CLASS.disabled}`, PRIMARY_BUTTON_TEXT),
+    htmlElements.button(INPUT_FORM_CLASS.cancelButton, CANCEL_BUTTON_TEXT),
+  ),
 };
 
-export const createTextareaElement = (): string => {
-  return `<div class="${INPUT_FORM_CLASS.inputWrap} ${UTIL_CLASS.hidden}">
+export const inputFormElement = (parentElement: any): any => parentElement.querySelector(`.${INPUT_FORM_CLASS.inputForm}`);
+
+export const textareaElement = (parentElement: any): HTMLTextAreaElement => parentElement.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
+
+export const templateInputFormElement = (): string => {
+  return `<div class="${INPUT_FORM_CLASS.inputForm} ${UTIL_CLASS.hidden}">
     ${INPUT_FORM_ATOM.textarea}
     ${INPUT_FORM_ATOM.buttons}</div>`;
 };
 
-export const hiddenInputForm = (targetColumn: HTMLDivElement): void => {
-  const inputForm = targetColumn.querySelector(`.${INPUT_FORM_CLASS.inputWrap}`);
-  addClass(UTIL_CLASS.hidden, inputForm);
+const hideInputForm = (targetColumn: HTMLDivElement): void => {
+  addClass(UTIL_CLASS.hidden, inputFormElement(targetColumn));
+};
+
+const clickInputFormAddButton = async (event: any): void => {
+  if (event.target.className !== INPUT_FORM_CLASS.addButton) return;
+  const targetColumn = columnElement(event);
+  addClass(UTIL_CLASS.disabled, event.target);
+  addNewCard(targetColumn, cardWrapElement(targetColumn), textareaElement(targetColumn));
+};
+
+const clickInputFormCancelButton = (event: any): void => {
+  if (event.target.className !== INPUT_FORM_CLASS.cancelButton) return;
+  const targetColumn = columnElement(event);
+  hideInputForm(targetColumn);
+};
+
+const toogleActivateAddButton = (event: any): void => {
+  if (event.target.id !== INPUT_FORM_CLASS.textarea) return;
+  const targetInputForm = event.target.closest(`.${INPUT_FORM_CLASS.inputForm}`);
+  const addButton: HTMLButtonElement = targetInputForm.querySelector(`.${INPUT_FORM_CLASS.addButton}`);
+  event.target.value ? removeClass(UTIL_CLASS.disabled, addButton) : addClass(UTIL_CLASS.disabled, addButton);
+};
+
+export const inputFormClickHandler = (event: Event): void => {
+  clickInputFormAddButton(event);
+  clickInputFormCancelButton(event);
+};
+
+export const inputFormInputHandler = (event: Event): void => {
+  toogleActivateAddButton(event);
 };

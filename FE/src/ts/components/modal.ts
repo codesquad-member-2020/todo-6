@@ -1,43 +1,15 @@
-//     <!-- < div class="dimmed-layer" > </div> -->
-//       < !--
-//       < div class="modal edit" >
-//   <div class="header-wrap modal-header" >
-//     <button class="delete-btn icon-secondary-btn material-icons icon-primary-btn" >
-//       close
-//       < /button>
-//       < h2 class="modal-title" > 할 일 수정 < /h2>
-//         < /div>
-//         < div class="modal-content" >
-//           <label class="modal-label" for= "edit-textarea" > 할 일 < /label>
-//             < textarea
-//             name = "edit-textarea"
-//             id = "edit-textarea"
-// maxlength = "500"
-//   > </textarea>
-//   < button class="modal-btn primary-btn" > 수정하기 < /button>
-//     < /div>
-//     < /div> -->
-//     < !-- delete modal-- >
-//       <!-- < div class="modal delete" >
-//         <div class="header-wrap modal-header" >
-//           <button class="delete-btn icon-secondary-btn material-icons icon-primary-btn" >
-//             close
-//             < /button>
-//             < h2 class="modal-title" > 할 일 삭제 < /h2>
-//               < /div>
-//               < div class="modal-content" >
-//                 <span class="modal-text" > 선택한 할 일 카드를 삭제하시겠어요 ? </span>
-//                   < button class="modal-btn primary-btn" > 삭제하기 < /button>
-//                     < button class="modal-btn cancel-btn" > 취소 < /button>
-//                       < /div>
-//                       < /div> -->
-
+import { _q } from '../utils/utils';
 import { ICON_TYPE } from '../utils/constants';
+import htmlElements from '../utils/htmlElement';
+import { fetchDeletedCard } from './fetch';
+import { changeCardCount } from './column';
+import { getCardId } from './card';
 
 export const MODAL_CLASS = {
   dimmedLayer: 'dimmed-layer',
-  edit: 'modal-edit',
-  delete: 'modal-delete',
+  modal: 'modal',
+  edit: 'modal edit',
+  delete: 'modal delete',
   header: 'header-wrap modal-header',
   closeBtn: 'delete-btn icon-secondary-btn material-icons icon-primary-btn',
   title: 'modal-title',
@@ -45,7 +17,8 @@ export const MODAL_CLASS = {
   label: 'modal-label',
   textarea: 'edit-textarea',
   text: 'modal-text',
-  primaryBtn: 'modal-btn primary-btn',
+  deleteBtn: 'modal-btn primary-btn delete-card',
+  editBtn: `modal-btn primary-btn edit-card`,
   cancelBtn: 'modal-btn cancel-btn',
 };
 
@@ -62,19 +35,76 @@ const MODAL_STRING = {
 const TEXTAREA_MAX_LENGTH: number = 500;
 
 const MODAL_ATOM = {
-  dimmedLayer: `<div class="${MODAL_CLASS.dimmedLayer}"> /div>`,
-  header: (atoms: string): string => `<div class="${MODAL_CLASS.header}">${atoms}</div>`,
-  editTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.editTitle}</h2>`,
-  deleteTitle: `<h2 class="${MODAL_CLASS.title}">${MODAL_STRING.deleteTitle}</h2>`,
-  deleteText: `<span class="${MODAL_CLASS.text}">${MODAL_STRING.deleteText}</span>`,
-  editLabel: `<label class="${MODAL_CLASS.label}" for="${MODAL_CLASS.textarea}">${MODAL_STRING.editLabel}</label>`,
-  editTextarea: `<textarea name="${MODAL_CLASS.textarea}" id="${MODAL_CLASS.textarea}" maxlength="${TEXTAREA_MAX_LENGTH}"></textarea>`,
-  closeBtn: `<button class="${MODAL_CLASS.closeBtn}">${ICON_TYPE.delete}</button>`,
-  deleteBtn: `<button class="${MODAL_CLASS.primaryBtn}">${MODAL_STRING.deleteBtn}</button>`,
-  editBtn: `<button class="${MODAL_CLASS.primaryBtn}">${MODAL_STRING.editBtn}</button>`,
-  cancelBtn: `<button class="${MODAL_CLASS.cancelBtn}">${MODAL_STRING.cancelBtn}</button>`,
+  dimmedLayer: htmlElements.div(MODAL_CLASS.dimmedLayer),
+  header: (atoms: string): string => htmlElements.div(MODAL_CLASS.header, atoms),
+  content: (atoms: string): string => htmlElements.div(MODAL_CLASS.content, atoms),
+  editTitle: htmlElements.h2(MODAL_CLASS.title, MODAL_STRING.editTitle),
+  deleteTitle: htmlElements.h2(MODAL_CLASS.title, MODAL_STRING.deleteTitle),
+  deleteText: htmlElements.span(MODAL_CLASS.text, MODAL_STRING.deleteText),
+  editLabel: htmlElements.label(MODAL_CLASS.label, MODAL_CLASS.textarea, MODAL_STRING.editLabel),
+  editTextarea: (value: string): string =>
+    htmlElements.textarea({
+      id: MODAL_CLASS.textarea,
+      maxLength: TEXTAREA_MAX_LENGTH,
+      placeholder: '',
+      value: value,
+    }),
+  closeBtn: htmlElements.button(MODAL_CLASS.closeBtn, ICON_TYPE.delete),
+  deleteBtn: htmlElements.button(MODAL_CLASS.deleteBtn, MODAL_STRING.deleteBtn),
+  editBtn: htmlElements.button(MODAL_CLASS.editBtn, MODAL_STRING.editBtn),
+  cancelBtn: htmlElements.button(MODAL_CLASS.cancelBtn, MODAL_STRING.cancelBtn),
 };
 
-const createDeleteModalComponent = () => {};
+export const modalElement: any = {
+  targetCard: null,
+  targetColumn: null,
+  modal: null,
+  dimmedLayer: null,
+  textarea: null,
+};
 
-const createEditModalComponent = () => {};
+export const templateEditModalElement = (textAreaValue: string): string => {
+  return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.edit}">
+  ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.editTitle}`)}
+  ${MODAL_ATOM.content(`${MODAL_ATOM.editLabel}${MODAL_ATOM.editTextarea(textAreaValue)}${MODAL_ATOM.editBtn}`)}
+  </div>`;
+};
+
+export const templateDeleteModalElement = (): string => {
+  return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.delete}">
+  ${MODAL_ATOM.header(`${MODAL_ATOM.closeBtn}${MODAL_ATOM.deleteTitle}`)}
+  ${MODAL_ATOM.content(`${MODAL_ATOM.deleteText}${MODAL_ATOM.deleteBtn}${MODAL_ATOM.cancelBtn}`)}
+  </div>`;
+};
+
+export const setModalElement = (): void => {
+  modalElement.dimmedLayer = _q(`.${MODAL_CLASS.dimmedLayer}`);
+  modalElement.modal = _q(`.${MODAL_CLASS.modal}`);
+  modalElement.modal.addEventListener('click', modalClickHandler);
+};
+
+const removeModalElement = (): void => {
+  modalElement.modal.removeEventListener('click', modalClickHandler);
+  modalElement.dimmedLayer.remove();
+  modalElement.modal.remove();
+};
+
+const clickModalCardDeleteButton = async (event: any): void => {
+  if (event.target.className !== MODAL_CLASS.deleteBtn) return;
+  const isDeleted = await fetchDeletedCard(getCardId(modalElement.targetCard));
+  if (isDeleted) {
+    modalElement.targetCard.remove();
+    changeCardCount(modalElement.targetColumn);
+  } else console.error('Delete Error');
+  removeModalElement();
+};
+
+const clickModalCloseButton = (event: any): void => {
+  if (event.target.className !== MODAL_CLASS.closeBtn && event.target.className !== MODAL_CLASS.cancelBtn) return;
+  removeModalElement();
+};
+
+const modalClickHandler = (event: any): void => {
+  clickModalCardDeleteButton(event);
+  clickModalCloseButton(event);
+};
