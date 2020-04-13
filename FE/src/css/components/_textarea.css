@@ -1,0 +1,21 @@
+textarea {
+  @apply transition duration-200 ease-in-out box-border block w-full h-24 p-4 resize-y border border-gray-300 rounded appearance-none;
+  min-height: 4rem;
+  max-height: 20rem;
+}
+
+textarea:focus {
+  @apply outline-none shadow-outline;
+}
+
+.todo-input-wrap {
+  @apply flex flex-col flex-wrap mb-4;
+}
+
+.input-btn-wrap {
+  @apply grid grid-cols-2 gap-2 grid-flow-col h-12;
+}
+
+.input-btn-wrap button {
+  @apply rounded font-semibold mt-2 py-2;
+}

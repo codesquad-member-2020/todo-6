@@ -1,0 +1,5 @@
+@tailwind base;
+
+.container {
+  @apply box-border mx-auto min-w-0;
+}

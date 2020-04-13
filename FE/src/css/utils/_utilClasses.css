@@ -1,0 +1,7 @@
+.disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.container.full-width {
+  max-width: 100%;
+}
