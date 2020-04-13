@@ -2,7 +2,7 @@ import { ICON_TYPE, DATA_ATTRIBUTE } from '../utils/constants';
 import htmlElements from '../utils/htmlElement';
 import { renderDeleteModal, renderEditModal } from './container';
 import { columnElement } from './column';
-import { modalElement, setModalElement } from './modal';
+import { modalElement, setModalElement, DELETE_MODAL, EDIT_MODAL } from './modal';
 
 export const author = {
   userId: '',
@@ -55,14 +55,15 @@ const clickCardDeleteButton = (event: any): void => {
   modalElement.targetColumn = columnElement(event);
   modalElement.targetCard = cardElement(event);
   renderDeleteModal();
-  setModalElement();
+  setModalElement(DELETE_MODAL);
 };
 
 const doubleClickCard = (event: any): void => {
-  console.log(event.target);
   if (event.target.className !== CARD_CLASS.card) return;
-  modalElement.targetCardContent = cardElement(event).querySelector(`.${CARD_CLASS.content}`);
+  modalElement.targetCard = cardElement(event);
+  modalElement.targetCardContent = modalElement.targetCard.querySelector(`.${CARD_CLASS.content}`);
   renderEditModal(modalElement.targetCardContent.innerHTML);
+  setModalElement(EDIT_MODAL);
 };
 
 export const cardClickHandler = (event: any): any => {

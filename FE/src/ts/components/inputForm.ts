@@ -52,11 +52,11 @@ const clickInputFormCancelButton = (event: any): void => {
   hideInputForm(targetColumn);
 };
 
-const toogleActivateAddButton = (event: any): void => {
-  if (event.target.id !== INPUT_FORM_CLASS.textarea) return;
-  const targetInputForm = event.target.closest(`.${INPUT_FORM_CLASS.inputForm}`);
-  const addButton: HTMLButtonElement = targetInputForm.querySelector(`.${INPUT_FORM_CLASS.addButton}`);
-  event.target.value ? removeClass(UTIL_CLASS.disabled, addButton) : addClass(UTIL_CLASS.disabled, addButton);
+export const toogleButtonActiveState = (event: any, { textAreaClass: textAreaClass, targetClass: targetClass, buttonClass: buttonClass }): void => {
+  if (event.target.id !== textAreaClass) return;
+  const targetElement = event.target.closest(`.${targetClass}`);
+  const toggleButton: HTMLButtonElement = targetElement.querySelector(`.${buttonClass}`);
+  event.target.value ? removeClass(UTIL_CLASS.disabled, toggleButton) : addClass(UTIL_CLASS.disabled, toggleButton);
 };
 
 export const inputFormClickHandler = (event: Event): void => {
@@ -65,5 +65,9 @@ export const inputFormClickHandler = (event: Event): void => {
 };
 
 export const inputFormInputHandler = (event: Event): void => {
-  toogleActivateAddButton(event);
+  toogleButtonActiveState(event, {
+    textAreaClass: INPUT_FORM_CLASS.textarea,
+    targetClass: INPUT_FORM_CLASS.inputForm,
+    buttonClass: INPUT_FORM_CLASS.addButton,
+  });
 };
