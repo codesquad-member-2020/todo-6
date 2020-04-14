@@ -15,8 +15,8 @@ public class TodoService {
   ProjectRepository projectRepository;
   @Autowired
   SectionRepository sectionRepository;
-  @Autowired
-  ActivityRepository activityRepository;
+
+  private Long projectId = 1L;
 
   public CardDto createCard(Long sectionId, Card card, User user) {
     final int addAtFirst = 0;
@@ -49,10 +49,10 @@ public class TodoService {
   }
 
   public List<ActivityDto> getAllActivity() {
-    return activityRepository.getActivities();
+    return projectRepository.getAllActivity(projectId);
   }
 
   private Project selectProject() {
-    return projectRepository.findById(1L).orElseThrow(() -> new NotFoundData("해당 프로젝트가 없습니다"));
+    return projectRepository.findById(projectId).orElseThrow(() -> new NotFoundData("해당 프로젝트가 없습니다"));
   }
 }
