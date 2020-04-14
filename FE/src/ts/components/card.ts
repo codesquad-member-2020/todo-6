@@ -4,13 +4,11 @@ import { renderDeleteModal, renderEditModal } from './columnWrap';
 import { columnElement } from './column';
 import { modalElement, setModalElement, DELETE_MODAL, EDIT_MODAL } from './modal';
 
-export const author = {
-  userId: '',
-};
-
 export interface Card {
   id: number;
+  title: string;
   contents: string;
+  user: string;
 }
 
 export const CARD_CLASS = {
@@ -23,6 +21,8 @@ export const CARD_CLASS = {
 
 const AUTHOR_STRING: string = ' (이)가 추가함';
 
+export const DEFAULT_CARD_TITLE = '새로운 카드 제목';
+
 const CARD_ATOM = {
   icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.bookmark),
   deleteBtn: htmlElements.button(CARD_CLASS.deleteBtn, ICON_TYPE.delete),
@@ -34,18 +34,18 @@ export const getCardId = (targetCard: HTMLElement): string => targetCard.dataset
 
 export const cardElement = (target: HTMLElement): HTMLElement => target.closest(`.${CARD_CLASS.card}`);
 
-export const templateCardElement = (columnId: number, cardData: Card, author: string): string => {
-  const { id, contents } = cardData;
-  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", class="${CARD_CLASS.card}" tabindex="0">
+export const templateCardElement = (columnId: number, cardData: Card): string => {
+  const { id, title, contents, user } = cardData;
+  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", ${DATA_ATTRIBUTE.title}="${title}", class="${CARD_CLASS.card}" tabindex="0">
     ${CARD_ATOM.icon}
     ${CARD_ATOM.deleteBtn}
     ${CARD_ATOM.content(contents)}
-    ${CARD_ATOM.author(author)}</article>`;
+    ${CARD_ATOM.author(user)}</article>`;
 };
 
-export const templateAllCardElement = (columnId: number, cardsData: Array<Card>, author: string): string => {
+export const templateAllCardElement = (columnId: number, cardsData: Array<Card>): string => {
   return cardsData.reduce((allCardElement: string, eachCardData: Card): string => {
-    allCardElement += templateCardElement(columnId, eachCardData, author);
+    allCardElement += templateCardElement(columnId, eachCardData);
     return allCardElement;
   }, '');
 };

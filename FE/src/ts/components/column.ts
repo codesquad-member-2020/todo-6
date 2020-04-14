@@ -2,7 +2,7 @@ import { ICON_TYPE, UTIL_CLASS, DATA_ATTRIBUTE } from '../utils/constants';
 import { _q, toggleClass } from '../utils/utils';
 import htmlElements from '../utils/htmlElement';
 import { inputFormElement, textareaElement, templateInputFormElement } from './inputForm';
-import { Card, templateAllCardElement } from './card';
+import { Card, DEFAULT_CARD_TITLE, templateAllCardElement } from './card';
 import { Sections, createCard } from './fetch';
 
 export const COLUMN_CLASS = {
@@ -22,7 +22,7 @@ const COLUMN_ATOM = {
   title: (name: string): string => htmlElements.h2(COLUMN_CLASS.title, name),
   buttons: htmlElements.div(COLUMN_CLASS.buttonWrap, htmlElements.button(COLUMN_CLASS.addButton, ICON_TYPE.add), htmlElements.button(COLUMN_CLASS.deleteButton, ICON_TYPE.delete)),
   inputForm: templateInputFormElement(),
-  cards: (id: number, userName: string, cards: Array<Card>): string => htmlElements.div(COLUMN_CLASS.cardWrap, templateAllCardElement(id, cards, userName)),
+  cards: (id: number, cards: Array<Card>): string => htmlElements.div(COLUMN_CLASS.cardWrap, templateAllCardElement(id, cards)),
 };
 
 export const getColumnId = (targetColumn: HTMLElement): string => targetColumn.dataset.columnId;
@@ -31,12 +31,12 @@ export const columnElement = (target: EventTarget): HTMLElement => target.closes
 
 export const cardWrapElement = (columnElement: HTMLElement): HTMLElement => columnElement.querySelector(`.${COLUMN_CLASS.cardWrap}`);
 
-export const templateColumnElement = ({ id, name, cards }: Sections, userName: string): string => {
+export const templateColumnElement = ({ id, name, cards }: Sections): string => {
   const cardCount: number = Object.keys(cards).length;
   return `<div ${DATA_ATTRIBUTE.columnId}="${id}" class="${COLUMN_CLASS.column}">
   ${COLUMN_ATOM.titleAtoms(`${COLUMN_ATOM.cardCount(cardCount)}${COLUMN_ATOM.title(name)}${COLUMN_ATOM.buttons}`)}
   ${COLUMN_ATOM.inputForm}
-  ${COLUMN_ATOM.cards(id, userName, cards)}</div>`;
+  ${COLUMN_ATOM.cards(id, cards)}</div>`;
 };
 
 export const changeCardCount = (targetColumn: HTMLElement): void => {
@@ -55,7 +55,7 @@ const clickColumnAddButton = ({ target }: Event): void => {
 
 export const addNewCard = async (targetColumn: HTMLElement, cardWrap: HTMLElement, textarea: HTMLTextAreaElement): Promise<void> => {
   textarea.setAttribute('disabled', true);
-  cardWrap.insertAdjacentHTML('afterbegin', await createCard(parseInt(getColumnId(targetColumn), 10), textarea.value));
+  cardWrap.insertAdjacentHTML('afterbegin', await createCard(parseInt(getColumnId(targetColumn), 10), DEFAULT_CARD_TITLE, textarea.value));
   textarea.value = '';
   textarea.removeAttribute('disabled');
   changeCardCount(targetColumn);
