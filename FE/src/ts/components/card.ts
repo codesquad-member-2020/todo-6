@@ -1,8 +1,8 @@
 import { ICON_TYPE, DATA_ATTRIBUTE } from '../utils/constants';
 import htmlElements from '../utils/htmlElement';
-import { renderDeleteModal } from './container';
+import { renderDeleteModal, renderEditModal } from './columnWrap';
 import { columnElement } from './column';
-import { modalElement, setModalElement } from './modal';
+import { modalElement, setModalElement, DELETE_MODAL, EDIT_MODAL } from './modal';
 
 export const author = {
   userId: '',
@@ -30,9 +30,9 @@ const CARD_ATOM = {
   author: (author: string): string => htmlElements.span(CARD_CLASS.author, htmlElements.strong(author), AUTHOR_STRING),
 };
 
-export const getCardId = (targetCard: any): any => targetCard.dataset.cardId;
+export const getCardId = (targetCard: HTMLElement): string => targetCard.dataset.cardId;
 
-export const cardElement = (event: any): any => event.target.closest(`.${CARD_CLASS.card}`);
+export const cardElement = (target: HTMLElement): HTMLElement => target.closest(`.${CARD_CLASS.card}`);
 
 export const templateCardElement = (columnId: number, cardData: Card, author: string): string => {
   const { id, contents } = cardData;
@@ -50,14 +50,26 @@ export const templateAllCardElement = (columnId: number, cardsData: Array<Card>,
   }, '');
 };
 
-const clickCardDeleteButton = (event: any): void => {
-  if (event.target.className !== CARD_CLASS.deleteBtn) return;
-  modalElement.targetColumn = columnElement(event);
-  modalElement.targetCard = cardElement(event);
+const clickCardDeleteButton = ({ target }: Event): void => {
+  if (target.className !== CARD_CLASS.deleteBtn) return;
+  modalElement.targetColumn = columnElement(target);
+  modalElement.targetCard = cardElement(target);
   renderDeleteModal();
-  setModalElement();
+  setModalElement(DELETE_MODAL);
 };
 
-export const cardClickHandler = (event: any): any => {
+const doubleClickCard = ({ target }: Event): void => {
+  if (target.className !== CARD_CLASS.card) return;
+  modalElement.targetCard = cardElement(target);
+  modalElement.targetCardContent = modalElement.targetCard.querySelector(`.${CARD_CLASS.content}`);
+  renderEditModal(modalElement.targetCardContent.innerHTML);
+  setModalElement(EDIT_MODAL);
+};
+
+export const cardClickHandler = (event: Event): any => {
   clickCardDeleteButton(event);
+};
+
+export const cardDoubleClickHandler = (event: Event): any => {
+  doubleClickCard(event);
 };
