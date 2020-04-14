@@ -36,7 +36,7 @@ export const cardElement = (target: HTMLElement): HTMLElement => target.closest(
 
 export const templateCardElement = (columnId: number, cardData: Card, author: string): string => {
   const { id, contents } = cardData;
-  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", class="${CARD_CLASS.card}">
+  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", class="${CARD_CLASS.card}" tabindex="0">
     ${CARD_ATOM.icon}
     ${CARD_ATOM.deleteBtn}
     ${CARD_ATOM.content(contents)}
@@ -50,20 +50,20 @@ export const templateAllCardElement = (columnId: number, cardsData: Array<Card>,
   }, '');
 };
 
+const doubleClickCard = ({ target }: Event): void => {
+  if (!target.classList.contains(CARD_CLASS.card)) return;
+  modalElement.targetCard = cardElement(target);
+  modalElement.targetCardContent = modalElement.targetCard.querySelector(`.${CARD_CLASS.content}`);
+  renderEditModal(modalElement.targetCardContent.innerHTML);
+  setModalElement(EDIT_MODAL);
+};
+
 const clickCardDeleteButton = ({ target }: Event): void => {
   if (target.className !== CARD_CLASS.deleteBtn) return;
   modalElement.targetColumn = columnElement(target);
   modalElement.targetCard = cardElement(target);
   renderDeleteModal();
   setModalElement(DELETE_MODAL);
-};
-
-const doubleClickCard = ({ target }: Event): void => {
-  if (target.className !== CARD_CLASS.card) return;
-  modalElement.targetCard = cardElement(target);
-  modalElement.targetCardContent = modalElement.targetCard.querySelector(`.${CARD_CLASS.content}`);
-  renderEditModal(modalElement.targetCardContent.innerHTML);
-  setModalElement(EDIT_MODAL);
 };
 
 export const cardClickHandler = (event: Event): any => {

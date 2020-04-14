@@ -5,3 +5,11 @@
 .container.full-width {
   max-width: 100%;
 }
+
+.clone {
+  @apply fixed opacity-50 pointer-events-none;
+}
+
+.transparent {
+  @apply opacity-50 pointer-events-none;
+}

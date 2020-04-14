@@ -1,5 +1,5 @@
 .card-wrap {
-  @apply overflow-y-scroll;
+  @apply overflow-y-scroll pt-4 px-4;
 }
 
 .card {
@@ -8,6 +8,14 @@
 
 .card:hover {
   @apply shadow;
+}
+
+.card:focus {
+  @apply outline-none border-blue-500 shadow-outline;
+}
+
+.card button:focus {
+  @apply outline-none border-blue-500 shadow-outline;
 }
 
 .card-content {

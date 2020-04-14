@@ -2,10 +2,6 @@ button {
   @apply transition duration-200 ease-in-out;
 }
 
-button:focus {
-  @apply outline-none;
-}
-
 .icon-primary-btn {
   @apply absolute right-0 mr-3 w-12 h-12 flex items-center justify-center;
 }

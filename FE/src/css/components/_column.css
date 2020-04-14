@@ -3,7 +3,7 @@
 }
 
 .column {
-  @apply flex-none flex flex-col relative w-full max-w-sm bg-gray-200 box-border border border-gray-400 rounded p-4 mr-4;
+  @apply flex-none flex flex-col relative w-full max-w-sm bg-gray-200 box-border border border-gray-400 rounded mr-4 py-4;
 }
 
 .column:first-child {
@@ -20,7 +20,7 @@
 }
 
 .column-title-wrap {
-  @apply flex items-center justify-between mb-4;
+  @apply flex items-center justify-between px-4;
 }
 
 .column-button-wrap {
