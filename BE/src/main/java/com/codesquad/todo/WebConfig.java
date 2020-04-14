@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(httpInterceptor())
-                .addPathPatterns("/api/**");
+                .addPathPatterns("/api/column/**");
     }
 
 }
