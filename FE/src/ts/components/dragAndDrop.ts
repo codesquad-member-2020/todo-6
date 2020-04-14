@@ -20,7 +20,6 @@ const DRAG_CLASS = {
   clone: 'clone',
   transparent: 'transparent',
   outlined: 'outlined',
-  dragShield: 'drag-shield',
 };
 
 const MOUSE_RIGHT_BUTTON_CODE = 2;
@@ -36,7 +35,6 @@ const setCloneElementSize = (targetElement: HTMLElement, cloneElement: HTMLEleme
 };
 
 const insertCloneElement = (containerElement: HTMLElement, cloneElement: HTMLElement): void => {
-  containerElement.insertAdjacentHTML('afterbegin', htmlElements.div(DRAG_CLASS.dragShield));
   containerElement.appendChild(cloneElement);
 };
 
@@ -52,16 +50,20 @@ const updateCloneElementPosition = (event: MouseEvent, cloneElement: HTMLElement
 };
 
 const revertToOriginState = (targetElement: HTMLElement): void => {
-  targetElement.querySelector(`.${DRAG_CLASS.dragShield}`).remove();
   dragProperty.cloneElement.remove();
   dragProperty.isVisible = false;
   dragProperty.isMousePressed = false;
   removeClass(DRAG_CLASS.transparent, dragProperty.targetElement);
 };
 
+const disableSelect = (event: Event): void => {
+  event.preventDefault();
+};
+
 const mouseDownCard = (event: MouseEvent): void => {
   if (event.buttons === MOUSE_RIGHT_BUTTON_CODE) return;
   if (!event.target.classList.contains(CARD_CLASS.card)) return;
+  window.addEventListener('selectstart', disableSelect);
   dragProperty.isMousePressed = true;
   cloneCardElement(event);
   setCloneElementSize(dragProperty.targetElement, dragProperty.cloneElement);
@@ -79,13 +81,20 @@ const mouseMoveCard = (event: MouseEvent, containerElement: HTMLElement): void =
 
 const mouseUpCard = (event: MouseEvent, targetElement: HTMLElement): void => {
   if (!dragProperty.isMousePressed) return;
+  window.removeEventListener('selectstart', disableSelect);
   revertToOriginState(targetElement);
+};
+
+const mouseOverCard = ({ target }: MouseEvent): void => {
+  if (!target.classList.contains(CARD_CLASS.card)) return;
+  console.log(target);
 };
 
 const applyDragAndDrop = (targetElement: HTMLElement): void => {
   targetElement.addEventListener('mousedown', mouseDownCard);
   targetElement.addEventListener('mousemove', event => mouseMoveCard(event, targetElement));
   targetElement.addEventListener('mouseup', event => mouseUpCard(event, targetElement));
+  targetElement.addEventListener('mouseover', mouseOverCard);
 };
 
 export default applyDragAndDrop;
