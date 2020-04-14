@@ -1,5 +1,5 @@
 .card-wrap {
-  @apply overflow-y-scroll pt-4 px-4;
+  @apply overflow-y-scroll mt-3 pt-1 px-4;
 }
 
 .card {

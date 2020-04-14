@@ -1,19 +1,23 @@
 import { _q, addClass, removeClass } from '../utils/utils';
+import { COLUMN_CLASS } from './column';
 import { CARD_CLASS } from './card';
-import htmlElements from '../utils/htmlElement';
 
 interface DragProperty {
   targetElement: any;
   cloneElement: any;
+  hoverElement: any;
+  cardWrapElement: any;
   isMousePressed: boolean;
-  isVisible: boolean;
+  isCloneDisplay: boolean;
 }
 
 const dragProperty: DragProperty = {
   targetElement: null,
   cloneElement: null,
+  hoverElement: null,
+  cardWrapElement: null,
   isMousePressed: false,
-  isVisible: false,
+  isCloneDisplay: false,
 };
 
 const DRAG_CLASS = {
@@ -29,29 +33,29 @@ const cloneCardElement = ({ target }: Event): void => {
   dragProperty.cloneElement = target.cloneNode(true);
 };
 
-const setCloneElementSize = (targetElement: HTMLElement, cloneElement: HTMLElement): void => {
-  cloneElement.style.width = `${targetElement.offsetWidth}px`;
-  cloneElement.style.height = `${targetElement.offsetHeight}px`;
+const setCloneElementSize = (): void => {
+  dragProperty.cloneElement.style.width = `${dragProperty.targetElement.offsetWidth}px`;
+  dragProperty.cloneElement.style.height = `${dragProperty.targetElement.offsetHeight}px`;
 };
 
-const insertCloneElement = (containerElement: HTMLElement, cloneElement: HTMLElement): void => {
-  containerElement.appendChild(cloneElement);
+const displayCloneElement = (containerElement: HTMLElement): void => {
+  containerElement.appendChild(dragProperty.cloneElement);
 };
 
-const addOpacityClass = (targetElement: HTMLElement, cloneElement: HTMLElement): void => {
-  addClass(DRAG_CLASS.transparent, targetElement);
-  addClass(DRAG_CLASS.clone, cloneElement);
+const addOpacityClass = (): void => {
+  addClass(DRAG_CLASS.transparent, dragProperty.targetElement);
+  addClass(DRAG_CLASS.clone, dragProperty.cloneElement);
 };
 
-const updateCloneElementPosition = (event: MouseEvent, cloneElement: HTMLElement): void => {
-  const posX = event.clientX - cloneElement.offsetWidth / 2;
-  const posY = event.clientY - cloneElement.offsetHeight / 2;
-  cloneElement.style.transform = `translate(${posX}px, ${posY}px)`;
+const updateCloneElementPosition = ({ clientX, clientY }: MouseEvent): void => {
+  const posX = clientX - dragProperty.cloneElement.offsetWidth / 2;
+  const posY = clientY - dragProperty.cloneElement.offsetHeight / 2;
+  dragProperty.cloneElement.style.transform = `translate(${posX}px, ${posY}px)`;
 };
 
-const revertToOriginState = (targetElement: HTMLElement): void => {
+const revertToOriginState = (): void => {
   dragProperty.cloneElement.remove();
-  dragProperty.isVisible = false;
+  dragProperty.isCloneDisplay = false;
   dragProperty.isMousePressed = false;
   removeClass(DRAG_CLASS.transparent, dragProperty.targetElement);
 };
@@ -60,40 +64,58 @@ const disableSelect = (event: Event): void => {
   event.preventDefault();
 };
 
+const isMousePositionedLastIndex = ({ clientX, clientY }: MouseEvent, { x, right, bottom }: DOMRect) => {
+  const SENSITIVITY = 10;
+  return clientX >= x - SENSITIVITY && clientX <= right && clientY >= bottom;
+};
+
+const insertCard = (event: MouseEvent) => {
+  dragProperty.hoverElement = event.target;
+  dragProperty.cardWrapElement = dragProperty.hoverElement.parentNode;
+  dragProperty.cardWrapElement.insertBefore(dragProperty.targetElement, dragProperty.hoverElement);
+};
+
+const insertCardLastIndex = (event: MouseEvent) => {
+  dragProperty.cardWrapElement = event.target.querySelector(`.${COLUMN_CLASS.cardWrap}`);
+  if (!isMousePositionedLastIndex(event, dragProperty.cardWrapElement.getBoundingClientRect())) return;
+  dragProperty.cardWrapElement.insertBefore(dragProperty.targetElement, null);
+};
+
 const mouseDownCard = (event: MouseEvent): void => {
   if (event.buttons === MOUSE_RIGHT_BUTTON_CODE) return;
   if (!event.target.classList.contains(CARD_CLASS.card)) return;
   window.addEventListener('selectstart', disableSelect);
   dragProperty.isMousePressed = true;
   cloneCardElement(event);
-  setCloneElementSize(dragProperty.targetElement, dragProperty.cloneElement);
+  setCloneElementSize();
 };
 
 const mouseMoveCard = (event: MouseEvent, containerElement: HTMLElement): void => {
   if (!dragProperty.isMousePressed) return;
-  if (!dragProperty.isVisible) {
-    dragProperty.isVisible = true;
-    addOpacityClass(dragProperty.targetElement, dragProperty.cloneElement);
-    insertCloneElement(containerElement, dragProperty.cloneElement);
+  if (!dragProperty.isCloneDisplay) {
+    dragProperty.isCloneDisplay = true;
+    addOpacityClass();
+    displayCloneElement(containerElement);
   }
-  updateCloneElementPosition(event, dragProperty.cloneElement);
+  updateCloneElementPosition(event);
 };
 
-const mouseUpCard = (event: MouseEvent, targetElement: HTMLElement): void => {
+const mouseUpCard = (): void => {
   if (!dragProperty.isMousePressed) return;
   window.removeEventListener('selectstart', disableSelect);
-  revertToOriginState(targetElement);
+  revertToOriginState();
 };
 
 const mouseOverCard = ({ target }: MouseEvent): void => {
-  if (!target.classList.contains(CARD_CLASS.card)) return;
-  console.log(target);
+  if (!dragProperty.isMousePressed) return;
+  if (target.classList.contains(CARD_CLASS.card)) insertCard(event);
+  if (target.className === COLUMN_CLASS.column) insertCardLastIndex(event);
 };
 
 const applyDragAndDrop = (targetElement: HTMLElement): void => {
   targetElement.addEventListener('mousedown', mouseDownCard);
   targetElement.addEventListener('mousemove', event => mouseMoveCard(event, targetElement));
-  targetElement.addEventListener('mouseup', event => mouseUpCard(event, targetElement));
+  targetElement.addEventListener('mouseup', mouseUpCard);
   targetElement.addEventListener('mouseover', mouseOverCard);
 };
 
