@@ -9,9 +9,6 @@ import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 @Service
 public class JwtService {
 
@@ -27,7 +24,7 @@ public class JwtService {
         String userId = claims.get("userId", String.class);
         Long id = claims.get("id", Long.class);
 
-        User user = userRepository.findById(id).orElseThrow(NotFoundData::new);
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundData("없는 사용자입니다."));
         if(!user.isMatchWithUserId(userId)){
             throw new UnauthorizedException();
         }
