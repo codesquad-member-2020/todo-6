@@ -1,10 +1,13 @@
 package com.codesquad.todo.service;
 
 import com.codesquad.todo.domain.*;
+import com.codesquad.todo.dto.ActivityDto;
 import com.codesquad.todo.dto.CardDto;
 import com.codesquad.todo.exeption.NotFoundData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TodoService {
@@ -12,6 +15,8 @@ public class TodoService {
   ProjectRepository projectRepository;
   @Autowired
   SectionRepository sectionRepository;
+  @Autowired
+  ActivityRepository activityRepository;
 
   public CardDto createCard(Long sectionId, Card card, User user) {
     final int addAtFirst = 0;
@@ -41,6 +46,10 @@ public class TodoService {
     Activity activity = new Activity(action, card, user);
     project.addActivity(activity);
     projectRepository.save(project);
+  }
+
+  public List<ActivityDto> getAllActivity() {
+    return activityRepository.getActivities();
   }
 
   private Project selectProject() {
