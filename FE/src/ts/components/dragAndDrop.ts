@@ -1,36 +1,33 @@
 import { _q, addClass, removeClass } from '../utils/utils';
-import { UTIL_CLASS } from '../utils/constants';
 import { CARD_CLASS } from './card';
-
-const CONTAINER_CLASS = 'container';
-
-const containerElement = _q(`.${CONTAINER_CLASS}`);
+import htmlElements from '../utils/htmlElement';
 
 interface DragProperty {
   targetElement: any;
   cloneElement: any;
   isMousePressed: boolean;
-  currentX: number;
-  currentY: number;
+  isVisible: boolean;
 }
 
 const dragProperty: DragProperty = {
   targetElement: null,
   cloneElement: null,
   isMousePressed: false,
-  currentX: 0,
-  currentY: 0,
+  isVisible: false,
 };
 
-const addOpacityClass = (targetElement: HTMLElement, cloneElement: HTMLElement): void => {
-  addClass(UTIL_CLASS.transparent, targetElement);
-  addClass(UTIL_CLASS.clone, cloneElement);
+const DRAG_CLASS = {
+  clone: 'clone',
+  transparent: 'transparent',
+  outlined: 'outlined',
+  dragShield: 'drag-shield',
 };
 
-const revertToOriginCard = (): void => {
-  removeClass(UTIL_CLASS.transparent, dragProperty.targetElement);
-  dragProperty.cloneElement.remove();
-  dragProperty.isMousePressed = false;
+const MOUSE_RIGHT_BUTTON_CODE = 2;
+
+const cloneCardElement = ({ target }: Event): void => {
+  dragProperty.targetElement = target;
+  dragProperty.cloneElement = target.cloneNode(true);
 };
 
 const setCloneElementSize = (targetElement: HTMLElement, cloneElement: HTMLElement): void => {
@@ -38,35 +35,57 @@ const setCloneElementSize = (targetElement: HTMLElement, cloneElement: HTMLEleme
   cloneElement.style.height = `${targetElement.offsetHeight}px`;
 };
 
-const updateCloneElementPosition = (event: MouseEvent, cloneElement: HTMLElement): void => {
-  cloneElement.style.top = `${event.clientY - cloneElement.offsetHeight / 2}px`;
-  cloneElement.style.left = `${event.clientX - cloneElement.offsetWidth / 2}px`;
+const insertCloneElement = (containerElement: HTMLElement, cloneElement: HTMLElement): void => {
+  containerElement.insertAdjacentHTML('afterbegin', htmlElements.div(DRAG_CLASS.dragShield));
+  containerElement.appendChild(cloneElement);
 };
 
-const mouseDownCard = ({ target }: any): void => {
-  if (!target.classList.contains(CARD_CLASS.card)) return;
+const addOpacityClass = (targetElement: HTMLElement, cloneElement: HTMLElement): void => {
+  addClass(DRAG_CLASS.transparent, targetElement);
+  addClass(DRAG_CLASS.clone, cloneElement);
+};
+
+const updateCloneElementPosition = (event: MouseEvent, cloneElement: HTMLElement): void => {
+  const posX = event.clientX - cloneElement.offsetWidth / 2;
+  const posY = event.clientY - cloneElement.offsetHeight / 2;
+  cloneElement.style.transform = `translate(${posX}px, ${posY}px)`;
+};
+
+const revertToOriginState = (targetElement: HTMLElement): void => {
+  targetElement.querySelector(`.${DRAG_CLASS.dragShield}`).remove();
+  dragProperty.cloneElement.remove();
+  dragProperty.isVisible = false;
+  dragProperty.isMousePressed = false;
+  removeClass(DRAG_CLASS.transparent, dragProperty.targetElement);
+};
+
+const mouseDownCard = (event: MouseEvent): void => {
+  if (event.buttons === MOUSE_RIGHT_BUTTON_CODE) return;
+  if (!event.target.classList.contains(CARD_CLASS.card)) return;
   dragProperty.isMousePressed = true;
-  dragProperty.targetElement = target;
-  dragProperty.cloneElement = target.cloneNode(true);
+  cloneCardElement(event);
   setCloneElementSize(dragProperty.targetElement, dragProperty.cloneElement);
 };
 
-const mouseMoveCard = (event: MouseEvent): void => {
+const mouseMoveCard = (event: MouseEvent, containerElement: HTMLElement): void => {
   if (!dragProperty.isMousePressed) return;
-  addOpacityClass(dragProperty.targetElement, dragProperty.cloneElement);
+  if (!dragProperty.isVisible) {
+    dragProperty.isVisible = true;
+    addOpacityClass(dragProperty.targetElement, dragProperty.cloneElement);
+    insertCloneElement(containerElement, dragProperty.cloneElement);
+  }
   updateCloneElementPosition(event, dragProperty.cloneElement);
-  containerElement.appendChild(dragProperty.cloneElement);
 };
 
-const mouseUpCard = (event: MouseEvent): void => {
+const mouseUpCard = (event: MouseEvent, targetElement: HTMLElement): void => {
   if (!dragProperty.isMousePressed) return;
-  revertToOriginCard();
+  revertToOriginState(targetElement);
 };
 
-const applyDragAndDrop = (): void => {
-  containerElement.addEventListener('mousedown', mouseDownCard);
-  containerElement.addEventListener('mousemove', mouseMoveCard);
-  containerElement.addEventListener('mouseup', mouseUpCard);
+const applyDragAndDrop = (targetElement: HTMLElement): void => {
+  targetElement.addEventListener('mousedown', mouseDownCard);
+  targetElement.addEventListener('mousemove', event => mouseMoveCard(event, targetElement));
+  targetElement.addEventListener('mouseup', event => mouseUpCard(event, targetElement));
 };
 
 export default applyDragAndDrop;
