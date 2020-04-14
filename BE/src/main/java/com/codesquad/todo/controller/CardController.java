@@ -1,17 +1,27 @@
 package com.codesquad.todo.controller;
 
-import com.codesquad.todo.domain.ApiResponse;
-import com.codesquad.todo.domain.Card;
+import com.codesquad.todo.domain.*;
+import com.codesquad.todo.dto.CardDto;
+import com.codesquad.todo.exeption.NotFoundData;
+import com.codesquad.todo.service.TodoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/column/{columnId}")
 public class CardController {
 
-  @PostMapping("/column/{columnId}/card")
-  public ResponseEntity<ApiResponse> createCard(@PathVariable int columnId, Card card) {
-    return null;
+  @Autowired
+  TodoService todoService;
+
+  @PostMapping("/card")
+  public ResponseEntity<ApiResponse> createCard(@PathVariable Long columnId, @RequestBody @Valid Card card,  @RequestAttribute User user) {
+    CardDto newCard = todoService.createCard(columnId, card, user);
+    return new ResponseEntity<>(new ApiResponse("SUCCESS", newCard), HttpStatus.OK);
   }
 
   @PutMapping("/card/{cardId}")
@@ -28,7 +38,8 @@ public class CardController {
   }
 
   @DeleteMapping("/card/{cardId}")
-  public ResponseEntity<ApiResponse> deleteCard(@PathVariable int cardId) {
-    return null;
+  public ResponseEntity<ApiResponse> deleteCard(@PathVariable Long columnId, @PathVariable Long cardId, @RequestAttribute User user) {
+    todoService.deleteCard(columnId, cardId, user);
+    return new ResponseEntity<>(new ApiResponse("SUCCESS", "삭제되었습니다"), HttpStatus.OK);
   }
 }

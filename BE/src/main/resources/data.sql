@@ -1,45 +1,14 @@
 use todo;
 
-INSERT
-INTO user (id, user_id, name)
-VALUES (1, 'john01', 'John Smith');
-
-INSERT
-INTO project (id, title, user, user_key)
-VALUES (1, 'todo', 1, 0);
-
-INSERT
-INTO section (id, name, project, project_key)
-VALUES (1, '해야할일', 1, 0);
-
-INSERT
-INTO section (id, name, project, project_key)
-VALUES (2, '하는중', 1, 1);
-
-INSERT
-INTO section (id, name, project, project_key)
-VALUES (3, '다했다', 1, 2);
-
-INSERT
-INTO card (contents, section, section_key)
-VALUES ('컬럼1 내용1', 1, 0);
-
-INSERT
-INTO card (contents, section, section_key)
-VALUES ('컬럼1 내용2', 1, 1);
-
-INSERT
-INTO card (contents, section, section_key)
-VALUES ('컬럼1 내용3', 1, 2);
-
-INSERT
-INTO card (contents, section, section_key)
-VALUES ('컬럼2 내용1', 2, 0);
-
-INSERT
-INTO card (contents, section, section_key)
-VALUES ('컬럼2 내용2', 2, 1);
-
-INSERT
-INTO card (contents, section, section_key)
-VALUES ('컬럼3 내용1', 3, 0);
+insert into project (id, name) values (1, '아닌데');
+insert into user (id, user_id, project, project_key) values (1, 'lynn', 1, 0);
+insert into section  (id, name, project, project_key) values (1, 'TODO', 1, 0);
+insert into section  (id, name, project, project_key) values (2, 'DOING', 1, 0);
+insert into section  (id, name, project, project_key) values (3, 'DONE', 1, 0);
+insert into card (id, title, contents, section, section_key, user) values (1,'배고프다', '배가 고파', 1,0,1);
+insert into card (id, title, contents, section, section_key, user) values (2,'배고픈가', '닭갈비 먹고싶어', 1,1,1);
+insert into card (id, title, contents, section, section_key, user) values (3,'배고픈듯', '뭐먹지', 1,2,1);
+insert into card (id, title, contents, section, section_key, user) values (4,'닭갈비도', '철판으로', 2,0,1);
+insert into card (id, title, contents, section, section_key, user) values (5,'먹고싶은걸', '어떡해 힝', 2,1,1);
+insert into card (id, title, contents, section, section_key, user) values (6,'이제', '슬 것도 없다', 3,0,1);
+insert into card (id, title, contents, section, section_key, user) values (7,'졸려', '다얜바부', 3,1,1);

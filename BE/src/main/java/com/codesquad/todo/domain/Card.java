@@ -9,24 +9,43 @@ import javax.validation.constraints.NotEmpty;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Card {
   @Id
-  private int id;
+  private Long id;
   @NotEmpty
   @Length(max=500)
+  private String title;
+  @Length(max=500)
   private String contents;
+  private Long user;
 
-  public int getId() {
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setContents(String contents) {
+    this.contents = contents;
+  }
+
+  public void setUser(User user) {
+    this.user = user.getId();
+  }
+
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public String getTitle() {
+    return title;
   }
 
   public String getContents() {
     return contents;
   }
 
-  public void setContents(String contents) {
-    this.contents = contents;
+  public Long getUser() {
+    return user;
   }
 }

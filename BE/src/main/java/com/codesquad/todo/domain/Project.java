@@ -3,47 +3,35 @@ package com.codesquad.todo.domain;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.data.annotation.Id;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Project {
   @Id
-  private int id;
-  private String title;
+  private Long id;
+  private String name;
   private List<Section> sections;
   private List<Activity> activities;
+  private List<User> users;
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public List<Section> getSections() {
-    return sections;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public void setSections(List<Section> sections) {
     this.sections = sections;
   }
 
-  public List<Activity> getActivities() {
-    return activities;
-  }
-
   public void setActivities(List<Activity> activities) {
     this.activities = activities;
+  }
+
+  public void addActivity(Activity activity) {
+    final int addAtFirst = 0;
+    this.activities.add(addAtFirst, activity);
   }
 }
