@@ -1,9 +1,10 @@
 import { _q, addClass, removeClass } from '../utils/utils';
-import { COLUMN_CLASS } from './column';
+import { COLUMN_CLASS, changeCardCount } from './column';
 import { CARD_CLASS } from './card';
 
 interface DragProperty {
   targetElement: any;
+  prevColumnElement: any;
   cloneElement: any;
   hoverElement: any;
   cardWrapElement: any;
@@ -13,6 +14,7 @@ interface DragProperty {
 
 const dragProperty: DragProperty = {
   targetElement: null,
+  prevColumnElement: null,
   cloneElement: null,
   hoverElement: null,
   cardWrapElement: null,
@@ -30,6 +32,7 @@ const MOUSE_RIGHT_BUTTON_CODE = 2;
 
 const cloneCardElement = ({ target }: Event): void => {
   dragProperty.targetElement = target;
+  dragProperty.prevColumnElement = target.closest(`.${COLUMN_CLASS.column}`);
   dragProperty.cloneElement = target.cloneNode(true);
 };
 
@@ -48,8 +51,8 @@ const addOpacityClass = (): void => {
 };
 
 const updateCloneElementPosition = ({ clientX, clientY }: MouseEvent): void => {
-  const posX = clientX - dragProperty.cloneElement.offsetWidth / 2;
-  const posY = clientY - dragProperty.cloneElement.offsetHeight / 2;
+  const posX: number = clientX - dragProperty.cloneElement.offsetWidth / 2;
+  const posY: number = clientY - dragProperty.cloneElement.offsetHeight / 2;
   dragProperty.cloneElement.style.transform = `translate(${posX}px, ${posY}px)`;
 };
 
@@ -65,8 +68,8 @@ const disableSelect = (event: Event): void => {
 };
 
 const isMousePositionedLastIndex = ({ clientX, clientY }: MouseEvent, { x, right, bottom }: DOMRect) => {
-  const SENSITIVITY = 10;
-  return clientX >= x - SENSITIVITY && clientX <= right && clientY >= bottom;
+  const SENSITIVITY: number = 10;
+  return clientX >= x - SENSITIVITY && clientX <= right && clientY >= bottom - SENSITIVITY;
 };
 
 const insertCard = (event: MouseEvent) => {
@@ -81,7 +84,14 @@ const insertCardLastIndex = (event: MouseEvent) => {
   dragProperty.cardWrapElement.insertBefore(dragProperty.targetElement, null);
 };
 
-const mouseDownCard = (event: MouseEvent): void => {
+const getTargetCardIndex = (): number | undefined => {
+  const cardWrapChildNodes = dragProperty.cardWrapElement.childNodes;
+  for (let index = 0; index < cardWrapChildNodes.length; index++) {
+    if (cardWrapChildNodes[index] === dragProperty.targetElement) return index;
+  }
+};
+
+const mouseDownCard = async (event: MouseEvent): void => {
   if (event.buttons === MOUSE_RIGHT_BUTTON_CODE) return;
   if (!event.target.classList.contains(CARD_CLASS.card)) return;
   window.addEventListener('selectstart', disableSelect);
@@ -103,6 +113,13 @@ const mouseMoveCard = (event: MouseEvent, containerElement: HTMLElement): void =
 const mouseUpCard = (): void => {
   if (!dragProperty.isMousePressed) return;
   window.removeEventListener('selectstart', disableSelect);
+  const targetColumn = dragProperty.targetElement.closest(`.${COLUMN_CLASS.column}`);
+  const prevColumn = dragProperty.prevColumnElement;
+  if (targetColumn !== prevColumn) {
+    changeCardCount(targetColumn);
+    changeCardCount(prevColumn);
+  }
+  console.log(getTargetCardIndex());
   revertToOriginState();
 };
 
