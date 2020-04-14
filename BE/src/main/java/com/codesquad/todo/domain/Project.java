@@ -30,7 +30,8 @@ public class Project {
     this.activities = activities;
   }
 
-  public void addActivity(int addPosition, Activity activity) {
-    this.activities.add(addPosition, activity);
+  public void addActivity(Activity activity) {
+    final int addAtFirst = 0;
+    this.activities.add(addAtFirst, activity);
   }
 }
