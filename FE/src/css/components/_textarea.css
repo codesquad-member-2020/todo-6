@@ -9,7 +9,7 @@ textarea:focus {
 }
 
 .todo-input-wrap {
-  @apply flex flex-col flex-wrap px-4 my-4;
+  @apply flex flex-col flex-wrap px-4 mt-4;
 }
 
 .input-btn-wrap {

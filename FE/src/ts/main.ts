@@ -5,4 +5,4 @@ import applyDragAndDrop from './components/dragAndDrop';
 
 fetchTodoList();
 addAllEventListener(columnWrapElement);
-applyDragAndDrop(columnWrapElement);
+applyDragAndDrop();

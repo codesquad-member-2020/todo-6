@@ -6,10 +6,11 @@
   max-width: 100%;
 }
 
-.clone {
-  @apply fixed opacity-50 pointer-events-none;
+.card.clone {
+  position: fixed !important;
+  @apply border border-blue-500 opacity-75 pointer-events-none z-50 shadow-xl;
 }
 
 .transparent {
-  @apply opacity-50 pointer-events-none;
+  @apply opacity-50;
 }
