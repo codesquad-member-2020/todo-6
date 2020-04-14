@@ -29,7 +29,23 @@ public class Card {
     this.contents = contents;
   }
 
-  public void setUser(Long user) {
-    this.user = user;
+  public void setUser(User user) {
+    this.user = user.getId();
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getContents() {
+    return contents;
+  }
+
+  public Long getUser() {
+    return user;
   }
 }

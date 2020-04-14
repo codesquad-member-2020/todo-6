@@ -20,7 +20,15 @@ public class User {
     this.userId = userId;
   }
 
-    public boolean isMatchWithUserId(String userId) {
+  public Long getId() {
+    return this.id;
+  }
+
+  public String getUserId() {
+    return this.userId;
+  }
+
+  public boolean isMatchWithUserId(String userId) {
       return this.userId.equals(userId);
-    }
+  }
 }

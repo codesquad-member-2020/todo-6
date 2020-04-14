@@ -23,4 +23,17 @@ public class Section {
   public void setCards(List<Card> cards) {
     this.cards = cards;
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public Card getNewCard() {
+    return cards.get(0);
+  }
+
+  public void addCard(Card card, User user, int position) {
+    card.setUser(user);
+    this.cards.add(position, card);
+  }
 }

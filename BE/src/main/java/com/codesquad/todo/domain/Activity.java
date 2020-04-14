@@ -13,8 +13,26 @@ public class Activity {
   private String source;
   private String destination;
   private String card;
-  private LocalDateTime createAt;
+  private LocalDateTime createdAt;
   private Long user;
+
+  public Activity(String action, Section source, Section destination, Card card, User user) {
+    this.action = action;
+    this.source = source.getName();
+    this.destination = destination.getName();
+    this.card = card.getTitle();
+    this.createdAt = LocalDateTime.now();
+    this.user = user.getId();
+  }
+
+  public Activity(String action, Card card, User user) {
+    this.action = action;
+    this.source = "";
+    this.destination = "";
+    this.card = card.getContents();
+    this.createdAt = LocalDateTime.now();
+    this.user = user.getId();
+  }
 
   public void setId(Long id) {
     this.id = id;
@@ -36,8 +54,8 @@ public class Activity {
     this.card = card;
   }
 
-  public void setCreateAt(LocalDateTime createAt) {
-    this.createAt = createAt;
+  public void setCreateAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
   }
 
   public void setUser(Long user) {

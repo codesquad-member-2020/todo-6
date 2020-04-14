@@ -29,4 +29,8 @@ public class Project {
   public void setActivities(List<Activity> activities) {
     this.activities = activities;
   }
+
+  public List<Activity> getActivities() {
+    return activities;
+  }
 }
