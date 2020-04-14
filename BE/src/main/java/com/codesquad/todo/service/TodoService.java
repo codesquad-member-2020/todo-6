@@ -23,9 +23,27 @@ public class TodoService {
   }
 
   public void createCardActivity(String action, Section source, Section destination, Card card, User user) {
-    Project project = projectRepository.findById(1L).get();
+    Project project = selectProject();
     Activity activity = new Activity(action, source, destination, card, user);
-    project.getActivities().add(activity);
+    project.addActivity(activity);
     projectRepository.save(project);
+  }
+
+  public void deleteCard(Long sectionId, Long cardId, User user) {
+    Card card = sectionRepository.findCardBySectionIdAndCardId(sectionId, cardId)
+                                 .orElseThrow(() -> new NotFoundData("컬럼 혹은 카드가 존재하지 않습니다"));
+    deleteCardActivity("delete", card, user);
+    sectionRepository.deleteCard(sectionId, cardId);
+  }
+
+  public void deleteCardActivity(String action, Card card, User user) {
+    Project project = selectProject();
+    Activity activity = new Activity(action, card, user);
+    project.addActivity(activity);
+    projectRepository.save(project);
+  }
+
+  private Project selectProject() {
+    return projectRepository.findById(1L).orElseThrow(() -> new NotFoundData("해당 프로젝트가 없습니다"));
   }
 }

@@ -30,7 +30,8 @@ public class Project {
     this.activities = activities;
   }
 
-  public List<Activity> getActivities() {
-    return activities;
+  public void addActivity(Activity activity) {
+    final int addAtFirst = 0;
+    this.activities.add(addAtFirst, activity);
   }
 }

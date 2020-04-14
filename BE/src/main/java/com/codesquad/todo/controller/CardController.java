@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/column/{columnId}")
 public class CardController {
 
   @Autowired
   TodoService todoService;
 
-  @PostMapping("/column/{columnId}/card")
+  @PostMapping("/card")
   public ResponseEntity<ApiResponse> createCard(@PathVariable Long columnId, @RequestBody @Valid Card card,  @RequestAttribute User user) {
     CardDto newCard = todoService.createCard(columnId, card, user);
     return new ResponseEntity<>(new ApiResponse("SUCCESS", newCard), HttpStatus.OK);
@@ -38,7 +38,8 @@ public class CardController {
   }
 
   @DeleteMapping("/card/{cardId}")
-  public ResponseEntity<ApiResponse> deleteCard(@PathVariable int cardId) {
-    return null;
+  public ResponseEntity<ApiResponse> deleteCard(@PathVariable Long columnId, @PathVariable Long cardId, @RequestAttribute User user) {
+    todoService.deleteCard(columnId, cardId, user);
+    return new ResponseEntity<>(new ApiResponse("SUCCESS", "삭제되었습니다"), HttpStatus.OK);
   }
 }
