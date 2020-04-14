@@ -11,8 +11,6 @@ public class User {
   @Id
   private Long id;
   private String userId;
-  private String name;
-  private List<Project> project;
 
   public void setId(Long id) {
     this.id = id;
@@ -22,11 +20,7 @@ public class User {
     this.userId = userId;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setProject(List<Project> project) {
-    this.project = project;
-  }
+    public boolean isMatchWithUserId(String userId) {
+      return this.userId.equals(userId);
+    }
 }

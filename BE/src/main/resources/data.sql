@@ -1,7 +1,7 @@
 use todo;
 
 insert into project (id, name) values (1, '아닌데');
-insert into user (id, user_id, project, project_key) values (1, '그래 그렇게 살아.....', 1, 0);
+insert into user (id, user_id, project, project_key) values (1, 'lynn', 1, 0);
 insert into section  (id, name, project, project_key) values (1, 'TODO', 1, 0);
 insert into section  (id, name, project, project_key) values (2, 'DOING', 1, 0);
 insert into section  (id, name, project, project_key) values (3, 'DONE', 1, 0);
