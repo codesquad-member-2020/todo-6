@@ -27,7 +27,7 @@ const COLUMN_ATOM = {
 
 export const getColumnId = (targetColumn: any): any => targetColumn.dataset.columnId;
 
-export const columnElement = (event: any): HTMLDivElement => event.target.closest(`.${COLUMN_CLASS.column}`);
+export const columnElement = (target: any): HTMLDivElement => target.closest(`.${COLUMN_CLASS.column}`);
 
 export const cardWrapElement = (columnElement: any): HTMLDivElement => columnElement.querySelector(`.${COLUMN_CLASS.cardWrap}`);
 
@@ -46,9 +46,9 @@ export const changeCardCount = (targetColumn: any): void => {
   countElement.innerHTML = cardCount;
 };
 
-const clickColumnAddButton = (event: any): void => {
-  if (event.target.className !== COLUMN_CLASS.addButton) return;
-  const targetColumn = columnElement(event);
+const clickColumnAddButton = ({ target }: any): void => {
+  if (target.className !== COLUMN_CLASS.addButton) return;
+  const targetColumn = columnElement(target);
   toggleClass(UTIL_CLASS.hidden, inputFormElement(targetColumn));
   textareaElement(targetColumn).focus();
 };

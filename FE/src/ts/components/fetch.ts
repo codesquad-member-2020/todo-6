@@ -1,6 +1,6 @@
 import { Card } from './card';
 import { templateCardElement, author } from './card';
-import { initialRender } from './container';
+import { initialRender } from './columnWrap';
 
 const BASE_URL: string = 'http://15.165.109.219:8080';
 

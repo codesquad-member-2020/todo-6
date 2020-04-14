@@ -25,9 +25,9 @@ const INPUT_FORM_ATOM = {
   ),
 };
 
-export const inputFormElement = (parentElement: any): any => parentElement.querySelector(`.${INPUT_FORM_CLASS.inputForm}`);
+export const inputFormElement = (parentElement: HTMLElement): HTMLElement | null => parentElement.querySelector(`.${INPUT_FORM_CLASS.inputForm}`);
 
-export const textareaElement = (parentElement: any): HTMLTextAreaElement => parentElement.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
+export const textareaElement = (parentElement: HTMLElement): HTMLTextAreaElement | null => parentElement.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
 
 export const templateInputFormElement = (): string => {
   return `<div class="${INPUT_FORM_CLASS.inputForm} ${UTIL_CLASS.hidden}">
@@ -39,32 +39,38 @@ const hideInputForm = (targetColumn: HTMLDivElement): void => {
   addClass(UTIL_CLASS.hidden, inputFormElement(targetColumn));
 };
 
-const clickInputFormAddButton = async (event: any): void => {
-  if (event.target.className !== INPUT_FORM_CLASS.addButton) return;
-  const targetColumn = columnElement(event);
-  addClass(UTIL_CLASS.disabled, event.target);
+const clickInputFormAddButton = async ({ target }: Event): Promise<void> => {
+  if (target.className !== INPUT_FORM_CLASS.addButton) return;
+  const targetColumn: HTMLElement = columnElement(target);
+  addClass(UTIL_CLASS.disabled, target);
   addNewCard(targetColumn, cardWrapElement(targetColumn), textareaElement(targetColumn));
 };
 
-const clickInputFormCancelButton = (event: any): void => {
-  if (event.target.className !== INPUT_FORM_CLASS.cancelButton) return;
-  const targetColumn = columnElement(event);
+const clickInputFormCancelButton = ({ target }: Event): void => {
+  if (target.className !== INPUT_FORM_CLASS.cancelButton) return;
+  const targetColumn: HTMLElement = columnElement(target);
   hideInputForm(targetColumn);
 };
 
-export const toogleButtonActiveState = (event: any, { textAreaClass: textAreaClass, targetClass: targetClass, buttonClass: buttonClass }): void => {
-  if (event.target.id !== textAreaClass) return;
-  const targetElement = event.target.closest(`.${targetClass}`);
-  const toggleButton: HTMLButtonElement = targetElement.querySelector(`.${buttonClass}`);
-  event.target.value ? removeClass(UTIL_CLASS.disabled, toggleButton) : addClass(UTIL_CLASS.disabled, toggleButton);
+interface ClassNameObj {
+  textAreaClass: string;
+  targetClass: string;
+  buttonClass: string;
+}
+
+export const toogleButtonActiveState = ({ target }: Event, className: ClassNameObj): void => {
+  if (target.id !== className.textAreaClass) return;
+  const targetElement: HTMLElement = target.closest(`.${className.targetClass}`);
+  const toggleButton: HTMLButtonElement = targetElement.querySelector(`.${className.buttonClass}`);
+  target.value ? removeClass(UTIL_CLASS.disabled, toggleButton) : addClass(UTIL_CLASS.disabled, toggleButton);
 };
 
-export const inputFormClickHandler = (event: Event): void => {
+export const inputFormClickHandler = (event: MouseEvent): void => {
   clickInputFormAddButton(event);
   clickInputFormCancelButton(event);
 };
 
-export const inputFormInputHandler = (event: Event): void => {
+export const inputFormInputHandler = (event: InputEvent): void => {
   toogleButtonActiveState(event, {
     textAreaClass: INPUT_FORM_CLASS.textarea,
     targetClass: INPUT_FORM_CLASS.inputForm,

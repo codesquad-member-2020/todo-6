@@ -86,6 +86,7 @@ export const templateDeleteModalElement = (): string => {
 export const setModalElement = (type = ''): void => {
   modalElement.dimmedLayer = _q(`.${MODAL_CLASS.dimmedLayer}`);
   modalElement.modal = _q(`.${MODAL_CLASS.modal}`);
+  modalElement.dimmedLayer.addEventListener('click', removeModalElement);
   modalElement.modal.addEventListener('click', modalClickHandler);
   if (type === EDIT_MODAL) {
     modalElement.textarea = _q(`#${MODAL_CLASS.textarea}`);
@@ -94,6 +95,7 @@ export const setModalElement = (type = ''): void => {
 };
 
 const removeModalElement = (type = ''): void => {
+  modalElement.dimmedLayer.removeEventListener('click', removeModalElement);
   modalElement.modal.removeEventListener('click', modalClickHandler);
   if (type === EDIT_MODAL) {
     modalElement.modal.removeEventListener('input', modalInputHandler);
@@ -102,8 +104,8 @@ const removeModalElement = (type = ''): void => {
   modalElement.modal.remove();
 };
 
-const clickModalCardDeleteButton = async (event: any): void => {
-  if (event.target.className !== MODAL_CLASS.deleteButton) return;
+const clickModalCardDeleteButton = async ({ target }: any): void => {
+  if (target.className !== MODAL_CLASS.deleteButton) return;
   const isDeleted = await isCardDeleted(getCardId(modalElement.targetCard));
   if (isDeleted) {
     modalElement.targetCard.remove();
@@ -112,8 +114,8 @@ const clickModalCardDeleteButton = async (event: any): void => {
   removeModalElement(DELETE_MODAL);
 };
 
-const clickModalCardEditButton = async (event: any): void => {
-  if (event.target.className !== MODAL_CLASS.editButton) return;
+const clickModalCardEditButton = async ({ target }: any): void => {
+  if (target.className !== MODAL_CLASS.editButton) return;
   const isEdited = await isCardEdited(getCardId(modalElement.targetCard), modalElement.targetCardContent.innerHTML);
   if (isEdited) {
     modalElement.targetCardContent.innerHTML = modalElement.textarea.value;
@@ -121,8 +123,9 @@ const clickModalCardEditButton = async (event: any): void => {
   removeModalElement(EDIT_MODAL);
 };
 
-const clickModalCloseButton = (event: any): void => {
-  if (event.target.className !== MODAL_CLASS.closeButton && event.target.className !== MODAL_CLASS.cancelButton) return;
+const clickModalCloseButton = ({ target }: any): void => {
+  const closeElementClassName = [MODAL_CLASS.closeButton, MODAL_CLASS.cancelButton];
+  if (!closeElementClassName.includes(target.className)) return;
   removeModalElement();
 };
 

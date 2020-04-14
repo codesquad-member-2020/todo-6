@@ -1,8 +1,8 @@
 import { fetchTodoList } from './components/fetch';
 import { clickHandler, doubleClickHandler, inputHandler } from './components/eventManager';
-import { containerElement } from './components/container';
+import { columnWrapElement } from './components/columnWrap';
 
 fetchTodoList();
-containerElement.addEventListener('click', clickHandler);
-containerElement.addEventListener('dblclick', doubleClickHandler);
-containerElement.addEventListener('input', inputHandler);
+columnWrapElement.addEventListener('click', clickHandler);
+columnWrapElement.addEventListener('dblclick', doubleClickHandler);
+columnWrapElement.addEventListener('input', inputHandler);
