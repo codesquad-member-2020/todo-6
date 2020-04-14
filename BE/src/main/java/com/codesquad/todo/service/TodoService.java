@@ -23,9 +23,10 @@ public class TodoService {
   }
 
   public void createCardActivity(String action, Section source, Section destination, Card card, User user) {
-    Project project = projectRepository.findById(1L).get();
+    final int addAtFirst = 0;
+    Project project = projectRepository.findById(1L).orElseThrow(() -> new NotFoundData("해당 프로젝트가 없습니다"));
     Activity activity = new Activity(action, source, destination, card, user);
-    project.getActivities().add(activity);
+    project.addActivity(addAtFirst, activity);
     projectRepository.save(project);
   }
 }
