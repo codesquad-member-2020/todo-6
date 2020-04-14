@@ -30,9 +30,9 @@ const CARD_ATOM = {
   author: (author: string): string => htmlElements.span(CARD_CLASS.author, htmlElements.strong(author), AUTHOR_STRING),
 };
 
-export const getCardId = (targetCard: any): any => targetCard.dataset.cardId;
+export const getCardId = (targetCard: HTMLElement): string => targetCard.dataset.cardId;
 
-export const cardElement = (target: any): any => target.closest(`.${CARD_CLASS.card}`);
+export const cardElement = (target: HTMLElement): HTMLElement => target.closest(`.${CARD_CLASS.card}`);
 
 export const templateCardElement = (columnId: number, cardData: Card, author: string): string => {
   const { id, contents } = cardData;
@@ -50,7 +50,7 @@ export const templateAllCardElement = (columnId: number, cardsData: Array<Card>,
   }, '');
 };
 
-const clickCardDeleteButton = ({ target }: any): void => {
+const clickCardDeleteButton = ({ target }: Event): void => {
   if (target.className !== CARD_CLASS.deleteBtn) return;
   modalElement.targetColumn = columnElement(target);
   modalElement.targetCard = cardElement(target);
@@ -58,7 +58,7 @@ const clickCardDeleteButton = ({ target }: any): void => {
   setModalElement(DELETE_MODAL);
 };
 
-const doubleClickCard = ({ target }: any): void => {
+const doubleClickCard = ({ target }: Event): void => {
   if (target.className !== CARD_CLASS.card) return;
   modalElement.targetCard = cardElement(target);
   modalElement.targetCardContent = modalElement.targetCard.querySelector(`.${CARD_CLASS.content}`);
@@ -66,10 +66,10 @@ const doubleClickCard = ({ target }: any): void => {
   setModalElement(EDIT_MODAL);
 };
 
-export const cardClickHandler = (event: any): any => {
+export const cardClickHandler = (event: Event): any => {
   clickCardDeleteButton(event);
 };
 
-export const cardDoubleClickHandler = (event: any): any => {
+export const cardDoubleClickHandler = (event: Event): any => {
   doubleClickCard(event);
 };

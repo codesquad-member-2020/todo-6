@@ -2,7 +2,7 @@ import { ICON_TYPE, UTIL_CLASS, DATA_ATTRIBUTE } from '../utils/constants';
 import { _q, toggleClass } from '../utils/utils';
 import htmlElements from '../utils/htmlElement';
 import { inputFormElement, textareaElement, templateInputFormElement } from './inputForm';
-import { templateAllCardElement } from './card';
+import { Card, templateAllCardElement } from './card';
 import { Sections, createCard } from './fetch';
 
 export const COLUMN_CLASS = {
@@ -22,40 +22,40 @@ const COLUMN_ATOM = {
   title: (name: string): string => htmlElements.h2(COLUMN_CLASS.title, name),
   buttons: htmlElements.div(COLUMN_CLASS.buttonWrap, htmlElements.button(COLUMN_CLASS.addButton, ICON_TYPE.add), htmlElements.button(COLUMN_CLASS.deleteButton, ICON_TYPE.delete)),
   inputForm: templateInputFormElement(),
-  cards: (id: number, userName: string, cards: Array<any>): string => htmlElements.div(COLUMN_CLASS.cardWrap, templateAllCardElement(id, cards, userName)),
+  cards: (id: number, userName: string, cards: Array<Card>): string => htmlElements.div(COLUMN_CLASS.cardWrap, templateAllCardElement(id, cards, userName)),
 };
 
-export const getColumnId = (targetColumn: any): any => targetColumn.dataset.columnId;
+export const getColumnId = (targetColumn: HTMLElement): string => targetColumn.dataset.columnId;
 
-export const columnElement = (target: any): HTMLDivElement => target.closest(`.${COLUMN_CLASS.column}`);
+export const columnElement = (target: EventTarget): HTMLElement => target.closest(`.${COLUMN_CLASS.column}`);
 
-export const cardWrapElement = (columnElement: any): HTMLDivElement => columnElement.querySelector(`.${COLUMN_CLASS.cardWrap}`);
+export const cardWrapElement = (columnElement: HTMLElement): HTMLElement => columnElement.querySelector(`.${COLUMN_CLASS.cardWrap}`);
 
 export const templateColumnElement = ({ id, name, cards }: Sections, userName: string): string => {
-  const cardCount = Object.keys(cards).length;
+  const cardCount: number = Object.keys(cards).length;
   return `<div ${DATA_ATTRIBUTE.columnId}="${id}" class="${COLUMN_CLASS.column}">
   ${COLUMN_ATOM.titleAtoms(`${COLUMN_ATOM.cardCount(cardCount)}${COLUMN_ATOM.title(name)}${COLUMN_ATOM.buttons}`)}
   ${COLUMN_ATOM.inputForm}
   ${COLUMN_ATOM.cards(id, userName, cards)}</div>`;
 };
 
-export const changeCardCount = (targetColumn: any): void => {
-  const countElement = targetColumn.querySelector(`.${COLUMN_CLASS.cardCount}`);
-  const cardWrapElement = targetColumn.querySelector(`.${COLUMN_CLASS.cardWrap}`);
+export const changeCardCount = (targetColumn: HTMLElement): void => {
+  const countElement: HTMLElement = targetColumn.querySelector(`.${COLUMN_CLASS.cardCount}`);
+  const cardWrapElement: HTMLElement = targetColumn.querySelector(`.${COLUMN_CLASS.cardWrap}`);
   const cardCount: number = cardWrapElement.childElementCount;
-  countElement.innerHTML = cardCount;
+  countElement.innerHTML = String(cardCount);
 };
 
-const clickColumnAddButton = ({ target }: any): void => {
+const clickColumnAddButton = ({ target }: Event): void => {
   if (target.className !== COLUMN_CLASS.addButton) return;
-  const targetColumn = columnElement(target);
+  const targetColumn: HTMLElement = columnElement(target);
   toggleClass(UTIL_CLASS.hidden, inputFormElement(targetColumn));
   textareaElement(targetColumn).focus();
 };
 
-export const addNewCard = async (targetColumn: any, cardWrap: any, textarea: HTMLTextAreaElement): void => {
+export const addNewCard = async (targetColumn: HTMLElement, cardWrap: HTMLElement, textarea: HTMLTextAreaElement): Promise<void> => {
   textarea.setAttribute('disabled', true);
-  cardWrap.insertAdjacentHTML('afterbegin', await createCard(getColumnId(targetColumn), textarea.value));
+  cardWrap.insertAdjacentHTML('afterbegin', await createCard(parseInt(getColumnId(targetColumn), 10), textarea.value));
   textarea.value = '';
   textarea.removeAttribute('disabled');
   changeCardCount(targetColumn);

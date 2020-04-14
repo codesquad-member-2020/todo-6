@@ -18,7 +18,7 @@ export interface Sections {
 }
 
 export const fetchTodoList = async (): Promise<void> => {
-  const response = await fetch(API_URL.todoList(), { method: 'GET' });
+  const response: Response = await fetch(API_URL.todoList(), { method: 'GET' });
   const todoList = await response.json();
   const {
     data: { userId, project },
@@ -29,20 +29,20 @@ export const fetchTodoList = async (): Promise<void> => {
 };
 
 export const createCard = async (columnId: number, contents: string): Promise<string> => {
-  const response = await fetch(API_URL.addCard(columnId), { method: 'POST', body: JSON.stringify({ contents: contents }), redirect: 'follow' });
+  const response: Response = await fetch(API_URL.addCard(columnId), { method: 'POST', body: JSON.stringify({ contents: contents }), redirect: 'follow' });
   const addedCard = await response.json();
   const { data } = addedCard;
   return templateCardElement(columnId, data, author.userId);
 };
 
 export const isCardDeleted = async (cardId: number): Promise<boolean> => {
-  const response = await fetch(API_URL.deleteCard(cardId), { method: 'DELETE', redirect: 'follow' });
+  const response: Response = await fetch(API_URL.deleteCard(cardId), { method: 'DELETE', redirect: 'follow' });
   console.log(response);
   return response.ok;
 };
 
 export const isCardEdited = async (cardId: number, contents: string): Promise<boolean> => {
-  const response = await fetch(API_URL.editCard(cardId), { method: 'PUT', body: JSON.stringify({ contents: contents }), redirect: 'follow' });
+  const response: Response = await fetch(API_URL.editCard(cardId), { method: 'PUT', body: JSON.stringify({ contents: contents }), redirect: 'follow' });
   console.log(response);
   return response.ok;
 };

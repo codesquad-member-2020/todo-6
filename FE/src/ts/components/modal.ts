@@ -34,8 +34,8 @@ const MODAL_STRING = {
   cancelButton: '취소',
 };
 
-export const DELETE_MODAL = 'DELETE';
-export const EDIT_MODAL = 'EDIT';
+export const DELETE_MODAL: string = 'DELETE';
+export const EDIT_MODAL: string = 'EDIT';
 
 const TEXTAREA_MAX_LENGTH: number = 500;
 
@@ -83,7 +83,7 @@ export const templateDeleteModalElement = (): string => {
   </div>`;
 };
 
-export const setModalElement = (type = ''): void => {
+export const setModalElement = (type: string = ''): void => {
   modalElement.dimmedLayer = _q(`.${MODAL_CLASS.dimmedLayer}`);
   modalElement.modal = _q(`.${MODAL_CLASS.modal}`);
   modalElement.dimmedLayer.addEventListener('click', removeModalElement);
@@ -94,7 +94,7 @@ export const setModalElement = (type = ''): void => {
   }
 };
 
-const removeModalElement = (type = ''): void => {
+const removeModalElement = (type: string = ''): void => {
   modalElement.dimmedLayer.removeEventListener('click', removeModalElement);
   modalElement.modal.removeEventListener('click', modalClickHandler);
   if (type === EDIT_MODAL) {
@@ -104,9 +104,9 @@ const removeModalElement = (type = ''): void => {
   modalElement.modal.remove();
 };
 
-const clickModalCardDeleteButton = async ({ target }: any): void => {
+const clickModalCardDeleteButton = async ({ target }: Event): Promise<void> => {
   if (target.className !== MODAL_CLASS.deleteButton) return;
-  const isDeleted = await isCardDeleted(getCardId(modalElement.targetCard));
+  const isDeleted: boolean = await isCardDeleted(getCardId(modalElement.targetCard));
   if (isDeleted) {
     modalElement.targetCard.remove();
     changeCardCount(modalElement.targetColumn);
@@ -114,9 +114,9 @@ const clickModalCardDeleteButton = async ({ target }: any): void => {
   removeModalElement(DELETE_MODAL);
 };
 
-const clickModalCardEditButton = async ({ target }: any): void => {
+const clickModalCardEditButton = async ({ target }: Event): Promise<void> => {
   if (target.className !== MODAL_CLASS.editButton) return;
-  const isEdited = await isCardEdited(getCardId(modalElement.targetCard), modalElement.targetCardContent.innerHTML);
+  const isEdited: boolean = await isCardEdited(getCardId(modalElement.targetCard), modalElement.targetCardContent.innerHTML);
   if (isEdited) {
     modalElement.targetCardContent.innerHTML = modalElement.textarea.value;
   } else console.error('Edit Error');
@@ -124,7 +124,7 @@ const clickModalCardEditButton = async ({ target }: any): void => {
 };
 
 const clickModalCloseButton = ({ target }: any): void => {
-  const closeElementClassName = [MODAL_CLASS.closeButton, MODAL_CLASS.cancelButton];
+  const closeElementClassName: Array<string> = [MODAL_CLASS.closeButton, MODAL_CLASS.cancelButton];
   if (!closeElementClassName.includes(target.className)) return;
   removeModalElement();
 };

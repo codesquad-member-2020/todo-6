@@ -25,9 +25,9 @@ const INPUT_FORM_ATOM = {
   ),
 };
 
-export const inputFormElement = (parentElement: HTMLElement): HTMLElement | null => parentElement.querySelector(`.${INPUT_FORM_CLASS.inputForm}`);
+export const inputFormElement = (parentElement: HTMLElement): HTMLElement => parentElement.querySelector(`.${INPUT_FORM_CLASS.inputForm}`);
 
-export const textareaElement = (parentElement: HTMLElement): HTMLTextAreaElement | null => parentElement.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
+export const textareaElement = (parentElement: HTMLElement): HTMLTextAreaElement => parentElement.querySelector(`#${INPUT_FORM_CLASS.textarea}`);
 
 export const templateInputFormElement = (): string => {
   return `<div class="${INPUT_FORM_CLASS.inputForm} ${UTIL_CLASS.hidden}">
@@ -65,12 +65,12 @@ export const toogleButtonActiveState = ({ target }: Event, className: ClassNameO
   target.value ? removeClass(UTIL_CLASS.disabled, toggleButton) : addClass(UTIL_CLASS.disabled, toggleButton);
 };
 
-export const inputFormClickHandler = (event: MouseEvent): void => {
+export const inputFormClickHandler = (event: Event): void => {
   clickInputFormAddButton(event);
   clickInputFormCancelButton(event);
 };
 
-export const inputFormInputHandler = (event: InputEvent): void => {
+export const inputFormInputHandler = (event: Event): void => {
   toogleButtonActiveState(event, {
     textAreaClass: INPUT_FORM_CLASS.textarea,
     targetClass: INPUT_FORM_CLASS.inputForm,
