@@ -36,6 +36,8 @@ public class Activity {
     this.user = user.getId();
   }
 
+  public Activity(){}
+
   public void setId(Long id) {
     this.id = id;
   }
