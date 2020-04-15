@@ -25,7 +25,7 @@ const COLUMN_ATOM = {
   cards: (id: number, cards: Array<Card>): string => htmlElements.div(COLUMN_CLASS.cardWrap, templateAllCardElement(id, cards)),
 };
 
-export const getColumnId = (target: HTMLElement): string => target.dataset.columnId;
+export const getColumnId = (target: HTMLElement): number => parseInt(target.dataset.columnId, 10);
 
 export const columnElement = (target: EventTarget): HTMLElement => target.closest(`.${COLUMN_CLASS.column}`);
 
@@ -56,7 +56,7 @@ const clickColumnAddButton = ({ target }: Event): void => {
 export const addNewCard = async (targetColumn: HTMLElement, cardWrap: HTMLElement, textarea: HTMLTextAreaElement): Promise<void> => {
   try {
     textarea.setAttribute('disabled', true);
-    cardWrap.insertAdjacentHTML('afterbegin', await createCard(parseInt(getColumnId(targetColumn), 10), DEFAULT_CARD_TITLE, textarea.value));
+    cardWrap.insertAdjacentHTML('afterbegin', await createCard(getColumnId(targetColumn), DEFAULT_CARD_TITLE, textarea.value));
     changeCardCount(targetColumn);
   } catch (err) {
     console.error(err);

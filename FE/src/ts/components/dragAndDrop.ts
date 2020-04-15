@@ -1,10 +1,11 @@
 import { _q, addClass, removeClass } from '../utils/utils';
-import { COLUMN_CLASS, changeCardCount } from './column';
-import { CARD_CLASS } from './card';
+import { COLUMN_CLASS, changeCardCount, getColumnId, cardWrapElement } from './column';
+import { CARD_CLASS, getCardId } from './card';
+import { isCardMoved } from './fetch';
 
 interface DragProperty {
   targetElement: any;
-  prevColumnElement: any;
+  sourceColumn: any;
   cloneElement: any;
   hoverElement: any;
   cardWrapElement: any;
@@ -16,7 +17,7 @@ interface DragProperty {
 
 const dragProperty: DragProperty = {
   targetElement: null,
-  prevColumnElement: null,
+  sourceColumn: null,
   cloneElement: null,
   hoverElement: null,
   cardWrapElement: null,
@@ -41,7 +42,7 @@ const cloneCardElement = (event: MouseEvent): void => {
     x: event.clientX,
     y: event.clientY,
   };
-  dragProperty.prevColumnElement = event.target.closest(`.${COLUMN_CLASS.column}`);
+  dragProperty.sourceColumn = event.target.closest(`.${COLUMN_CLASS.column}`);
   dragProperty.cloneElement = event.target.cloneNode(true);
 };
 
@@ -67,9 +68,14 @@ const updateCloneElementPosition = ({ clientX, clientY }: MouseEvent): void => {
   dragProperty.cloneElement.style.transform = `translate(${posX}px, ${posY}px)`;
 };
 
-const revertToOriginState = (): void => {
+const initDragProperty = (): void => {
   dragProperty.isCloneDisplay = false;
   dragProperty.isMousePressed = false;
+  dragProperty.sourceColumn = null;
+  dragProperty.hoverElement = null;
+  dragProperty.cardWrapElement = null;
+  dragProperty.originElementPos = null;
+  dragProperty.dragStartPos = null;
   dragProperty.cloneElement.remove();
   dragProperty.targetElement.focus();
   removeClass(DRAG_CLASS.transparent, dragProperty.targetElement);
@@ -91,17 +97,31 @@ const insertCard = (event: MouseEvent) => {
 };
 
 const insertCardLastIndex = (event: MouseEvent) => {
-  dragProperty.cardWrapElement = event.target.querySelector(`.${COLUMN_CLASS.cardWrap}`);
-  if (!isMousePositionedLastIndex(event, dragProperty.cardWrapElement.getBoundingClientRect())) return;
+  const targetColumnCardWrap = event.target.querySelector(`.${COLUMN_CLASS.cardWrap}`);
+  if (!isMousePositionedLastIndex(event, targetColumnCardWrap.getBoundingClientRect())) return;
+  dragProperty.cardWrapElement = targetColumnCardWrap;
   dragProperty.cardWrapElement.insertBefore(dragProperty.targetElement, null);
 };
 
-const getTargetCardIndex = (): number | undefined => {
-  if (!dragProperty.cardWrapElement) return;
+const getMovedCardIndex = (): number => {
+  if (!dragProperty.cardWrapElement) return -1;
   const cardWrapChildNodes = dragProperty.cardWrapElement.childNodes;
   for (let index = 0; index < cardWrapChildNodes.length; index++) {
     if (cardWrapChildNodes[index] === dragProperty.targetElement) return index;
   }
+  return -1;
+};
+
+const changeEachColumnCardCount = (sourceColumn: HTMLElement, destinationColumn: HTMLElement): void => {
+  if (destinationColumn === sourceColumn) return;
+  changeCardCount(destinationColumn);
+  changeCardCount(sourceColumn);
+};
+
+const fetchMovedCardInfo = async (sourceColumn: HTMLElement, destinationColumn: HTMLElement, movedCardIndex: number): Promise<void> => {
+  console.log('source:', getColumnId(sourceColumn), 'desti:', getColumnId(destinationColumn), 'cardId:', getCardId(dragProperty.targetElement), 'pos:', movedCardIndex);
+  const isMoved = await isCardMoved(getColumnId(sourceColumn), getColumnId(destinationColumn), getCardId(dragProperty.targetElement), movedCardIndex);
+  if (!isMoved) console.log('Move Error:', isMoved);
 };
 
 const mouseDownCard = (event: MouseEvent): void => {
@@ -131,15 +151,14 @@ const mouseOverCard = ({ target }: MouseEvent): void => {
 
 const mouseUpCard = (): void => {
   if (!dragProperty.isMousePressed) return;
-  revertToOriginState();
   window.removeEventListener('selectstart', disableSelect);
-  const targetColumn = dragProperty.targetElement.closest(`.${COLUMN_CLASS.column}`);
-  const prevColumn = dragProperty.prevColumnElement;
-  if (targetColumn !== prevColumn) {
-    changeCardCount(targetColumn);
-    changeCardCount(prevColumn);
-  }
-  console.log(getTargetCardIndex());
+  const sourceColumn = dragProperty.sourceColumn;
+  const destinationColumn = dragProperty.targetElement.closest(`.${COLUMN_CLASS.column}`);
+  const movedCardIndex = getMovedCardIndex();
+  initDragProperty();
+  if (movedCardIndex < 0) return;
+  changeEachColumnCardCount(destinationColumn, sourceColumn);
+  fetchMovedCardInfo(sourceColumn, destinationColumn, movedCardIndex);
 };
 
 const applyDragAndDrop = (targetElement: HTMLElement): void => {

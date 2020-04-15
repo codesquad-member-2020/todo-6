@@ -16,6 +16,9 @@ const API_URL = {
   editCard(cardId: number): string {
     return `${this.BASE_URL}/api/card/${cardId}`;
   },
+  moveCard(sourceColumnId: number, destinationColumnId: number, cardId: number, cardPosition: number): string {
+    return `${this.BASE_URL}/api/column/${sourceColumnId}/card/${cardId}?destination=${destinationColumnId}&position=${cardPosition}`;
+  },
 };
 
 const JWT_TOKEN: string = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcklkIjoibHlubiIsImV4cCI6MTQ4NTI3MDAwMDAwMH0.LGcj3yDql6M-9s21JXgDw4kYokbQ1t919FdjVkai7bE';
@@ -108,6 +111,12 @@ export const isCardDeleted = async (columnId: number, cardId: number): Promise<b
 
 export const isCardEdited = async (cardId: number, title: string, contents: string): Promise<boolean> => {
   const response: Response = await fetch(API_URL.editCard(cardId), { method: 'PUT', body: JSON.stringify({ title: title, contents: contents }), headers: { Authorization: JWT_TOKEN } });
+  console.log(response);
+  return response.ok;
+};
+
+export const isCardMoved = async (sourceColumnId: number, destinationColumnId: number, cardId: number, cardPosition: number): Promise<boolean> => {
+  const response: Response = await fetch(API_URL.moveCard(sourceColumnId, destinationColumnId, cardId, cardPosition), { method: 'GET', headers: { Authorization: JWT_TOKEN } });
   console.log(response);
   return response.ok;
 };
