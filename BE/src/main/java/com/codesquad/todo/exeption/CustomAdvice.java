@@ -1,6 +1,7 @@
 package com.codesquad.todo.exeption;
 
 import com.codesquad.todo.domain.ApiResponse;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -22,5 +23,12 @@ public class CustomAdvice {
   @ResponseBody
   public ApiResponse handleError(NotFoundData notFoundData) {
     return notFoundData.returnErrorMessage();
+  }
+
+  @ExceptionHandler(SignatureException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  @ResponseBody
+  public ApiResponse handleError(SignatureException e) {
+    return new ApiResponse("FAIL", e.getMessage());
   }
 }
