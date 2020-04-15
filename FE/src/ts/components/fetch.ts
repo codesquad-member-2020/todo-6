@@ -2,14 +2,23 @@ import { Card } from './card';
 import { templateCardElement } from './card';
 import { initialRender } from './columnWrap';
 
-const BASE_URL: string = 'http://15.165.109.219:8080';
-
 const API_URL = {
-  todoList: (): string => `${BASE_URL}/api/todo`,
-  addCard: (columnId: number): string => `${BASE_URL}/api/column/${columnId}/card`,
-  deleteCard: (cardId: number): string => `${BASE_URL}/api/card/${cardId}`,
-  editCard: (cardId: number): string => `${BASE_URL}/api/card/${cardId}`,
+  BASE_URL: 'http://15.165.109.219:8080',
+  todoList(): string {
+    return `${this.BASE_URL}/api/todo`;
+  },
+  addCard(columnId: number): string {
+    return `${this.BASE_URL}/api/column/${columnId}/card`;
+  },
+  deleteCard(cardId: number): string {
+    return `${this.BASE_URL}/api/card/${cardId}`;
+  },
+  editCard(cardId: number): string {
+    return `${this.BASE_URL}/api/card/${cardId}`;
+  },
 };
+
+const JWT_TOKEN: string = 'Basic eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcklkIjoibHlubiIsImV4cCI6MTQ4NTI3MDAwMDAwMH0.LGcj3yDql6M-9s21JXgDw4kYokbQ1t919FdjVkai7bE';
 
 export interface Sections {
   id: number;
@@ -70,7 +79,7 @@ const todo = {
 };
 
 export const fetchTodoList = async (): Promise<void> => {
-  // const response: Response = await fetch(API_URL.todoList(), { method: 'GET' });
+  // const response: Response = await fetch(API_URL.todoList(), { method: 'GET' }, headers: { Authorization: JWT_TOKEN });
   // const todoList = await response.json();
   const todoList = todo;
   const {
@@ -80,20 +89,25 @@ export const fetchTodoList = async (): Promise<void> => {
 };
 
 export const createCard = async (columnId: number, title: string, contents: string): Promise<string> => {
-  const response: Response = await fetch(API_URL.addCard(columnId), { method: 'POST', body: JSON.stringify({ title: title, contents: contents }) });
+  const response: Response = await fetch(API_URL.addCard(columnId), {
+    method: 'POST',
+    body: JSON.stringify({ title: title, contents: contents }),
+    headers: { Authorization: JWT_TOKEN },
+  });
   const addedCard = await response.json();
+  console.log(addedCard);
   const { data } = addedCard;
   return templateCardElement(columnId, data);
 };
 
 export const isCardDeleted = async (cardId: number): Promise<boolean> => {
-  const response: Response = await fetch(API_URL.deleteCard(cardId), { method: 'DELETE' });
+  const response: Response = await fetch(API_URL.deleteCard(cardId), { method: 'DELETE', headers: { Authorization: JWT_TOKEN } });
   console.log(response);
   return response.ok;
 };
 
 export const isCardEdited = async (cardId: number, title: string, contents: string): Promise<boolean> => {
-  const response: Response = await fetch(API_URL.editCard(cardId), { method: 'PUT', body: JSON.stringify({ title: title, contents: contents }) });
+  const response: Response = await fetch(API_URL.editCard(cardId), { method: 'PUT', body: JSON.stringify({ title: title, contents: contents }), headers: { Authorization: JWT_TOKEN } });
   console.log(response);
   return response.ok;
 };
