@@ -13,5 +13,5 @@ export const UTIL_CLASS = {
 export const DATA_ATTRIBUTE = {
   columnId: 'data-column-id',
   cardId: 'data-card-id',
-  title: 'data-title',
+  contents: 'data-contents',
 };

@@ -21,7 +21,7 @@ export const CARD_CLASS = {
 
 const AUTHOR_STRING: string = ' (이)가 추가함';
 
-export const DEFAULT_CARD_TITLE = '새로운 카드 제목';
+export const DEFAULT_CARD_CONTENTS = null;
 
 const CARD_ATOM = {
   icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.bookmark),
@@ -36,10 +36,10 @@ export const cardElement = (target: HTMLElement): HTMLElement => target.closest(
 
 export const templateCardElement = (columnId: number, cardData: Card): string => {
   const { id, title, contents, user } = cardData;
-  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", ${DATA_ATTRIBUTE.title}="${title}", class="${CARD_CLASS.card}" tabindex="0">
+  return `<article ${DATA_ATTRIBUTE.columnId}="${columnId}", ${DATA_ATTRIBUTE.cardId}="${id}", ${DATA_ATTRIBUTE.contents}="${contents}", class="${CARD_CLASS.card}" tabindex="0">
     ${CARD_ATOM.icon}
     ${CARD_ATOM.deleteBtn}
-    ${CARD_ATOM.content(contents)}
+    ${CARD_ATOM.content(title)}
     ${CARD_ATOM.author(user)}</article>`;
 };
 

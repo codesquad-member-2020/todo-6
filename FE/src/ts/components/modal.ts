@@ -116,7 +116,7 @@ const clickModalCardDeleteButton = async ({ target }: Event): Promise<void> => {
 
 const clickModalCardEditButton = async ({ target }: Event): Promise<void> => {
   if (target.className !== MODAL_CLASS.editButton) return;
-  const isEdited: boolean = await isCardEdited(getCardId(modalElement.targetCard), modalElement.targetCard.dataset.title, modalElement.targetCardContent.innerHTML);
+  const isEdited: boolean = await isCardEdited(getCardId(modalElement.targetCard), modalElement.targetCard.dataset.contents, modalElement.targetCardContent.innerHTML);
   if (isEdited) {
     modalElement.targetCardContent.innerHTML = modalElement.textarea.value;
   } else console.error('Edit Error');

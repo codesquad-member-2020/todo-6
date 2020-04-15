@@ -26,72 +26,120 @@ const JWT_TOKEN: string = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6M
 export interface Sections {
   id: number;
   name: string;
-  cards: Array<Card>;
+  card: Array<Card>;
 }
 
 const todo = {
   status: 'SUCCESS',
-  data: {
-    id: 1,
-    name: 'todo',
-    sections: [
-      {
-        id: 1,
-        name: '해야할일',
-        cards: [
-          {
-            id: 3,
-            title: '제목3333',
-            contents: '내용3333',
-            user: '에드',
-          },
-          {
-            id: 2,
-            title: '제목2222',
-            contents: '내용2222',
-            user: '다이앤',
-          },
-          {
-            id: 1,
-            title: '제목1111',
-            contents: '내용1111',
-            user: '모스',
-          },
-        ],
-      },
-      {
-        id: 2,
-        name: '하는중',
-        cards: [
-          {
-            id: 4,
-            title: '하는중제목4444',
-            contents: '하는중내용4444',
-            user: '에드',
-          },
-        ],
-      },
-      {
-        id: 3,
-        name: '다했다',
-        cards: [],
-      },
-    ],
-    activities: [],
-  },
+  data: [
+    {
+      id: 1,
+      name: 'TODO',
+      card: [
+        {
+          id: 13,
+          title: '제곧내',
+          contents: null,
+          user: 'lynn',
+        },
+        {
+          id: 12,
+          title: '제곧내',
+          contents: null,
+          user: 'lynn',
+        },
+        {
+          id: 11,
+          title: '제곧내',
+          contents: null,
+          user: 'lynn',
+        },
+        {
+          id: 10,
+          title: '제곧내',
+          contents: null,
+          user: 'lynn',
+        },
+        {
+          id: 9,
+          title: '제곧내',
+          contents: null,
+          user: 'lynn',
+        },
+        {
+          id: 8,
+          title: '제곧내',
+          contents: null,
+          user: 'lynn',
+        },
+        {
+          id: 1,
+          title: '배고프다',
+          contents: '배가 고파',
+          user: 'lynn',
+        },
+        {
+          id: 2,
+          title: '배고픈가',
+          contents: '닭갈비 먹고싶어',
+          user: 'lynn',
+        },
+        {
+          id: 3,
+          title: '배고픈듯',
+          contents: '뭐먹지',
+          user: 'lynn',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'DOING',
+      card: [
+        {
+          id: 4,
+          title: '닭갈비도',
+          contents: '철판으로',
+          user: 'lynn',
+        },
+        {
+          id: 5,
+          title: '먹고싶은걸',
+          contents: '어떡해 힝',
+          user: 'lynn',
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: 'DONE',
+      card: [
+        {
+          id: 6,
+          title: '이제',
+          contents: '슬 것도 없다',
+          user: 'lynn',
+        },
+        {
+          id: 7,
+          title: '졸려',
+          contents: '다얜바부',
+          user: 'lynn',
+        },
+      ],
+    },
+  ],
 };
 
 export const fetchTodoList = async (): Promise<void> => {
   // const response: Response = await fetch(API_URL.todoList(), { method: 'GET' }, headers: { Authorization: JWT_TOKEN });
   // const todoList = await response.json();
-  const todoList = todo;
-  const {
-    data: { sections },
-  } = todoList;
-  initialRender(sections);
+  const { data } = todo;
+  console.log(data);
+  initialRender(data);
 };
 
-export const createCard = async (columnId: number, title: string, contents: string): Promise<string> => {
+export const createCard = async (columnId: number, title: string, contents: null): Promise<string> => {
   const response: Response = await fetch(API_URL.addCard(columnId), {
     method: 'POST',
     body: JSON.stringify({ title: title, contents: contents }),
