@@ -1,10 +1,13 @@
 package com.codesquad.todo.service;
 
 import com.codesquad.todo.domain.*;
+import com.codesquad.todo.dto.ActivityDto;
 import com.codesquad.todo.dto.CardDto;
 import com.codesquad.todo.exeption.NotFoundData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TodoService {
@@ -12,6 +15,8 @@ public class TodoService {
   ProjectRepository projectRepository;
   @Autowired
   SectionRepository sectionRepository;
+
+  private Long projectId = 1L;
 
   public CardDto createCard(Long sectionId, Card card, User user) {
     final int addAtFirst = 0;
@@ -49,8 +54,12 @@ public class TodoService {
 
     deleteOrUpdateCardActivity("update", card, user);
   }
+  
+   public List<ActivityDto> getAllActivity() {
+    return projectRepository.getAllActivity(projectId);
+  }
 
   private Project selectProject() {
-    return projectRepository.findById(1L).orElseThrow(() -> new NotFoundData("해당 프로젝트가 없습니다"));
+    return projectRepository.findById(projectId).orElseThrow(() -> new NotFoundData("해당 프로젝트가 없습니다"));
   }
 }

@@ -16,6 +16,8 @@ public class Activity {
   private LocalDateTime createdAt;
   private Long user;
 
+  public Activity(){}
+
   public Activity(String action, Section source, Section destination, Card card, User user) {
     this.action = action;
     this.source = source.getName();
