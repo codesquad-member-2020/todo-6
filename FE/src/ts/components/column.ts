@@ -25,7 +25,7 @@ const COLUMN_ATOM = {
   cards: (id: number, cards: Array<Card>): string => htmlElements.div(COLUMN_CLASS.cardWrap, templateAllCardElement(id, cards)),
 };
 
-export const getColumnId = (targetColumn: HTMLElement): string => targetColumn.dataset.columnId;
+export const getColumnId = (target: HTMLElement): string => target.dataset.columnId;
 
 export const columnElement = (target: EventTarget): HTMLElement => target.closest(`.${COLUMN_CLASS.column}`);
 

@@ -2,7 +2,7 @@ import { _q } from '../utils/utils';
 import { ICON_TYPE } from '../utils/constants';
 import htmlElements from '../utils/htmlElement';
 import { isCardDeleted, isCardEdited } from './fetch';
-import { changeCardCount } from './column';
+import { changeCardCount, getColumnId } from './column';
 import { toogleButtonActiveState } from './inputForm';
 import { getCardId } from './card';
 
@@ -106,7 +106,7 @@ const removeModalElement = (type: string = ''): void => {
 
 const clickModalCardDeleteButton = async ({ target }: Event): Promise<void> => {
   if (target.className !== MODAL_CLASS.deleteButton) return;
-  const isDeleted: boolean = await isCardDeleted(parseInt(getCardId(modalElement.targetCard), 10));
+  const isDeleted: boolean = await isCardDeleted(parseInt(getColumnId(modalElement.targetCard), 10), parseInt(getCardId(modalElement.targetCard), 10));
   if (isDeleted) {
     modalElement.targetCard.remove();
     changeCardCount(modalElement.targetColumn);

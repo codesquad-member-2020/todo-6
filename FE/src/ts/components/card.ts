@@ -30,7 +30,7 @@ const CARD_ATOM = {
   author: (author: string): string => htmlElements.span(CARD_CLASS.author, htmlElements.strong(author), AUTHOR_STRING),
 };
 
-export const getCardId = (targetCard: HTMLElement): string => targetCard.dataset.cardId;
+export const getCardId = (target: HTMLElement): string => target.dataset.cardId;
 
 export const cardElement = (target: HTMLElement): HTMLElement => target.closest(`.${CARD_CLASS.card}`);
 
