@@ -19,10 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
                         HttpMethod.PUT.name(),
                         HttpMethod.PATCH.name(),
                         HttpMethod.DELETE.name())
-                .allowedHeaders("access-control-allow-origin", "*")
-                .allowedHeaders("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT")
-                .allowedHeaders("Access-Control-Max-Age", "3600")
-                .allowedHeaders("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept");
+                .exposedHeaders("Authorization");
     }
 
     @Bean
