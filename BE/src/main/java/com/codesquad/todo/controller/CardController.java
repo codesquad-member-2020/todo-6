@@ -2,9 +2,9 @@ package com.codesquad.todo.controller;
 
 import com.codesquad.todo.domain.*;
 import com.codesquad.todo.dto.CardDto;
-import com.codesquad.todo.exeption.NotFoundData;
 import com.codesquad.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +25,10 @@ public class CardController {
   }
 
   @PutMapping("/card/{cardId}")
-  public ResponseEntity<ApiResponse> updateCard(@PathVariable int cardId, Card card) {
-    return null;
+  public ResponseEntity<ApiResponse> updateCard(@PathVariable Long columnId, @PathVariable Long cardId,
+                                                @RequestBody @Valid Card card, @RequestAttribute User user) {
+    todoService.updateCard(columnId, cardId, card, user);
+    return ResponseEntity.ok(new ApiResponse("SUCCESS", "수정되었습니다."));
   }
 
   @GetMapping("/card/{cardId}")
