@@ -1,12 +1,12 @@
 package com.codesquad.todo.service;
 
 import com.codesquad.todo.domain.*;
-import com.codesquad.todo.dto.ActivityDto;
-import com.codesquad.todo.dto.CardDto;
+import com.codesquad.todo.dto.*;
 import com.codesquad.todo.exeption.NotFoundData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,8 +55,16 @@ public class TodoService {
     deleteOrUpdateCardActivity("update", card, user);
   }
   
-   public List<ActivityDto> getAllActivity() {
+  public List<ActivityDto> getAllActivity() {
     return projectRepository.getAllActivity(projectId);
+  }
+
+  public List<SectionDto> getTodo() {
+    List<TempSectionDTO> temp =  projectRepository.findAllSectionInProject();
+    List<SectionDto> resultSet = new ArrayList<>();
+    temp.forEach(t -> resultSet.add(t.mapToSectionDto(t)));
+    resultSet.forEach(s -> s.setCard( projectRepository.findAllCardinEachSection(s.getId())));
+    return resultSet;
   }
 
   private Project selectProject() {
