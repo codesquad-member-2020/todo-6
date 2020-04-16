@@ -4,6 +4,7 @@ import com.codesquad.todo.domain.User;
 import com.codesquad.todo.domain.UserRepository;
 import com.codesquad.todo.exeption.NotFoundData;
 import com.codesquad.todo.exeption.UnauthorizedException;
+import com.codesquad.todo.utill.ErrorMessages;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class JwtService {
         String userId = claims.get("userId", String.class);
         Long id = claims.get("id", Long.class);
 
-        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundData("없는 사용자입니다."));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_USER));
         if(!user.isMatchWithUserId(userId)){
             throw new UnauthorizedException();
         }

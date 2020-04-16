@@ -4,6 +4,7 @@ import com.codesquad.todo.domain.ApiResponse;
 import com.codesquad.todo.domain.ProjectRepository;
 import com.codesquad.todo.dto.*;
 import com.codesquad.todo.service.TodoService;
+import com.codesquad.todo.utill.SuccessMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -24,6 +25,6 @@ public class TodoController {
 
   @GetMapping
   public ResponseEntity<ApiResponse> getTodo() {
-    return new ResponseEntity<>(new ApiResponse("SUCCESS", todoService.getTodo()), HttpStatus.OK);
+    return new ResponseEntity<>(new ApiResponse(SuccessMessages.SUCCESS, todoService.getTodo()), HttpStatus.OK);
   }
 }
