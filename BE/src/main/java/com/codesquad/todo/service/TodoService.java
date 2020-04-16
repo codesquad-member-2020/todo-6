@@ -47,24 +47,32 @@ public class TodoService {
   }
 
   @Transactional
-  public void moveCard(Long columnId, int columnKey, Long destination, int position, User user){
-    if(columnId.equals(destination) & columnKey==position) {
+  public void moveCard(Long columnId, Long cardId, int sourcePosition, Long destination, int position, User user){
+    if(columnId.equals(destination) & sourcePosition==position) {
       return;
     }
 
-    Section from = sectionRepository.findById(columnId).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
-    Section to = sectionRepository.findById(destination).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
+    Section from = sectionRepository.findById(columnId)
+                                    .orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
+    Section to = sectionRepository.findById(destination)
+                                  .orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
 
-    Card targetCard = from.getCard(columnKey);
+    Card foundCardById = sectionRepository.findCardByCardId(cardId)
+                                          .orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_CARD_SECTION));
+    Card targetCard = from.getCard(sourcePosition);
+    if(!targetCard.isMatchId(foundCardById)){
+      throw new NotFoundData(ErrorMessages.NOTFOUND_CARD_SECTION);
+    }
+
     addCreateOrMoveCardActivity(Action.MOVE, from, to, targetCard, user);
 
     if(columnId.equals(destination)){
-      from.moveCardInSameSection(columnKey,position);
+      from.moveCardInSameSection(sourcePosition,position);
       sectionRepository.save(from);
       return;
     }
 
-    from.removeCard(columnKey);
+    from.removeCard(sourcePosition);
     to.addCardForMove(targetCard,position);
 
     sectionRepository.save(from);
