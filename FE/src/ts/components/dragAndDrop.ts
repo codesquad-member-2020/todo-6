@@ -166,11 +166,11 @@ const mouseUpCard = (): void => {
   fetchMovedCardInfo(sourceColumn, destinationColumn, movedCardIndex);
 };
 
-const applyDragAndDrop = (targetElement: HTMLElement): void => {
+const addDragAndDropEvent = (targetElement: HTMLElement): void => {
   targetElement.addEventListener('mousedown', mouseDownCard);
   targetElement.addEventListener('mousemove', event => mouseMoveCard(event, targetElement));
   targetElement.addEventListener('mouseup', mouseUpCard);
   targetElement.addEventListener('mouseover', mouseOverCard);
 };
 
-export default applyDragAndDrop;
+export default addDragAndDropEvent;

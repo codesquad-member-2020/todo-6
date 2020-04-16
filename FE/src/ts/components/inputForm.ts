@@ -2,6 +2,7 @@ import { _q, addClass, removeClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
 import htmlElements from '../utils/htmlElement';
 import { columnElement, cardWrapElement, addNewCard } from './column';
+import { updateActivityList } from './sidemenu';
 
 export const INPUT_FORM_CLASS = {
   inputForm: 'todo-input-wrap',
@@ -44,6 +45,7 @@ const clickInputFormAddButton = async ({ target }: Event): Promise<void> => {
   const targetColumn: HTMLElement = columnElement(target);
   addClass(UTIL_CLASS.disabled, target);
   addNewCard(targetColumn, cardWrapElement(targetColumn), textareaElement(targetColumn));
+  updateActivityList();
 };
 
 const clickInputFormCancelButton = ({ target }: Event): void => {

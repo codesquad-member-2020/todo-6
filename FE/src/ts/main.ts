@@ -1,14 +1,13 @@
 import { _q } from './utils/utils';
-import { fetchTodoList, fetchActivityList } from './components/fetch';
-import { activityListElement } from './components/sidemenu';
-import { columnWrapElement } from './components/columnWrap';
+import { initialRenderTodoList, columnWrapElement } from './components/columnWrap';
+import { initialRenderActivityList } from './components/sidemenu';
 import addAllEventListener from './components/eventManager';
-import applyDragAndDrop from './components/dragAndDrop';
+import addDragAndDropEvent from './components/dragAndDrop';
 
 const CONTAINER_CLASS = 'container';
 const containerElement = _q(`.${CONTAINER_CLASS}`);
 
-fetchTodoList();
-fetchActivityList(activityListElement);
+initialRenderTodoList();
+initialRenderActivityList();
 addAllEventListener(columnWrapElement);
-applyDragAndDrop(containerElement);
+addDragAndDropEvent(containerElement);

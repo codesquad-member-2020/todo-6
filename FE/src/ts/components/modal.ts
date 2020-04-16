@@ -5,6 +5,7 @@ import { isCardDeleted, isCardEdited } from './fetch';
 import { changeCardCount, getColumnId } from './column';
 import { toogleButtonActiveState } from './inputForm';
 import { getCardId } from './card';
+import { updateActivityList } from './sidemenu';
 
 export const MODAL_CLASS = {
   dimmedLayer: 'dimmed-layer',
@@ -112,6 +113,7 @@ const clickModalCardDeleteButton = async ({ target }: Event): Promise<void> => {
     changeCardCount(modalElement.targetColumn);
   } else console.error('Delete Error');
   removeModalElement(DELETE_MODAL);
+  updateActivityList();
 };
 
 const clickModalCardEditButton = async ({ target }: Event): Promise<void> => {
@@ -126,6 +128,7 @@ const clickModalCardEditButton = async ({ target }: Event): Promise<void> => {
     modalElement.targetCardContent.innerHTML = modalElement.textarea.value;
   } else console.error('Edit Error');
   removeModalElement(EDIT_MODAL);
+  updateActivityList();
 };
 
 const clickModalCloseButton = ({ target }: any): void => {

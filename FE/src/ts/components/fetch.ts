@@ -1,7 +1,5 @@
-import { Card } from './card';
-import { templateCardElement } from './card';
-import { templateSideMenuElement } from './sidemenu';
-import { initialRender } from './columnWrap';
+import { Card, templateCardElement } from './card';
+import { Activity } from './activity';
 
 const API_URL = {
   BASE_URL: 'http://15.165.109.219:8080',
@@ -48,19 +46,18 @@ const myHeaders: Headers = new Headers({
   'Content-Type': 'application/json',
 });
 
-export const fetchTodoList = async (): Promise<void> => {
+export const fetchTodoList = async (): Promise<Array<Sections>> => {
   const response: Response = await fetch(API_URL.todoList(), { method: 'GET', headers: myHeaders });
   const todoList = await response.json();
   const { data } = todoList;
-  initialRender(data);
+  return data;
 };
 
-export const fetchActivityList = async (targetElement: HTMLElement): Promise<void> => {
+export const fetchActivityList = async (): Promise<Array<Activity>> => {
   const response: Response = await fetch(API_URL.activityList(), { method: 'GET', headers: myHeaders });
   const activityList = await response.json();
   const { data } = activityList;
-  console.log(data);
-  targetElement.innerHTML = templateSideMenuElement(data);
+  return data;
 };
 
 export const createCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {
@@ -70,7 +67,6 @@ export const createCard = async ({ columnId, title, contents }: ApiParameter): P
     headers: myHeaders,
   });
   const addedCard = await response.json();
-  console.log(addedCard);
   const { data } = addedCard;
   return templateCardElement(columnId, data);
 };
@@ -85,7 +81,6 @@ export const isCardDeleted = async ({ columnId, cardId }: ApiParameter): Promise
 };
 
 export const isCardEdited = async ({ columnId, cardId, title, contents }: ApiParameter): Promise<boolean> => {
-  console.log(columnId, cardId, title, contents);
   const response: Response = await fetch(API_URL.editCard(columnId, cardId), { method: 'PUT', body: JSON.stringify({ title: title, contents: contents }), headers: myHeaders });
   console.log(response);
   return response.ok;
