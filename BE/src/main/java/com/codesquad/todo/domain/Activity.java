@@ -32,7 +32,7 @@ public class Activity {
     this.action = action;
     this.source = "";
     this.destination = "";
-    this.card = card.getContents();
+    this.card = card.getTitle();
     this.createdAt = LocalDateTime.now();
     this.user = user.getId();
   }
