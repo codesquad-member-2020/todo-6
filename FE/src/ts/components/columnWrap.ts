@@ -7,9 +7,9 @@ const COLUMN_WRAP_CLASS: string = 'column-wrap';
 
 export const columnWrapElement: HTMLElement = _q(`.${COLUMN_WRAP_CLASS}`);
 
-export const initialRender = (sections: Array<Sections>, userName: string): void => {
+export const initialRender = (sections: Array<Sections>): void => {
   const elementStr: string = sections.reduce((allElements: string, eachSection: Sections) => {
-    allElements += templateColumnElement(eachSection, userName);
+    allElements += templateColumnElement(eachSection);
     return allElements;
   }, '');
   columnWrapElement.innerHTML = elementStr;

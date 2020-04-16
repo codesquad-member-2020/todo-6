@@ -2,7 +2,7 @@ import { _q } from '../utils/utils';
 import { ICON_TYPE } from '../utils/constants';
 import htmlElements from '../utils/htmlElement';
 import { isCardDeleted, isCardEdited } from './fetch';
-import { changeCardCount } from './column';
+import { changeCardCount, getColumnId } from './column';
 import { toogleButtonActiveState } from './inputForm';
 import { getCardId } from './card';
 
@@ -106,7 +106,7 @@ const removeModalElement = (type: string = ''): void => {
 
 const clickModalCardDeleteButton = async ({ target }: Event): Promise<void> => {
   if (target.className !== MODAL_CLASS.deleteButton) return;
-  const isDeleted: boolean = await isCardDeleted(getCardId(modalElement.targetCard));
+  const isDeleted: boolean = await isCardDeleted({ columnId: getColumnId(modalElement.targetCard), cardId: getCardId(modalElement.targetCard) });
   if (isDeleted) {
     modalElement.targetCard.remove();
     changeCardCount(modalElement.targetColumn);
@@ -116,7 +116,12 @@ const clickModalCardDeleteButton = async ({ target }: Event): Promise<void> => {
 
 const clickModalCardEditButton = async ({ target }: Event): Promise<void> => {
   if (target.className !== MODAL_CLASS.editButton) return;
-  const isEdited: boolean = await isCardEdited(getCardId(modalElement.targetCard), modalElement.targetCardContent.innerHTML);
+  const isEdited: boolean = await isCardEdited({
+    columnId: getColumnId(modalElement.targetCard),
+    cardId: getCardId(modalElement.targetCard),
+    title: modalElement.textarea.value,
+    contents: modalElement.targetCard.dataset.contents,
+  });
   if (isEdited) {
     modalElement.targetCardContent.innerHTML = modalElement.textarea.value;
   } else console.error('Edit Error');

@@ -1,8 +1,8 @@
 export const _q = (str: string): HTMLElement => document.querySelector(str);
 
-export const _qa = (str: string): HTMLElement => document.querySelectorAll(str);
+export const _qa = (str: string): NodeListOf<HTMLElement> => document.querySelectorAll<HTMLElement>(str);
 
-export const pipe = (...fns: Array<Function>) => value => fns.reduce((acc, fn) => fn(acc), value);
+export const pipe = (...fns: Array<Function>) => (value: any) => fns.reduce((acc, fn) => fn(acc), value);
 
 export const addClass = (className: string, target: HTMLElement): void => target.classList.add(className);
 

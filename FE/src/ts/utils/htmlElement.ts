@@ -26,7 +26,7 @@ const htmlElements = {
   strong: (value: string): string => `<strong>${value}</strong>`,
   label: (className: string, id: string, value: string): string => `<label class="${className}" for="${id}">${value}</label>`,
   textarea: (property: Textarea): string => `<textarea name="${property.id}" id="${property.id}" maxlength="${property.maxLength}" placeholder="${property.placeholder}">${property.value}</textarea>`,
-  button: (className: string, value: string): string => `<button class="${className}">${value}</button>`,
+  button: (className: string, value: string): string => `<button class="${className}" tabindex="0">${value}</button>`,
   icon: (className: string, value: string): string => `<i class="${className}">${value}</i>`,
 };
 
