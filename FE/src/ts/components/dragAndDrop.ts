@@ -1,6 +1,6 @@
 import { _q, addClass, removeClass } from '../utils/utils';
 import { COLUMN_CLASS, changeCardCount, getColumnId } from './column';
-import { CARD_CLASS } from './card';
+import { CARD_CLASS, getCardId } from './card';
 import { isCardMoved } from './fetch';
 import { updateActivityList } from './sidemenu';
 
@@ -126,24 +126,41 @@ const changeEachColumnCardCount = (sourceColumn: HTMLElement, destinationColumn:
   changeCardCount(sourceColumn);
 };
 
-const fetchMoveCard = async (sourceColumnId: number, destinationColumnId: number, dropCardIndex: number): Promise<void> => {
+const undoMove = (sourceColumn: HTMLElement, destinationColumn: HTMLElement, dropCardIndex: number) => {
+  const sourceCardWrap: HTMLElement = sourceColumn.querySelector(`.${COLUMN_CLASS.cardWrap}`);
+  let sourceReferenceNode: Node;
+  if (dropCardIndex + 1 === dragProperty.sourceElementIndex && sourceColumn === destinationColumn) {
+    sourceReferenceNode = sourceCardWrap.childNodes[dragProperty.sourceElementIndex + 1];
+    sourceCardWrap.insertBefore(dragProperty.targetElement, sourceReferenceNode);
+  }
+  sourceReferenceNode = sourceCardWrap.childNodes[dragProperty.sourceElementIndex];
+  sourceCardWrap.insertBefore(dragProperty.targetElement, sourceReferenceNode);
+};
+
+const fetchMoveCard = async (sourceColumn: HTMLElement, destinationColumn: HTMLElement, dropCardIndex: number): Promise<void> => {
+  if (sourceColumn === destinationColumn && dragProperty.sourceElementIndex === dropCardIndex) return;
+  const sourceColumnId = getColumnId(sourceColumn);
+  const destinationColumnId = getColumnId(destinationColumn);
   const isMoved = await isCardMoved({
     sourceColumnId: sourceColumnId,
     destinationColumnId: destinationColumnId,
+    cardId: getCardId(dragProperty.targetElement),
     dragCardIndex: dragProperty.sourceElementIndex,
     dropCardIndex: dropCardIndex,
   });
-  if (!isMoved) console.log('Move Error:', isMoved);
-  else updateActivityList();
+  if (!isMoved) {
+    console.error('Move Error');
+    undoMove(sourceColumn, destinationColumn, dropCardIndex);
+    return;
+  }
+  dragProperty.targetElement.dataset.columnId = destinationColumnId;
+  updateActivityList();
 };
 
 const dropCard = (dropCardIndex: number, sourceColumn: HTMLElement, destinationColumn: HTMLElement): void => {
   if (dropCardIndex === INVALID_INDEX) return;
-  const sourceColumnId = getColumnId(sourceColumn);
-  const destinationColumnId = getColumnId(destinationColumn);
-  if (sourceColumnId === destinationColumnId && dragProperty.sourceElementIndex === dropCardIndex) return;
   changeEachColumnCardCount(destinationColumn, sourceColumn);
-  fetchMoveCard(sourceColumnId, destinationColumnId, dropCardIndex);
+  fetchMoveCard(sourceColumn, destinationColumn, dropCardIndex);
 };
 
 const mouseDownCard = (event: MouseEvent): void => {

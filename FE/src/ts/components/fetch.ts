@@ -18,8 +18,8 @@ const API_URL = {
   editCard(columnId: number, cardId: number): string {
     return `${this.BASE_URL}/api/column/${columnId}/card/${cardId}`;
   },
-  moveCard(sourceColumnId: number, destinationColumnId: number, dragCardIndex: number, dropCardIndex: number): string {
-    return `${this.BASE_URL}/api/column/${sourceColumnId}/card/${dragCardIndex}?destination=${destinationColumnId}&position=${dropCardIndex}`;
+  moveCard(sourceColumnId: number, destinationColumnId: number, cardId: number, dragCardIndex: number, dropCardIndex: number): string {
+    return `${this.BASE_URL}/api/column/${sourceColumnId}/card/${cardId}?destination=${destinationColumnId}&position=${dropCardIndex}&sourcePosition=${dragCardIndex}`;
   },
 };
 
@@ -85,7 +85,7 @@ export const isCardEdited = async ({ columnId, cardId, title, contents }: ApiPar
   return response.ok;
 };
 
-export const isCardMoved = async ({ sourceColumnId, destinationColumnId, dragCardIndex, dropCardIndex }: ApiParameter): Promise<boolean> => {
-  const response: Response = await fetch(API_URL.moveCard(sourceColumnId, destinationColumnId, dragCardIndex, dropCardIndex), { method: 'PATCH', headers: myHeaders });
+export const isCardMoved = async ({ sourceColumnId, destinationColumnId, cardId, dragCardIndex, dropCardIndex }: ApiParameter): Promise<boolean> => {
+  const response: Response = await fetch(API_URL.moveCard(sourceColumnId, destinationColumnId, cardId, dragCardIndex, dropCardIndex), { method: 'PATCH', headers: myHeaders });
   return response.ok;
 };
