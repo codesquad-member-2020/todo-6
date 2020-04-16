@@ -1,6 +1,5 @@
 .sidemenu {
   @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
-  animation: 0.5s slide-in;
 }
 
 .sidemenu-header {
@@ -29,6 +28,14 @@
 
 .activity-time {
   @apply block mt-1;
+}
+
+.slide-in {
+  animation: 0.3s slide-in;
+}
+
+.slide-out {
+  animation: 0.3s slide-out;
 }
 
 @keyframes slide-in {

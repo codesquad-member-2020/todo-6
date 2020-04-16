@@ -8,6 +8,10 @@ export const addClass = (className: string, target: HTMLElement): void => target
 
 export const removeClass = (className: string, target: HTMLElement): void => target.classList.remove(className);
 
+export const addMultipleClass = (classNames: Array<string>, target: HTMLElement): void => classNames.forEach(className => target.classList.add(className));
+
+export const removeMultipleClass = (classNames: Array<string>, target: HTMLElement): void => classNames.forEach(className => target.classList.remove(className));
+
 export const hasClass = (className: string, target: HTMLElement): boolean => target.classList.contains(className);
 
 export const toggleClass = (className: string, target: HTMLElement): void => {

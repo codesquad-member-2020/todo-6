@@ -9,6 +9,8 @@ export const UTIL_CLASS = {
   hidden: 'hidden',
   disabled: 'disabled',
   move: 'move',
+  slideIn: 'slide-in',
+  slideOut: 'slide-out',
 };
 
 export const DATA_ATTRIBUTE = {

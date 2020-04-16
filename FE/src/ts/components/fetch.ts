@@ -60,7 +60,7 @@ export const fetchActivityList = async (targetElement: HTMLElement): Promise<voi
   const activityList = await response.json();
   const { data } = activityList;
   console.log(data);
-  targetElement.insertAdjacentHTML('afterbegin', templateSideMenuElement(data));
+  targetElement.innerHTML = templateSideMenuElement(data);
 };
 
 export const createCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {
