@@ -1,24 +1,30 @@
-//   <div class="sidemenu" >
-//     <div class="header-wrap sidemenu-header" >
-//       <button class="material-icons sidemenu-btn icon-primary-btn" >
-//         menu
-//         < /button>
-//         < h2 class="sidemenu-title" > Activity < /h2>
-//           < /div>
-//           < ul class="activity-container" >
-//             <li class="activity-list" >
-//               <span class="activity-text" >
-//                 <strong class="activity-todo" > github 공부하기 < /strong> 가
-//                   < strong > 해야할일 < /strong> 에서 <strong>하는중</strong > 으로
-// 이동되었습니다.< /span
-//   > <span class="activity-time small-text" > 1분 전 < /span>
-//     < /li>
-//     < li class="activity-list" >
-//       <span class="activity-text" >
-//         <strong class="activity-todo" > 공부하기 < /strong> 가
-//           < strong > 해야할일 < /strong> 에서 <strong>하는중</strong > 으로
-// 이동되었습니다.< /span
-//   > <span class="activity-time small-text" > 1분 전 < /span>
-//     < /li>
-//     < /ul>
-//     < /div>
+import { _q } from '../utils/utils';
+import { ICON_TYPE } from '../utils/constants';
+import htmlElements from '../utils/htmlElement';
+import { Activity, templateActivityElement, templateAllActivityElement } from './activity';
+
+export const SIDE_MENU_CLASS = {
+  sidemenu: 'sidemenu',
+  header: 'header-wrap sidemenu-header',
+  headerButton: 'material-icons sidemenu-btn icon-primary-btn',
+  title: 'sidemenu-title',
+  activityList: 'activity-container',
+};
+
+const SIDE_MENU_TITLE = 'Activity';
+
+const SIDE_MENU_ATOM = {
+  header: htmlElements.div(SIDE_MENU_CLASS.header, htmlElements.button(SIDE_MENU_CLASS.headerButton, ICON_TYPE.menu), htmlElements.h2(SIDE_MENU_CLASS.title, SIDE_MENU_TITLE)),
+  activityList: (activityList: Array<Activity>): string => htmlElements.ul(SIDE_MENU_CLASS.activityList, templateAllActivityElement(activityList)),
+};
+
+export const sideMenuElement = (): HTMLElement => _q(`.${SIDE_MENU_CLASS.sidemenu}`);
+
+export const activityListElement = (): HTMLElement => _q(`.${SIDE_MENU_CLASS.activityList}`);
+
+export const templateSideMenuElement = (activityList: Array<Activity>): string => {
+  return `<div class="${SIDE_MENU_CLASS.sidemenu}">
+  ${SIDE_MENU_ATOM.header}
+  ${SIDE_MENU_ATOM.activityList(activityList)}
+  </div>`;
+};

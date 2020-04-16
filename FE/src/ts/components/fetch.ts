@@ -1,11 +1,15 @@
 import { Card } from './card';
 import { templateCardElement } from './card';
+import { templateSideMenuElement } from './sidemenu';
 import { initialRender } from './columnWrap';
 
 const API_URL = {
   BASE_URL: 'http://15.165.109.219:8080',
   todoList(): string {
     return `${this.BASE_URL}/api/todo`;
+  },
+  activityList(): string {
+    return `${this.BASE_URL}/api/activity`;
   },
   addCard(columnId: number): string {
     return `${this.BASE_URL}/api/column/${columnId}/card`;
@@ -49,6 +53,14 @@ export const fetchTodoList = async (): Promise<void> => {
   const todoList = await response.json();
   const { data } = todoList;
   initialRender(data);
+};
+
+export const fetchActivityList = async (targetElement: HTMLElement): Promise<void> => {
+  const response: Response = await fetch(API_URL.activityList(), { method: 'GET', headers: myHeaders });
+  const activityList = await response.json();
+  const { data } = activityList;
+  console.log(data);
+  targetElement.insertAdjacentHTML('afterbegin', templateSideMenuElement(data));
 };
 
 export const createCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {

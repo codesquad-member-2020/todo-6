@@ -1,7 +1,6 @@
 .sidemenu {
   @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
-  /* right: -28rem; */
-  /* transition animation */
+  animation: 0.5s slide-in;
 }
 
 .sidemenu-header {
@@ -26,4 +25,28 @@
 
 .activity-todo {
   @apply text-blue-600;
+}
+
+.activity-time {
+  @apply block mt-1;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(28rem);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(28rem);
+  }
 }
