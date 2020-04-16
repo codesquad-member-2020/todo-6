@@ -1,6 +1,6 @@
 .column-wrap {
   @apply overflow-x-auto flex box-border h-screen max-h-screen min-w-0 pt-20 pb-4;
-  transition: margin-right 0.3s ease;
+  transition: margin-right 0.2s ease;
 }
 
 .column {

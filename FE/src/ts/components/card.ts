@@ -24,7 +24,7 @@ const AUTHOR_STRING: string = ' (이)가 추가함';
 export const DEFAULT_CARD_CONTENTS = null;
 
 const CARD_ATOM = {
-  icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.bookmark),
+  icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.todo),
   deleteBtn: htmlElements.button(CARD_CLASS.deleteBtn, ICON_TYPE.delete),
   content: (text: string): string => htmlElements.h3(CARD_CLASS.content, text),
   author: (author: string): string => htmlElements.span(CARD_CLASS.author, htmlElements.strong(author), AUTHOR_STRING),

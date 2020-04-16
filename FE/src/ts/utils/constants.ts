@@ -1,5 +1,5 @@
 export const ICON_TYPE = {
-  bookmark: 'bookmark_border',
+  todo: 'list',
   add: 'add',
   delete: 'close',
   menu: 'menu',
