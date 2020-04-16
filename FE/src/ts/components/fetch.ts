@@ -60,7 +60,7 @@ export const fetchActivityList = async (): Promise<Array<Activity>> => {
   return data;
 };
 
-export const createCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {
+export const fetchAddedCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {
   const response: Response = await fetch(API_URL.addCard(columnId), {
     method: 'POST',
     body: JSON.stringify({ title: title, contents: contents }),
@@ -68,7 +68,7 @@ export const createCard = async ({ columnId, title, contents }: ApiParameter): P
   });
   const addedCard = await response.json();
   const { data } = addedCard;
-  return templateCardElement(columnId, data);
+  return data;
 };
 
 export const isCardDeleted = async ({ columnId, cardId }: ApiParameter): Promise<boolean> => {
@@ -76,18 +76,15 @@ export const isCardDeleted = async ({ columnId, cardId }: ApiParameter): Promise
     method: 'DELETE',
     headers: myHeaders,
   });
-  console.log(response);
   return response.ok;
 };
 
 export const isCardEdited = async ({ columnId, cardId, title, contents }: ApiParameter): Promise<boolean> => {
   const response: Response = await fetch(API_URL.editCard(columnId, cardId), { method: 'PUT', body: JSON.stringify({ title: title, contents: contents }), headers: myHeaders });
-  console.log(response);
   return response.ok;
 };
 
 export const isCardMoved = async ({ sourceColumnId, destinationColumnId, cardId, cardPosition }: ApiParameter): Promise<boolean> => {
   const response: Response = await fetch(API_URL.moveCard(sourceColumnId, destinationColumnId, cardId, cardPosition), { method: 'GET', headers: myHeaders });
-  console.log(response);
   return response.ok;
 };

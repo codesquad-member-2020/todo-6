@@ -22,6 +22,7 @@ const clickSideMenuButton = ({ target }: Event): void => {
 };
 
 const animationEndHandler = ({ target }: Event): void => {
+  if (target !== sideMenuElement) return;
   if (hasClass(UTIL_CLASS.slideIn, target)) return;
   toggleClass(UTIL_CLASS.hidden, sideMenuElement);
 };
@@ -38,8 +39,8 @@ export const initialRenderActivityList = async (): Promise<void> => {
 
 export const updateActivityList = async (): Promise<void> => {
   const updatedList: Array<Activity> = await fetchActivityList();
-  const changedListLength: number = updatedList.length - activityList.length;
   const changedList: Array<Activity> = [];
+  const changedListLength: number = updatedList.length - activityList.length;
   for (let index = 0; index < changedListLength; index++) {
     changedList.push(updatedList[index]);
   }

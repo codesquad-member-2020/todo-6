@@ -71,6 +71,7 @@ export const modalElement: any = {
 };
 
 export const templateEditModalElement = (textAreaValue: string): string => {
+  if (_q(`.${MODAL_CLASS.dimmedLayer}`)) return '';
   return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.edit}">
   ${MODAL_ATOM.header(`${MODAL_ATOM.closeButton}${MODAL_ATOM.editTitle}`)}
   ${MODAL_ATOM.content(`${MODAL_ATOM.editLabel}${MODAL_ATOM.editTextarea(textAreaValue)}${MODAL_ATOM.editButton}`)}
@@ -78,6 +79,7 @@ export const templateEditModalElement = (textAreaValue: string): string => {
 };
 
 export const templateDeleteModalElement = (): string => {
+  if (_q(`.${MODAL_CLASS.dimmedLayer}`)) return '';
   return `${MODAL_ATOM.dimmedLayer}<div class="${MODAL_CLASS.delete}">
   ${MODAL_ATOM.header(`${MODAL_ATOM.closeButton}${MODAL_ATOM.deleteTitle}`)}
   ${MODAL_ATOM.content(`${MODAL_ATOM.deleteText}${MODAL_ATOM.deleteButton}${MODAL_ATOM.cancelButton}`)}

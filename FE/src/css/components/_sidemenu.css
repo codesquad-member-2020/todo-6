@@ -20,6 +20,7 @@
 
 .activity-list {
   @apply py-4 border-b border-gray-300;
+  animation: 0.5s slide-in;
 }
 
 .activity-todo {
