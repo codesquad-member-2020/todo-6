@@ -56,7 +56,7 @@ const clickColumnAddButton = ({ target }: Event): void => {
 export const addNewCard = async (targetColumn: HTMLElement, cardWrap: HTMLElement, textarea: HTMLTextAreaElement): Promise<void> => {
   try {
     textarea.setAttribute('disabled', true);
-    cardWrap.insertAdjacentHTML('afterbegin', await createCard(getColumnId(targetColumn), textarea.value, DEFAULT_CARD_CONTENTS));
+    cardWrap.insertAdjacentHTML('afterbegin', await createCard({ columnId: getColumnId(targetColumn), title: textarea.value, contents: DEFAULT_CARD_CONTENTS }));
     changeCardCount(targetColumn);
   } catch (err) {
     console.error(err);

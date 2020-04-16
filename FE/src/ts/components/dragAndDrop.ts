@@ -120,7 +120,12 @@ const changeEachColumnCardCount = (sourceColumn: HTMLElement, destinationColumn:
 
 const fetchMovedCardInfo = async (sourceColumn: HTMLElement, destinationColumn: HTMLElement, movedCardIndex: number): Promise<void> => {
   console.log('source:', getColumnId(sourceColumn), 'desti:', getColumnId(destinationColumn), 'cardId:', getCardId(dragProperty.targetElement), 'pos:', movedCardIndex);
-  const isMoved = await isCardMoved(getColumnId(sourceColumn), getColumnId(destinationColumn), getCardId(dragProperty.targetElement), movedCardIndex);
+  const isMoved = await isCardMoved({
+    sourceColumnId: getColumnId(sourceColumn),
+    destinationColumnId: getColumnId(destinationColumn),
+    cardId: getCardId(dragProperty.targetElement),
+    cardPosition: movedCardIndex,
+  });
   if (!isMoved) console.log('Move Error:', isMoved);
 };
 
