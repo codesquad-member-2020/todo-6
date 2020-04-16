@@ -7,6 +7,7 @@ import com.codesquad.todo.utill.Action;
 import com.codesquad.todo.utill.ErrorMessages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class TodoService {
                                        .orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
     section.addCard(card, user, addAtFirst);
     sectionRepository.save(section);
-    addCreateCardActivity(section, section, card, user);
+    addCreateOrMoveCardActivity(Action.ADD, section, section, card, user);
     return new CardDto(section.getNewCard(), user);
   }
 
@@ -44,6 +45,28 @@ public class TodoService {
 
     addDeleteOrUpdateCardActivity(Action.UPDATE, card, user);
   }
+
+  @Transactional
+  public void moveCard(Long columnId, int columnKey, Long destination, int position, User user){
+    Section from = sectionRepository.findById(columnId).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
+    Section to = sectionRepository.findById(destination).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
+
+    Card targetCard = from.getCard(columnKey);
+    addCreateOrMoveCardActivity(Action.MOVE, from, to, targetCard, user);
+
+    if(columnId.equals(destination)){
+      from.moveCardInSameSection(columnKey,position);
+      sectionRepository.save(from);
+      return;
+    }
+
+    from.removeCard(columnKey);
+    to.addCardForMove(targetCard,position);
+
+    sectionRepository.save(from);
+    sectionRepository.save(to);
+
+  }
   
   public List<ActivityDto> getAllActivity() {
     return projectRepository.findAllActivity(projectId);
@@ -57,9 +80,9 @@ public class TodoService {
     return resultSet;
   }
 
-  private void addCreateCardActivity(Section source, Section destination, Card card, User user) {
+  private void addCreateOrMoveCardActivity(Action action,Section source, Section destination, Card card, User user) {
     Project project = selectProject();
-    Activity activity = new Activity(Action.ADD, source, destination, card, user);
+    Activity activity = new Activity(action, source, destination, card, user);
     project.addActivity(activity);
     projectRepository.save(project);
   }
