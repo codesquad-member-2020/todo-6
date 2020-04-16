@@ -48,6 +48,10 @@ public class TodoService {
 
   @Transactional
   public void moveCard(Long columnId, int columnKey, Long destination, int position, User user){
+    if(columnId.equals(destination) & columnKey==position) {
+      return;
+    }
+
     Section from = sectionRepository.findById(columnId).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
     Section to = sectionRepository.findById(destination).orElseThrow(() -> new NotFoundData(ErrorMessages.NOTFOUND_SECTION));
 
@@ -65,7 +69,6 @@ public class TodoService {
 
     sectionRepository.save(from);
     sectionRepository.save(to);
-
   }
   
   public List<ActivityDto> getAllActivity() {
