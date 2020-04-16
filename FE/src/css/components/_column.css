@@ -10,15 +10,6 @@
   @apply ml-4;
 }
 
-.column:last-child::after {
-  content: '';
-  display: block;
-  position: absolute;
-  right: -1rem;
-  width: 1rem;
-  height: 1rem;
-}
-
 .column-title-wrap {
   @apply flex items-center justify-between px-4;
 }
@@ -33,4 +24,25 @@
 
 .column-title {
   @apply block box-border w-4/5 pr-4;
+}
+
+.column-add-button {
+  @apply transition duration-300 cursor-pointer flex-none flex relative justify-center items-center w-full max-w-sm h-32 box-border border border-dashed border-gray-500 rounded mr-4 py-4 text-lg text-gray-700 font-bold;
+}
+
+.column-add-button:hover {
+  @apply bg-gray-200;
+}
+
+.column-add-button .material-icons {
+  @apply text-gray-700;
+}
+
+.column-add-button::after {
+  content: '';
+  display: block;
+  position: absolute;
+  right: -1rem;
+  width: 1rem;
+  height: 1rem;
 }
