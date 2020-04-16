@@ -1,6 +1,7 @@
 package com.codesquad.todo.exeption;
 
 import com.codesquad.todo.domain.ApiResponse;
+import com.codesquad.todo.utill.ErrorMessages;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,5 +31,12 @@ public class CustomAdvice {
   @ResponseBody
   public ApiResponse handleError(SignatureException e) {
     return new ApiResponse("FAIL", e.getMessage());
+  }
+
+  @ExceptionHandler(IndexOutOfBoundsException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  @ResponseBody
+  public ApiResponse handleError(IndexOutOfBoundsException e) {
+    return new ApiResponse("FAIL", ErrorMessages.NOTFOUND_CARD_SECTION);
   }
 }

@@ -31,12 +31,15 @@ public class CardController {
     return ResponseEntity.ok(new ApiResponse(SuccessMessages.SUCCESS, SuccessMessages.SUCCESS_UPDATE));
   }
 
-  @GetMapping("/card/{cardId}")
-  public ResponseEntity<ApiResponse> moveCard(@RequestParam int source,
-                                              @RequestParam int destination,
-                                              @PathVariable int cardId)
+  @PatchMapping("/card/{columnKey}")
+  public ResponseEntity<ApiResponse> moveCard(@PathVariable Long columnId,
+                                              @PathVariable int columnKey,
+                                              @RequestParam Long destination,
+                                              @RequestParam int position,
+                                              @RequestAttribute User user)
   {
-    return null;
+    todoService.moveCard(columnId,columnKey,destination,position,user);
+    return ResponseEntity.ok(new ApiResponse(SuccessMessages.SUCCESS, SuccessMessages.SUCCESS_MOVE));
   }
 
   @DeleteMapping("/card/{cardId}")
