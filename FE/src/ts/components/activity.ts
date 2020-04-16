@@ -47,7 +47,9 @@ const getActivityString = (activity: Activity): string => {
       action = `${htmlElements.strong(activity.card, ACTIVITY_CLASS.bold)} 을(를) 삭제했습니다.`;
       break;
     case 'MOVE':
-      action = `${htmlElements.strong(activity.card, ACTIVITY_CLASS.bold)} 을(를) ${htmlElements.strong(activity.source)} 에서 ${htmlElements.strong(activity.destination)} 으로 이동했습니다.`;
+      if (activity.source !== activity.destination) {
+        action = `${htmlElements.strong(activity.card, ACTIVITY_CLASS.bold)} 을(를) ${htmlElements.strong(activity.source)} 에서 ${htmlElements.strong(activity.destination)} 으로 이동했습니다.`;
+      } else action = `${htmlElements.strong(activity.card, ACTIVITY_CLASS.bold)} 의 순서를 변경했습니다.`;
       break;
     default:
       return '';
