@@ -66,4 +66,5 @@ export const updateActivityList = async (): Promise<void> => {
   }
   activityListElement.insertAdjacentHTML('afterbegin', templateAllActivityElement(changedList));
   activityList = updatedList;
+  activityListElement.scrollTo(0, 0);
 };

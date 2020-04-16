@@ -3,7 +3,7 @@
 }
 
 .sidemenu-header {
-  @apply bg-gray-200 border-b border-gray-200;
+  @apply bg-gray-200 border-b border-gray-200 z-30;
 }
 
 .sidemenu-title {
@@ -12,6 +12,7 @@
 
 .activity-container {
   @apply overflow-y-scroll pt-16;
+  scroll-behavior: smooth;
 }
 
 .activity-text {
