@@ -24,7 +24,7 @@ public class TodoController {
   TodoService todoService;
 
   @GetMapping
-  public ResponseEntity<ApiResponse> getTodo() {
-    return new ResponseEntity<>(new ApiResponse(SuccessMessages.SUCCESS, todoService.getTodo()), HttpStatus.OK);
+  public ResponseEntity<ApiResponse> getAllTodo() {
+    return new ResponseEntity<>(new ApiResponse(SuccessMessages.SUCCESS, todoService.getAllInProject()), HttpStatus.OK);
   }
 }
