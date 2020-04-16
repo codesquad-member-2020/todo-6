@@ -32,6 +32,8 @@ const CARD_ATOM = {
 
 export const getCardId = (target: HTMLElement): number => parseInt(target.dataset.cardId, 10);
 
+export const setCardColumnId = (target: HTMLElement, columnId: number): void => (target.dataset.columnId = columnId);
+
 export const cardElement = (target: HTMLElement): HTMLElement => target.closest(`.${CARD_CLASS.card}`);
 
 export const templateCardElement = (columnId: number, cardData: Card): string => {

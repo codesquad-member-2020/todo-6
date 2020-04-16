@@ -1,6 +1,6 @@
 import { _q, addClass, removeClass } from '../utils/utils';
 import { COLUMN_CLASS, changeCardCount, getColumnId } from './column';
-import { CARD_CLASS, getCardId } from './card';
+import { CARD_CLASS, getCardId, setCardColumnId } from './card';
 import { isCardMoved } from './fetch';
 import { updateActivityList } from './sidemenu';
 
@@ -153,7 +153,7 @@ const fetchMoveCard = async (sourceColumn: HTMLElement, destinationColumn: HTMLE
     undoMove(sourceColumn, destinationColumn, dropCardIndex);
     return;
   }
-  dragProperty.targetElement.dataset.columnId = destinationColumnId;
+  setCardColumnId(dragProperty.targetElement, destinationColumnId);
   updateActivityList();
 };
 
@@ -199,11 +199,11 @@ const mouseUpCard = (): void => {
   dropCard(dropCardIndex, sourceColumn, destinationColumn);
 };
 
-const addDragAndDropEvent = (targetElement: HTMLElement): void => {
+const dragAndDropEvent = (targetElement: HTMLElement): void => {
   targetElement.addEventListener('mousedown', mouseDownCard);
   targetElement.addEventListener('mousemove', event => mouseMoveCard(event, targetElement));
   targetElement.addEventListener('mouseup', mouseUpCard);
   targetElement.addEventListener('mouseover', mouseOverCard);
 };
 
-export default addDragAndDropEvent;
+export default dragAndDropEvent;

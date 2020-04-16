@@ -1,6 +1,7 @@
 import { _q, addClass, removeClass, hasClass, toggleClass } from '../utils/utils';
 import { UTIL_CLASS } from '../utils/constants';
 import { Activity, templateAllActivityElement } from './activity';
+import { columnWrapElement } from './columnWrap';
 import { fetchActivityList } from './fetch';
 
 const SIDE_MENU_CLASS = {
@@ -21,14 +22,33 @@ const clickSideMenuButton = ({ target }: Event): void => {
   addClass(UTIL_CLASS.slideOut, sideMenuElement);
 };
 
-const animationEndHandler = ({ target }: Event): void => {
-  if (target !== sideMenuElement) return;
+const createHorizontalSpace = () => {
+  columnWrapElement.style = `margin-right: ${sideMenuElement.offsetWidth}px`;
+};
+
+const removeHorizontalSpace = () => {
+  columnWrapElement.style = `margin-right: 0px`;
+};
+
+const hiddenSideMenu = (target: EventTarget): void => {
   if (hasClass(UTIL_CLASS.slideIn, target)) return;
   toggleClass(UTIL_CLASS.hidden, sideMenuElement);
 };
 
+const animationStartHandler = ({ target }: Event): void => {
+  if (target !== sideMenuElement) return;
+  removeHorizontalSpace();
+};
+
+const animationEndHandler = ({ target }: Event): void => {
+  if (target !== sideMenuElement) return;
+  hiddenSideMenu(target);
+  createHorizontalSpace();
+};
+
 export const sideMenuEventListener = (): void => {
   sideMenuElement.addEventListener('click', clickSideMenuButton);
+  sideMenuElement.addEventListener('animationstart', animationStartHandler);
   sideMenuElement.addEventListener('animationend', animationEndHandler);
 };
 
