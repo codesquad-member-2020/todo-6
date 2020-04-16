@@ -28,6 +28,10 @@ public class Section {
     return name;
   }
 
+  public List<Card> getCards() {
+    return cards;
+  }
+
   public Card getNewCard() {
     return cards.get(0);
   }
