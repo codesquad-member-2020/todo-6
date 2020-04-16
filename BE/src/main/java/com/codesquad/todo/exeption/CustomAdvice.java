@@ -30,13 +30,13 @@ public class CustomAdvice {
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
   @ResponseBody
   public ApiResponse handleError(SignatureException e) {
-    return new ApiResponse("FAIL", e.getMessage());
+    return new ApiResponse(ErrorMessages.ERROR, e.getMessage());
   }
 
   @ExceptionHandler(IndexOutOfBoundsException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   @ResponseBody
   public ApiResponse handleError(IndexOutOfBoundsException e) {
-    return new ApiResponse("FAIL", ErrorMessages.NOTFOUND_CARD_SECTION);
+    return new ApiResponse(ErrorMessages.ERROR, ErrorMessages.NOTFOUND_CARD_SECTION);
   }
 }
