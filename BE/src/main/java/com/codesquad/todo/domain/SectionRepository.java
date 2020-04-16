@@ -11,6 +11,9 @@ public interface SectionRepository extends CrudRepository<Section, Long> {
   @Query("SELECT * FROM card c LEFT JOIN section s ON c.section = s.id WHERE c.id = :cardId AND s.id = :sectionId")
   Optional<Card> findCardBySectionIdAndCardId(Long sectionId, Long cardId);
 
+  @Query("SELECT * FROM card WHERE card.id = :cardId")
+  Optional<Card> findCardByCardId(Long cardId);
+
   @Modifying
   @Query("DELETE c FROM card c LEFT JOIN section s ON c.section = s.id WHERE c.id = :cardId AND s.id = :sectionId")
   void deleteCard(Long sectionId, Long cardId);

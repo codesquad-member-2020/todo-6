@@ -48,4 +48,8 @@ public class Card {
   public Long getUser() {
     return user;
   }
+
+  public boolean isMatchId(Card card) {
+    return this.id.equals(card.id);
+  }
 }
