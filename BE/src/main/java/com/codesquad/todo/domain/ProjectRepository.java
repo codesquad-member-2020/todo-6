@@ -14,7 +14,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
       "AND a.user = u.id " +
       "AND p.id = :projectId " +
       "ORDER BY a.created_at DESC")
-  List<ActivityDto> getAllActivity(Long projectId);
+  List<ActivityDto> findAllActivity(Long projectId);
 
   @Query("SELECT s.* FROM section s, project p WHERE p.id = s.project AND p.id =1")
   List<TempSectionDTO> findAllSectionInProject();
