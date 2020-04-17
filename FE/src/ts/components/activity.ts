@@ -18,7 +18,9 @@ const ACTIVITY_CLASS = {
 };
 
 const calculateCreatedTime = (createdTime: string): string => {
-  const seconds = Math.floor((Date.now() - Date.parse(createdTime)) / 1000);
+  const time = createdTime.replace(' ', 'T').concat('Z');
+  const seconds = Math.floor((Date.now() - Date.parse(time)) / 1000);
+  console.log(Date.now(), time, Date.parse(time));
   let interval = Math.floor(seconds / 31536000);
   if (interval > 1) return interval + '년';
   interval = Math.floor(seconds / 2592000);
