@@ -1,11 +1,9 @@
 .sidemenu {
   @apply absolute flex flex-col box-border z-20 .shadow-xl top-0 right-0 max-w-md w-full h-full bg-white px-6;
-  /* right: -28rem; */
-  /* transition animation */
 }
 
 .sidemenu-header {
-  @apply bg-gray-200 border-b border-gray-200;
+  @apply bg-gray-200 border-b border-gray-200 z-30;
 }
 
 .sidemenu-title {
@@ -14,6 +12,7 @@
 
 .activity-container {
   @apply overflow-y-scroll pt-16;
+  scroll-behavior: smooth;
 }
 
 .activity-text {
@@ -22,8 +21,41 @@
 
 .activity-list {
   @apply py-4 border-b border-gray-300;
+  animation: 0.5s slide-in;
 }
 
 .activity-todo {
   @apply text-blue-600;
+}
+
+.activity-time {
+  @apply block mt-1;
+}
+
+.slide-in {
+  animation: 0.3s slide-in;
+}
+
+.slide-out {
+  animation: 0.3s slide-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(28rem);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(28rem);
+  }
 }

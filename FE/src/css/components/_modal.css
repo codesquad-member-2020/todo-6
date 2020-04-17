@@ -1,8 +1,9 @@
 .modal {
-  @apply box-border z-30 fixed w-full max-w-lg bg-white border rounded;
+  @apply box-border z-50 fixed w-full max-w-lg bg-white border rounded;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  animation: 0.5s fade-in;
 }
 
 .modal-header {

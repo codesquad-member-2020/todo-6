@@ -1,25 +1,29 @@
-export const _q = str => document.querySelector(str);
+export const _q = (str: string): HTMLElement => document.querySelector(str);
 
-export const _qa = str => document.querySelectorAll(str);
+export const _qa = (str: string): NodeListOf<HTMLElement> => document.querySelectorAll<HTMLElement>(str);
 
-export const pipe = (...fns) => value => fns.reduce((acc, fn) => fn(acc), value);
+export const pipe = (...fns: Array<Function>) => (value: any) => fns.reduce((acc, fn) => fn(acc), value);
 
-export const addClass = (className, target) => target.classList.add(className);
+export const addClass = (className: string, target: HTMLElement): void => target.classList.add(className);
 
-export const removeClass = (className, target) => target.classList.remove(className);
+export const removeClass = (className: string, target: HTMLElement): void => target.classList.remove(className);
 
-export const hasClass = (className, target) => target.classList.contains(className);
+export const addMultipleClass = (classNames: Array<string>, target: HTMLElement): void => classNames.forEach(className => target.classList.add(className));
 
-export const toggleClass = (className, target) => {
+export const removeMultipleClass = (classNames: Array<string>, target: HTMLElement): void => classNames.forEach(className => target.classList.remove(className));
+
+export const hasClass = (className: string, target: HTMLElement): boolean => target.classList.contains(className);
+
+export const toggleClass = (className: string, target: HTMLElement): void => {
   if (hasClass(className, target)) removeClass(className, target);
   else addClass(className, target);
 };
 
-export const reverseClass = (className, addTarget, removeTarget) => {
+export const reverseClass = (className: string, addTarget: HTMLElement, removeTarget: HTMLElement): void => {
   addClass(className, addTarget);
   removeClass(className, removeTarget);
 };
 
-export const clearClass = (classes, target) => target.classList.remove(...classes);
+export const clearClass = (classes: Array<string>, target: HTMLElement): void => target.classList.remove(...classes);
 
-export const addMultipleEventListener = (target, callback, ...event) => event.forEach(eachEvent => target.addEventListener(eachEvent, e => callback(e)));
+export const addMultipleEventListener = (target: HTMLElement, callback: Function, ...event: Array<string>) => event.forEach(eachEvent => target.addEventListener(eachEvent, e => callback(e)));

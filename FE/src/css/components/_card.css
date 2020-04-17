@@ -1,5 +1,5 @@
 .card-wrap {
-  @apply overflow-y-scroll;
+  @apply overflow-y-scroll mt-3 pt-1 px-4;
 }
 
 .card {
@@ -10,18 +10,30 @@
   @apply shadow;
 }
 
+.card:focus {
+  @apply outline-none border-blue-500 shadow-outline;
+}
+
+.card button:focus {
+  @apply outline-none border-blue-500 shadow-outline;
+}
+
 .card-content {
-  @apply align-top mb-2;
+  @apply align-top mb-2 pointer-events-none;
 }
 
 .secondary-icon {
-  @apply absolute top-0 mt-2 text-gray-600;
+  @apply absolute top-0 mt-2 text-gray-600 pointer-events-none;
 }
 
 .card-icon {
   @apply left-0 ml-2;
 }
 
+.card-author {
+  @apply pointer-events-none;
+}
+
 .card .delete-btn {
-  @apply right-0 mr-2;
+  @apply right-0 mr-2 pointer-events-auto;
 }
