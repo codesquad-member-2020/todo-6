@@ -5,6 +5,7 @@ import { inputFormElement, textareaElement, templateInputFormElement } from './i
 import { Card, DEFAULT_CARD_CONTENTS, templateCardElement, templateAllCardElement } from './card';
 import { updateActivityList } from './sidemenu';
 import { Sections, fetchAddedCard } from './fetch';
+import { initialRenderTodoList } from './columnWrap';
 
 export const COLUMN_CLASS = {
   column: 'column',
@@ -63,6 +64,7 @@ export const addNewCard = async (targetColumn: HTMLElement, cardWrap: HTMLElemen
     changeCardCount(targetColumn);
   } catch (err) {
     console.error(err);
+    initialRenderTodoList();
   }
   textarea.value = '';
   textarea.removeAttribute('disabled');

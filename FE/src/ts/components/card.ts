@@ -21,7 +21,7 @@ export const CARD_CLASS = {
 
 const AUTHOR_STRING: string = ' (이)가 추가함';
 
-export const DEFAULT_CARD_CONTENTS = null;
+export const DEFAULT_CARD_CONTENTS = '';
 
 const CARD_ATOM = {
   icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.todo),

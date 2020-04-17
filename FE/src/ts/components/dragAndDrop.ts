@@ -3,6 +3,7 @@ import { COLUMN_CLASS, changeCardCount, getColumnId } from './column';
 import { CARD_CLASS, getCardId, setCardColumnId } from './card';
 import { isCardMoved } from './fetch';
 import { updateActivityList } from './sidemenu';
+import { initialRenderTodoList } from './columnWrap';
 
 const RIGHT_MOUSE_BUTTON_CODE = 2;
 
@@ -151,6 +152,7 @@ const fetchMoveCard = async (sourceColumn: HTMLElement, destinationColumn: HTMLE
   if (!isMoved) {
     console.error('Move Error');
     undoMove(sourceColumn, destinationColumn, dropCardIndex);
+    initialRenderTodoList();
     return;
   }
   setCardColumnId(dragProperty.targetElement, destinationColumnId);
