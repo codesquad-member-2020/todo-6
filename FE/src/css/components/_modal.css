@@ -1,0 +1,37 @@
+.modal {
+  @apply box-border z-50 fixed w-full max-w-lg bg-white border rounded;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: 0.5s fade-in;
+}
+
+.modal-header {
+  @apply relative px-6 mb-6 bg-gray-200 border-b border-gray-300;
+}
+
+.modal-content {
+  @apply clear-both px-6 pb-6;
+}
+
+.modal-content::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.modal-text {
+  @apply block w-full mb-6 text-lg;
+}
+
+.modal-label {
+  @apply block font-semibold mb-2;
+}
+
+.modal-btn {
+  @apply float-left font-semibold rounded mt-4 w-24 py-2;
+}
+
+.modal-btn.cancel-btn {
+  @apply ml-2;
+}
