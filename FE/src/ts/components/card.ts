@@ -21,16 +21,18 @@ export const CARD_CLASS = {
 
 const AUTHOR_STRING: string = ' (이)가 추가함';
 
-export const DEFAULT_CARD_CONTENTS = null;
+export const DEFAULT_CARD_CONTENTS = '';
 
 const CARD_ATOM = {
-  icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.bookmark),
+  icon: htmlElements.icon(CARD_CLASS.icon, ICON_TYPE.todo),
   deleteBtn: htmlElements.button(CARD_CLASS.deleteBtn, ICON_TYPE.delete),
   content: (text: string): string => htmlElements.h3(CARD_CLASS.content, text),
   author: (author: string): string => htmlElements.span(CARD_CLASS.author, htmlElements.strong(author), AUTHOR_STRING),
 };
 
 export const getCardId = (target: HTMLElement): number => parseInt(target.dataset.cardId, 10);
+
+export const setCardColumnId = (target: HTMLElement, columnId: number): void => (target.dataset.columnId = columnId);
 
 export const cardElement = (target: HTMLElement): HTMLElement => target.closest(`.${CARD_CLASS.card}`);
 

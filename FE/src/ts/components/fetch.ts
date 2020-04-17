@@ -1,11 +1,13 @@
-import { Card } from './card';
-import { templateCardElement } from './card';
-import { initialRender } from './columnWrap';
+import { Card, templateCardElement } from './card';
+import { Activity } from './activity';
 
 const API_URL = {
   BASE_URL: 'http://15.165.109.219:8080',
   todoList(): string {
     return `${this.BASE_URL}/api/todo`;
+  },
+  activityList(): string {
+    return `${this.BASE_URL}/api/activity`;
   },
   addCard(columnId: number): string {
     return `${this.BASE_URL}/api/column/${columnId}/card`;
@@ -16,8 +18,8 @@ const API_URL = {
   editCard(columnId: number, cardId: number): string {
     return `${this.BASE_URL}/api/column/${columnId}/card/${cardId}`;
   },
-  moveCard(sourceColumnId: number, destinationColumnId: number, cardId: number, cardPosition: number): string {
-    return `${this.BASE_URL}/api/column/${sourceColumnId}/card/${cardId}?destination=${destinationColumnId}&position=${cardPosition}`;
+  moveCard(sourceColumnId: number, destinationColumnId: number, cardId: number, dragCardIndex: number, dropCardIndex: number): string {
+    return `${this.BASE_URL}/api/column/${sourceColumnId}/card/${cardId}?destination=${destinationColumnId}&position=${dropCardIndex}&sourcePosition=${dragCardIndex}`;
   },
 };
 
@@ -36,7 +38,8 @@ interface ApiParameter {
   contents?: string | null;
   sourceColumnId?: number;
   destinationColumnId?: number;
-  cardPosition?: number;
+  dragCardIndex?: number;
+  dropCardIndex?: number;
 }
 
 const myHeaders: Headers = new Headers({
@@ -44,23 +47,29 @@ const myHeaders: Headers = new Headers({
   'Content-Type': 'application/json',
 });
 
-export const fetchTodoList = async (): Promise<void> => {
+export const fetchTodoList = async (): Promise<Array<Sections>> => {
   const response: Response = await fetch(API_URL.todoList(), { method: 'GET', headers: myHeaders });
   const todoList = await response.json();
   const { data } = todoList;
-  initialRender(data);
+  return data;
 };
 
-export const createCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {
+export const fetchActivityList = async (): Promise<Array<Activity>> => {
+  const response: Response = await fetch(API_URL.activityList(), { method: 'GET', headers: myHeaders });
+  const activityList = await response.json();
+  const { data } = activityList;
+  return data;
+};
+
+export const fetchAddedCard = async ({ columnId, title, contents }: ApiParameter): Promise<string> => {
   const response: Response = await fetch(API_URL.addCard(columnId), {
     method: 'POST',
     body: JSON.stringify({ title: title, contents: contents }),
     headers: myHeaders,
   });
   const addedCard = await response.json();
-  console.log(addedCard);
   const { data } = addedCard;
-  return templateCardElement(columnId, data);
+  return data;
 };
 
 export const isCardDeleted = async ({ columnId, cardId }: ApiParameter): Promise<boolean> => {
@@ -68,19 +77,15 @@ export const isCardDeleted = async ({ columnId, cardId }: ApiParameter): Promise
     method: 'DELETE',
     headers: myHeaders,
   });
-  console.log(response);
   return response.ok;
 };
 
 export const isCardEdited = async ({ columnId, cardId, title, contents }: ApiParameter): Promise<boolean> => {
-  console.log(columnId, cardId, title, contents);
   const response: Response = await fetch(API_URL.editCard(columnId, cardId), { method: 'PUT', body: JSON.stringify({ title: title, contents: contents }), headers: myHeaders });
-  console.log(response);
   return response.ok;
 };
 
-export const isCardMoved = async ({ sourceColumnId, destinationColumnId, cardId, cardPosition }: ApiParameter): Promise<boolean> => {
-  const response: Response = await fetch(API_URL.moveCard(sourceColumnId, destinationColumnId, cardId, cardPosition), { method: 'GET', headers: myHeaders });
-  console.log(response);
+export const isCardMoved = async ({ sourceColumnId, destinationColumnId, cardId, dragCardIndex, dropCardIndex }: ApiParameter): Promise<boolean> => {
+  const response: Response = await fetch(API_URL.moveCard(sourceColumnId, destinationColumnId, cardId, dragCardIndex, dropCardIndex), { method: 'PATCH', headers: myHeaders });
   return response.ok;
 };

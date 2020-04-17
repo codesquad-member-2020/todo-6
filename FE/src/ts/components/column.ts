@@ -2,8 +2,10 @@ import { ICON_TYPE, UTIL_CLASS, DATA_ATTRIBUTE } from '../utils/constants';
 import { _q, toggleClass } from '../utils/utils';
 import htmlElements from '../utils/htmlElement';
 import { inputFormElement, textareaElement, templateInputFormElement } from './inputForm';
-import { Card, DEFAULT_CARD_CONTENTS, templateAllCardElement } from './card';
-import { Sections, createCard } from './fetch';
+import { Card, DEFAULT_CARD_CONTENTS, templateCardElement, templateAllCardElement } from './card';
+import { updateActivityList } from './sidemenu';
+import { Sections, fetchAddedCard } from './fetch';
+import { initialRenderTodoList } from './columnWrap';
 
 export const COLUMN_CLASS = {
   column: 'column',
@@ -55,14 +57,18 @@ const clickColumnAddButton = ({ target }: Event): void => {
 
 export const addNewCard = async (targetColumn: HTMLElement, cardWrap: HTMLElement, textarea: HTMLTextAreaElement): Promise<void> => {
   try {
+    const columnId = getColumnId(targetColumn);
+    const addedCardData = await fetchAddedCard({ columnId: columnId, title: textarea.value, contents: DEFAULT_CARD_CONTENTS });
     textarea.setAttribute('disabled', true);
-    cardWrap.insertAdjacentHTML('afterbegin', await createCard({ columnId: getColumnId(targetColumn), title: textarea.value, contents: DEFAULT_CARD_CONTENTS }));
+    cardWrap.insertAdjacentHTML('afterbegin', templateCardElement(columnId, addedCardData));
     changeCardCount(targetColumn);
   } catch (err) {
     console.error(err);
+    initialRenderTodoList();
   }
   textarea.value = '';
   textarea.removeAttribute('disabled');
+  updateActivityList();
 };
 
 export const columnClickHandler = (event: Event): void => {
