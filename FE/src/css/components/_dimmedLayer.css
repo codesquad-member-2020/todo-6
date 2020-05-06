@@ -1,0 +1,14 @@
+.dimmed-layer {
+  @apply fixed top-0 left-0 w-full h-full z-40 opacity-50 bg-black;
+  animation: 0.2s dimmed-fade-in;
+}
+
+@keyframes dimmed-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}

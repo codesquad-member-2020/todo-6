@@ -1,0 +1,28 @@
+* {
+  @apply text-gray-900;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  @apply text-2xl font-bold;
+}
+
+h2 {
+  @apply text-xl font-bold;
+}
+
+h3 {
+  @apply font-semibold;
+}
+
+.small-text {
+  @apply text-sm text-gray-500;
+}
+
+.small-text strong {
+  @apply font-normal text-gray-600;
+}
+
+.material-icons {
+  @apply text-gray-800;
+}
