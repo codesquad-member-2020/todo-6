@@ -7,10 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D61C57A243F559500DE63E4 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C579243F559500DE63E4 /* CardViewModel.swift */; };
+		8D61C57C243F58CE00DE63E4 /* ColumnTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C57B243F58CE00DE63E4 /* ColumnTableViewDataSource.swift */; };
+		8D61C57F243F6AE200DE63E4 /* ColumnViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C57E243F6AE200DE63E4 /* ColumnViewModel.swift */; };
+		8D61C581243F77FC00DE63E4 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D61C580243F77FC00DE63E4 /* ViewModel.swift */; };
 		8D63935F243C94C000164C3B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8D63935E243C94BF00164C3B /* README.md */; };
+		8D639361243CC54B00164C3B /* ColumnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D639360243CC54B00164C3B /* ColumnViewController.swift */; };
+		8D639363243D973000164C3B /* ColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D639362243D973000164C3B /* ColumnView.swift */; };
+		8D639365243D9B8800164C3B /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D639364243D9B8800164C3B /* CardCell.swift */; };
+		8D639367243DB8F600164C3B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D639366243DB8F600164C3B /* Model.swift */; };
 		8D6A9228243AEDD300076665 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A9227243AEDD300076665 /* AppDelegate.swift */; };
 		8D6A922A243AEDD300076665 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A9229243AEDD300076665 /* SceneDelegate.swift */; };
-		8D6A922C243AEDD300076665 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A922B243AEDD300076665 /* ViewController.swift */; };
+		8D6A922C243AEDD300076665 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D6A922B243AEDD300076665 /* MainViewController.swift */; };
 		8D6A922F243AEDD300076665 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6A922D243AEDD300076665 /* Main.storyboard */; };
 		8D6A9231243AEDD700076665 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D6A9230243AEDD700076665 /* Assets.xcassets */; };
 		8D6A9234243AEDD700076665 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D6A9232243AEDD700076665 /* LaunchScreen.storyboard */; };
@@ -28,11 +36,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8D61C579243F559500DE63E4 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		8D61C57B243F58CE00DE63E4 /* ColumnTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnTableViewDataSource.swift; sourceTree = "<group>"; };
+		8D61C57E243F6AE200DE63E4 /* ColumnViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnViewModel.swift; sourceTree = "<group>"; };
+		8D61C580243F77FC00DE63E4 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		8D63935E243C94BF00164C3B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		8D639360243CC54B00164C3B /* ColumnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnViewController.swift; sourceTree = "<group>"; };
+		8D639362243D973000164C3B /* ColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnView.swift; sourceTree = "<group>"; };
+		8D639364243D9B8800164C3B /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		8D639366243DB8F600164C3B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		8D6A9224243AEDD300076665 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D6A9227243AEDD300076665 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D6A9229243AEDD300076665 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8D6A922B243AEDD300076665 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8D6A922B243AEDD300076665 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8D6A922E243AEDD300076665 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8D6A9230243AEDD700076665 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8D6A9233243AEDD700076665 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -60,6 +76,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D61C57D243F6AB900DE63E4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8D61C580243F77FC00DE63E4 /* ViewModel.swift */,
+				8D61C579243F559500DE63E4 /* CardViewModel.swift */,
+				8D61C57E243F6AE200DE63E4 /* ColumnViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8D639368243DB91C00164C3B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8D639362243D973000164C3B /* ColumnView.swift */,
+				8D639364243D9B8800164C3B /* CardCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8D639369243DB93500164C3B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8D6A922B243AEDD300076665 /* MainViewController.swift */,
+				8D639360243CC54B00164C3B /* ColumnViewController.swift */,
+				8D61C57B243F58CE00DE63E4 /* ColumnTableViewDataSource.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		8D63936A243DB96500164C3B /* GlobalDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				8D6A9227243AEDD300076665 /* AppDelegate.swift */,
+				8D6A9229243AEDD300076665 /* SceneDelegate.swift */,
+			);
+			path = GlobalDelegate;
+			sourceTree = "<group>";
+		};
 		8D6A921B243AEDD300076665 = {
 			isa = PBXGroup;
 			children = (
@@ -82,9 +136,11 @@
 		8D6A9226243AEDD300076665 /* Todo */ = {
 			isa = PBXGroup;
 			children = (
-				8D6A9227243AEDD300076665 /* AppDelegate.swift */,
-				8D6A9229243AEDD300076665 /* SceneDelegate.swift */,
-				8D6A922B243AEDD300076665 /* ViewController.swift */,
+				8D639366243DB8F600164C3B /* Model.swift */,
+				8D639369243DB93500164C3B /* ViewController */,
+				8D61C57D243F6AB900DE63E4 /* ViewModel */,
+				8D639368243DB91C00164C3B /* View */,
+				8D63936A243DB96500164C3B /* GlobalDelegate */,
 				8D6A922D243AEDD300076665 /* Main.storyboard */,
 				8D6A9230243AEDD700076665 /* Assets.xcassets */,
 				8D6A9232243AEDD700076665 /* LaunchScreen.storyboard */,
@@ -204,9 +260,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D6A922C243AEDD300076665 /* ViewController.swift in Sources */,
+				8D61C57F243F6AE200DE63E4 /* ColumnViewModel.swift in Sources */,
+				8D61C57C243F58CE00DE63E4 /* ColumnTableViewDataSource.swift in Sources */,
+				8D639367243DB8F600164C3B /* Model.swift in Sources */,
+				8D61C581243F77FC00DE63E4 /* ViewModel.swift in Sources */,
+				8D6A922C243AEDD300076665 /* MainViewController.swift in Sources */,
+				8D639363243D973000164C3B /* ColumnView.swift in Sources */,
 				8D6A9228243AEDD300076665 /* AppDelegate.swift in Sources */,
+				8D639361243CC54B00164C3B /* ColumnViewController.swift in Sources */,
 				8D6A922A243AEDD300076665 /* SceneDelegate.swift in Sources */,
+				8D61C57A243F559500DE63E4 /* CardViewModel.swift in Sources */,
+				8D639365243D9B8800164C3B /* CardCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
